@@ -1,0 +1,18 @@
+# Top-most .editorconfig file
+root = true
+
+# Java files
+[*.java]
+charset = utf-8
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# YAML files
+[*.{yml,yaml}]
+charset = utf-8
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+insert_final_newline = true
