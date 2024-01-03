@@ -1,5 +1,6 @@
 plugins {
 	java
+	jacoco
 	id("org.springframework.boot") version "3.2.1"
 	id("io.spring.dependency-management") version "1.1.4"
 }
@@ -9,6 +10,24 @@ version = "0.0.1-SNAPSHOT"
 
 java {
 	sourceCompatibility = JavaVersion.VERSION_17
+}
+
+jacoco {
+	toolVersion = "0.8.11"
+}
+
+tasks.withType<JacocoReport> {
+	reports {
+		xml.required.set(true)
+		html.required.set(true)
+	}
+
+	val mainSrc = sourceSets.getByName("main").output.classesDirs
+	classDirectories.setFrom(files(mainSrc).asFileTree.matching {
+		exclude("**/dto/**")
+		exclude("**/entity/**")
+		exclude("ru/youmiteru/backend/BackendApplication.class")
+	})
 }
 
 configurations {
