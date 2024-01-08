@@ -54,6 +54,7 @@ public class Season {
 
     @OneToMany(mappedBy = "season")
     private List<Video> videoList;
+
 //    private хуйзнаеткакхранить json animePictures;
 
 
