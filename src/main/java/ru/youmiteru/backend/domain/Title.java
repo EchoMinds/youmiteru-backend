@@ -14,9 +14,18 @@ public class Title {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "title_image_url")
+    private String titleImageUrl;
+
     @Column(name = "name")
     private String name;
 
     @Column(name = "description")
     private String description;
+
+    public Title(String titleImageUrl, String name, String description) {
+        this.titleImageUrl = titleImageUrl;
+        this.name = name;
+        this.description = description;
+    }
 }

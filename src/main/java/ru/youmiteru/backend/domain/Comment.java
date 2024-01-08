@@ -26,5 +26,5 @@ public class Comment {
     private Double ratingValue;
 
     @Column(name = "reply_to")
-    private Double replyTo;
+    private Long replyTo;
 }

@@ -14,6 +14,10 @@ public class Genre {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "type")
-    private String type;
+    @Column(name = "name")
+    private String name;
+
+    public Genre(String name) {
+        this.name = name;
+    }
 }

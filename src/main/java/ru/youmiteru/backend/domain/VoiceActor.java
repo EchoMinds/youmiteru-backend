@@ -14,6 +14,10 @@ public class VoiceActor{
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "name")
     private String name;
+
+    public VoiceActor(String name) {
+        this.name = name;
+    }
 }

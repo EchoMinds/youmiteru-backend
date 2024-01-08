@@ -15,5 +15,6 @@ public class Rating {
     private Long id;
 
     @Column(name = "value")
-    private Double value;
+    private Long value;
+
 }
