@@ -1,9 +1,9 @@
 package ru.youmiteru.backend.domain;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.youmiteru.backend.util.enums.TitleState;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,8 +30,9 @@ public class Season {
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
-    @Column(name = "title_id")
-    private Long titleId;
+    @ManyToOne
+    @JoinColumn(name = "title_id", referencedColumnName = "id")
+    private Title titleId;
 
     @Column(name = "title_state")
     private TitleState title_state;
@@ -42,7 +43,6 @@ public class Season {
     @Column(name = "year_season")
     private String yearSeason;
 
-    @Column(name = "voice_actor")
     @ManyToMany
     @JoinTable(
         name = "seasons_voice_actors",
@@ -55,11 +55,16 @@ public class Season {
     @OneToMany(mappedBy = "season")
     private List<Video> videoList;
 
-//    private хуйзнаеткакхранить json animePictures;
+    //    private хуй знает как хранить json animePictures. Пытался однако совет гпт не помог,
+    //    затуп был в аннотации Type(type="json) в скобочках type не работал
+    @OneToMany(mappedBy = "seasonId")
+    private List<Comment> seasonCommentList;
 
+    @OneToMany(mappedBy = "seasonIdRating")
+    private List<Rating> seasonRatingList;
 
     public Season(String seasonImageUrl, String name, String description, LocalDate releaseDate,
-                  Long titleId, TitleState title_state, String ageRestriction, String yearSeason,
+                  Title titleId, TitleState title_state, String ageRestriction, String yearSeason,
                   List<VoiceActor> voiceActor, List<Video> videoList) {
         this.seasonImageUrl = seasonImageUrl;
         this.name = name;

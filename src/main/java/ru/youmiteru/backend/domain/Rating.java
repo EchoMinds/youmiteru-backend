@@ -17,4 +17,11 @@ public class Rating {
     @Column(name = "value")
     private Long value;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User userIdRating;
+
+    @ManyToOne
+    @JoinColumn(name = "season_id", referencedColumnName = "id")
+    private Season seasonIdRating;
 }

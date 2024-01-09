@@ -3,8 +3,10 @@ package ru.youmiteru.backend.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.youmiteru.backend.util.enums.Role;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -13,11 +15,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "profile_image_url")
+    @Column(name = "profile_picture_url")
     private String profileImageUrl;
 
     @Column(name = "name")
@@ -31,6 +33,16 @@ public class User {
 
     @Column(name = "creation_time")
     private LocalDateTime creationTime;
+
+    @OneToOne(mappedBy = "userId")
+    private VoiceActor voiceActorAcc;
+
+    @OneToMany(mappedBy = "writerId")
+    private List<Comment> usersComms;
+
+    @OneToMany(mappedBy = "userIdRating")
+    private List<Rating> ratingList;
+
 
     public User(String profileImageUrl, String name, String email, Role role) {
         this.profileImageUrl = profileImageUrl;

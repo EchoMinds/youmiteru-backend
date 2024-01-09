@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "title", schema = "youmiteru_backend")
 @Data
@@ -22,6 +24,9 @@ public class Title {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "titleId")
+    private List<Season> seasonList;
 
     public Title(String titleImageUrl, String name, String description) {
         this.titleImageUrl = titleImageUrl;

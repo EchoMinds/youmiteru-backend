@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "comment", schema = "youmiteru_backend")
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Comment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -23,8 +24,43 @@ public class Comment {
     private String message;
 
     @Column(name = "rating_value")
-    private Double ratingValue;
+    private int ratingValue;
 
-    @Column(name = "reply_to")
-    private Long replyTo;
+    /////////
+    @ManyToOne
+    @JoinColumn(name = "reply_to", referencedColumnName = "id")
+    private Comment replyTo;
+
+    @OneToMany(mappedBy = "replyTo")
+    private List<Comment> treeComment;
+    ///////////
+
+    @ManyToOne
+    @JoinColumn(name = "writer_id", referencedColumnName = "id")
+    private User writerId;
+
+    @ManyToOne
+    @JoinColumn(name = "season_id", referencedColumnName = "id")
+    private Season seasonId;
+
+    // при отсутствии replyTo ставится null
+    public Comment(LocalDateTime creationDate, String message,
+                   int ratingValue, User writerId, Season seasonId) {
+        this.creationDate = creationDate;
+        this.message = message;
+        this.ratingValue = ratingValue;
+        this.writerId = writerId;
+        this.seasonId = seasonId;
+        this.replyTo = null;
+    }
+
+    public Comment(LocalDateTime creationDate, String message, int ratingValue,
+                   Comment replyTo, User writerId, Season seasonId) {
+        this.creationDate = creationDate;
+        this.message = message;
+        this.ratingValue = ratingValue;
+        this.replyTo = replyTo;
+        this.writerId = writerId;
+        this.seasonId = seasonId;
+    }
 }

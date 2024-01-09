@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Video {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -28,7 +28,7 @@ public class Video {
         name = "season_id",
         referencedColumnName = "id"
     )
-    private Season season;
+    private Season seasonId;
 
     public Video(int episode, String player, String playerUrl) {
         this.episode = episode;
