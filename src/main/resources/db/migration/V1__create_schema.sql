@@ -1,0 +1,1 @@
+create schema IF NOT EXISTS youmiteru_backend
