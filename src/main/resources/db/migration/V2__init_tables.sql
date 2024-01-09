@@ -1,6 +1,6 @@
 create table if not exists youmiteru_backend.user(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    profile_picture varchar(512),
+    profile_picture_url varchar(512),
     name varchar(32) not null,
     email varchar(64),
     role varchar(32) not null,
@@ -23,7 +23,7 @@ create table if not exists youmiteru_backend.voice_actor(
 );
 create table if not exists youmiteru_backend.season(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    image varchar(512),
+    title_image_url varchar(512),
     name varchar(128) not null,
     description text,
     release_date DATE,
