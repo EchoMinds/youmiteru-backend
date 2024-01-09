@@ -72,6 +72,8 @@ dependencies {
 	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
 	annotationProcessor("org.projectlombok:lombok")
 
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
 	intTestImplementation("org.springframework.boot:spring-boot-starter-test")
 	intTestImplementation("org.testcontainers:junit-jupiter:1.18.3")
 	intTestImplementation("org.testcontainers:testcontainers:1.18.3")
