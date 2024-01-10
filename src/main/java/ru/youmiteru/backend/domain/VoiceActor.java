@@ -1,5 +1,6 @@
 package ru.youmiteru.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class VoiceActor {
     private String name;
 
     @OneToOne
+    @JsonBackReference
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User userId;
 

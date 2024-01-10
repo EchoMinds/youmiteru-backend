@@ -1,9 +1,11 @@
 package ru.youmiteru.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,49 +20,25 @@ public class Comment {
     private Long id;
 
     @Column(name = "creation_date")
-    private LocalDateTime creationDate;
+    private Timestamp creationDate;
 
     @Column(name = "message")
     private String message;
 
-    @Column(name = "rating_value")
-    private int ratingValue;
+    @Column(name = "rating_value", nullable = false)
+    private int ratingValue = 0;
 
-    /////////
     @ManyToOne
     @JoinColumn(name = "reply_to", referencedColumnName = "id")
     private Comment replyTo;
 
-    @OneToMany(mappedBy = "replyTo")
-    private List<Comment> treeComment;
-    ///////////
-
-    @ManyToOne
+    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", referencedColumnName = "id")
     private User writerId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "season_id", referencedColumnName = "id")
     private Season seasonId;
 
-    // при отсутствии replyTo ставится null
-    public Comment(LocalDateTime creationDate, String message,
-                   int ratingValue, User writerId, Season seasonId) {
-        this.creationDate = creationDate;
-        this.message = message;
-        this.ratingValue = ratingValue;
-        this.writerId = writerId;
-        this.seasonId = seasonId;
-        this.replyTo = null;
-    }
-
-    public Comment(LocalDateTime creationDate, String message, int ratingValue,
-                   Comment replyTo, User writerId, Season seasonId) {
-        this.creationDate = creationDate;
-        this.message = message;
-        this.ratingValue = ratingValue;
-        this.replyTo = replyTo;
-        this.writerId = writerId;
-        this.seasonId = seasonId;
-    }
 }
