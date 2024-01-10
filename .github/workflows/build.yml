@@ -25,6 +25,9 @@ jobs:
       - name: Build and unit tests
         run: ./gradlew build
 
+      - name: Integration tests
+        run: ./gradlew integrationTest
+
       - name: Generate JaCoCo Coverage Report
         run: ./gradlew jacocoTestReport
 
