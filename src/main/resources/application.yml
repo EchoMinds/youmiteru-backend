@@ -10,8 +10,6 @@ spring:
     show-sql: true
   flyway:
     enabled: true
-    user: postgres
-    password: postgres
     baseline-on-migrate: true
     baseline-description: "init"
     locations: classpath:db/migration
