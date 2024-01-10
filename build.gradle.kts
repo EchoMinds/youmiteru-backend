@@ -41,19 +41,19 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.postgresql:postgresql")
+	implementation("org.springframework.boot:spring-boot-starter-data-jdbc:3.0.4")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.0.4")
+	implementation("org.springframework.boot:spring-boot-starter-validation:3.0.4")
+	implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
+	implementation("org.postgresql:postgresql:42.5.4")
 	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.16.1")
-	compileOnly("org.projectlombok:lombok")
-	runtimeOnly("org.postgresql:postgresql")
-	annotationProcessor("org.projectlombok:lombok")
+	compileOnly("org.projectlombok:lombok:1.18.26")
+	runtimeOnly("org.postgresql:postgresql:42.5.4")
+	annotationProcessor("org.projectlombok:lombok:1.18.26")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("com.h2database:h2")
+	testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.0")
+	testImplementation("com.h2database:h2:2.1.214")
 }
 
 tasks.withType<Test> {

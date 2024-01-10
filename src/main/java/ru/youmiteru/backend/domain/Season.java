@@ -52,7 +52,7 @@ public class Season {
     private List<VoiceActor> voiceActor;
 
 
-    @OneToMany(mappedBy = "season")
+    @OneToMany(mappedBy = "seasonId")
     private List<Video> videoList;
 
     //    private хуй знает как хранить json animePictures. Пытался однако совет гпт не помог,
