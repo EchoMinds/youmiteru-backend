@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
-    password: postgres
+    password: 22813337
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -11,7 +11,8 @@ spring:
   flyway:
     enabled: true
     user: postgres
-    password: postgres
+    password: 22813337
     baseline-on-migrate: true
     baseline-description: "init"
     locations: classpath:db/migration
+    default-schema: flyway_schema
