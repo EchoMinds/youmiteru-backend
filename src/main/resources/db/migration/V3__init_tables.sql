@@ -1,6 +1,6 @@
 create table if not exists youmiteru_backend.user(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    profile_picture_url varchar(512),
+    profile_picture_url varchar,
     name varchar(32) not null,
     email varchar(64),
     role varchar(32) not null,
@@ -8,7 +8,7 @@ create table if not exists youmiteru_backend.user(
 );
 create table if not exists youmiteru_backend.title(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    title_image_url varchar(512),
+    title_image_url varchar,
     name varchar(128) not null,
     description varchar(5012)
 );
@@ -19,11 +19,11 @@ create table if not exists youmiteru_backend.genre(
 create table if not exists youmiteru_backend.voice_actor(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name varchar(32) not null,
-    user_id BIGINT references youmiteru_backend.user(id) on delete CASCADE
+    user_id BIGINT references youmiteru_backend.user(id)
 );
 create table if not exists youmiteru_backend.season(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    season_image_url varchar(512),
+    season_image_url varchar,
     name varchar(128) not null,
     description text,
     release_date DATE,
@@ -47,7 +47,7 @@ create table if not exists youmiteru_backend.video(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     episode Int not null,
     player varchar(64) not null,
-    link varchar(512) not null,
+    link varchar not null,
     season_id BIGINT references youmiteru_backend.season(id) on delete cascade not null
 );
 create table if not exists youmiteru_backend.rating(
