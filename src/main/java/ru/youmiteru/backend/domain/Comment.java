@@ -1,5 +1,7 @@
 package ru.youmiteru.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -13,6 +15,7 @@ import java.util.List;
 @Table(name = "comment", schema = "youmiteru_backend")
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,14 +32,22 @@ public class Comment {
     private int ratingValue = 0;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "reply_to", referencedColumnName = "id")
     private Comment replyTo;
 
-    @JsonManagedReference
+
+    @OneToMany(mappedBy = "replyTo", fetch = FetchType.LAZY)
+    private List<Comment> answerForThisCommList;
+
+
+    //    @JsonManagedReference
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", referencedColumnName = "id")
     private User writerId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "season_id", referencedColumnName = "id")
     private Season seasonId;

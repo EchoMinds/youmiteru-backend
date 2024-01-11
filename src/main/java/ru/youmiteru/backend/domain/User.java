@@ -1,6 +1,7 @@
 package ru.youmiteru.backend.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class User {
     private String email;
 
     @Column(name = "role")
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
     @Column(name = "creation_time")
@@ -38,7 +40,8 @@ public class User {
     @OneToOne(mappedBy = "userId")
     private VoiceActor voiceActorAcc;
 
-    @JsonBackReference
+//    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "writerId")
     private List<Comment> usersComms;
 

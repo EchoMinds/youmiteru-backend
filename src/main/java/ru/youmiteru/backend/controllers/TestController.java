@@ -27,7 +27,7 @@ public class TestController {
 
     @GetMapping
     public ResponseEntity<?> getComment() {
-        Comment test = commentRepository.getById(1L);
+        Comment test = commentRepository.getReferenceById(7L);
         return new ResponseEntity<>(test, HttpStatus.OK);
     }
 }
