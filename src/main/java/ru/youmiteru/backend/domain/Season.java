@@ -1,20 +1,23 @@
 package ru.youmiteru.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.youmiteru.backend.util.JsonObj;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import ru.youmiteru.backend.util.enums.TitleState;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.LinkedHashMap;
 @Entity
 @Table(name = "season", schema = "youmiteru_backend")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Season {
     @Id
@@ -36,14 +39,13 @@ public class Season {
 
     @ManyToOne
     @JoinColumn(name = "title_id", referencedColumnName = "id")
+    @JsonIgnore
     private Title titleId;
 
-//    @Column(name = "title_state")
-//    private TitleState title_state;
-
-    // for test
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "title_state")
-    private String title_state;
+    private TitleState title_state;
+
 
     @Column(name = "age_restriction")
     private String ageRestriction;
@@ -52,6 +54,7 @@ public class Season {
     private String yearSeason;
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
         name = "seasons_voice_actors",
         joinColumns = @JoinColumn(name = "season_id"),
@@ -61,29 +64,19 @@ public class Season {
 
 
     @OneToMany(mappedBy = "seasonId")
+    @JsonIgnore
     private List<Video> videoList;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "anime_pictures", columnDefinition = "jsonb")
-    private JsonObj animePictures;  // Изменено на JsonNode
+    private LinkedHashMap<String,String> animePictures;
 
     @OneToMany(mappedBy = "seasonId")
+    @JsonIgnore
     private List<Comment> seasonCommentList;
 
     @OneToMany(mappedBy = "seasonIdRating")
+    @JsonIgnore
     private List<Rating> seasonRatingList;
 
-//    public Season(String seasonImageUrl, String name, String description, LocalDate releaseDate,
-//                  Title titleId, TitleState title_state, String ageRestriction, String yearSeason,
-//                  List<VoiceActor> voiceActor, List<Video> videoList) {
-//        this.seasonImageUrl = seasonImageUrl;
-//        this.name = name;
-//        this.description = description;
-//        this.releaseDate = releaseDate;
-//        this.titleId = titleId;
-//        this.title_state = title_state;
-//        this.ageRestriction = ageRestriction;
-//        this.yearSeason = yearSeason;
-//        this.voiceActor = voiceActor;
-//        this.videoList = videoList;
-//    }
 }

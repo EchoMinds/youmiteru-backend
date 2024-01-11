@@ -27,7 +27,7 @@ public class TestController {
 
     @GetMapping
     public ResponseEntity<?> getComment() {
-        Optional<Comment> test = commentRepository.findById(7L);
+        Comment test = commentRepository.getById(1L);
         return new ResponseEntity<>(test, HttpStatus.OK);
     }
 }
