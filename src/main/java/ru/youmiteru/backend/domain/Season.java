@@ -52,6 +52,10 @@ public class Season {
     @Column(name = "year_season")
     private String yearSeason;
 
+    @Column(name = "anime_format")
+    @Enumerated(value = EnumType.STRING)
+    private AnimeFormat animeFormat;
+
     @ManyToMany
     @JsonIgnore
     @JoinTable(
