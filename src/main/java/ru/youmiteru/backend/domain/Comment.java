@@ -2,13 +2,11 @@ package ru.youmiteru.backend.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -41,7 +39,6 @@ public class Comment {
     private List<Comment> answerForThisCommList;
 
 
-    //    @JsonManagedReference
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", referencedColumnName = "id")

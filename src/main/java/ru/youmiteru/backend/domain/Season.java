@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import ru.youmiteru.backend.util.enums.TitleState;
 
 import java.time.LocalDate;
 import java.util.List;
