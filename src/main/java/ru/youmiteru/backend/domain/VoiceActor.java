@@ -1,14 +1,18 @@
 package ru.youmiteru.backend.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Entity
 @Data
 @Table(name = "voice_actor", schema = "youmiteru_backend")
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class VoiceActor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,17 +23,19 @@ public class VoiceActor {
     private String name;
 
     @OneToOne
-    @JsonBackReference
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User userId;
+    private User user;
+
+    @ManyToMany(mappedBy = "voiceActors")
+    private List<Season> seasons;
 
     public VoiceActor(String name) {
         this.name = name;
-        userId = null;
+        user = null;
     }
 
     public VoiceActor(String name, User userId) {
         this.name = name;
-        this.userId = userId;
+        this.user = userId;
     }
 }

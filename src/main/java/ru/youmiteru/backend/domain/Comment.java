@@ -1,19 +1,20 @@
 package ru.youmiteru.backend.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "comment", schema = "youmiteru_backend")
 @Data
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class Comment {
     private Long id;
 
     @Column(name = "creation_date")
-    private Timestamp creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "message")
     private String message;
@@ -30,7 +31,6 @@ public class Comment {
     private int ratingValue = 0;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "reply_to", referencedColumnName = "id")
     private Comment replyTo;
 
@@ -38,15 +38,12 @@ public class Comment {
     @OneToMany(mappedBy = "replyTo", fetch = FetchType.LAZY)
     private List<Comment> answerForThisCommList;
 
-
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", referencedColumnName = "id")
-    private User writerId;
+    private User writer;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "season_id", referencedColumnName = "id")
-    private Season seasonId;
+    private Season season;
 
 }

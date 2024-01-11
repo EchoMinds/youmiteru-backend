@@ -1,23 +1,21 @@
 package ru.youmiteru.backend.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Entity
 @Table(name = "season", schema = "youmiteru_backend")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Season {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +36,7 @@ public class Season {
 
     @ManyToOne
     @JoinColumn(name = "title_id", referencedColumnName = "id")
-    @JsonIgnore
-    private Title titleId;
+    private Title title;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "title_state")
@@ -57,29 +54,25 @@ public class Season {
     private AnimeFormat animeFormat;
 
     @ManyToMany
-    @JsonIgnore
     @JoinTable(
         name = "seasons_voice_actors",
+        schema = "youmiteru_backend",
         joinColumns = @JoinColumn(name = "season_id"),
         inverseJoinColumns = @JoinColumn(name = "voice_actor_id")
     )
-    private List<VoiceActor> voiceActor;
+    private List<VoiceActor> voiceActors;
 
-
-    @OneToMany(mappedBy = "seasonId")
-    @JsonIgnore
+    @OneToMany(mappedBy = "season")
     private List<Video> videoList;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "anime_pictures", columnDefinition = "jsonb")
-    private LinkedHashMap<String,String> animePictures;
+    private Map<String,String> animePictures;
 
-    @OneToMany(mappedBy = "seasonId")
-    @JsonIgnore
+    @OneToMany(mappedBy = "season")
     private List<Comment> seasonCommentList;
 
-    @OneToMany(mappedBy = "seasonIdRating")
-    @JsonIgnore
+    @OneToMany(mappedBy = "season")
     private List<Rating> seasonRatingList;
 
 }

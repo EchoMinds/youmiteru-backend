@@ -1,10 +1,8 @@
 package ru.youmiteru.backend.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,14 +32,13 @@ public class User {
     @Column(name = "creation_time")
     private LocalDateTime creationTime;
 
-    @OneToOne(mappedBy = "userId")
+    @OneToOne(mappedBy = "user")
     private VoiceActor voiceActorAcc;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "writerId")
+    @OneToMany(mappedBy = "writer")
     private List<Comment> usersComms;
 
-    @OneToMany(mappedBy = "userIdRating")
+    @OneToMany(mappedBy = "user")
     private List<Rating> ratingList;
 
 

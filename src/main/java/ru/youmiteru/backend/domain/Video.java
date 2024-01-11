@@ -1,13 +1,16 @@
 package ru.youmiteru.backend.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "video", schema = "youmiteru_backend")
 @Data
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +31,7 @@ public class Video {
         name = "season_id",
         referencedColumnName = "id"
     )
-    private Season seasonId;
+    private Season season;
 
     public Video(int episode, String player, String playerUrl) {
         this.episode = episode;
