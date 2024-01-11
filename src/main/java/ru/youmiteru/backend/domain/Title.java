@@ -44,13 +44,4 @@ public class Title {
         this.name = name;
         this.description = description;
     }
-
-    @Override
-    public String toString() {
-        return "Title{" +
-            "id=" + id +
-            ", titleImageUrl='" + titleImageUrl + '\'' +
-            ", name='" + name + '\'' +
-            '}';
-    }
 }
