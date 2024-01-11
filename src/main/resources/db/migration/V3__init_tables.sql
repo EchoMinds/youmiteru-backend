@@ -25,6 +25,7 @@ create table if not exists youmiteru_backend.season(
     id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     season_image_url varchar,
     name varchar(128) not null,
+    anime_format varchar(24) not null,
     description text,
     release_date DATE,
     title_id BIGINT references youmiteru_backend.title(id) on delete cascade not null,
