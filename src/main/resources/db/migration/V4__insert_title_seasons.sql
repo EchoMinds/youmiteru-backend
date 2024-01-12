@@ -78,7 +78,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/54492/37693ebdb70f8b6edfb27b0361f04b1f.jpeg',
         'Kusuriya no Hitorigoto', 'TV-show',
         'Уже полгода прошло с того момента, как 17-летнюю Маомао похитили и заставили трудиться в императорском дворце обычной служанкой. Работа тяжёлая, но девушка решила не сдаваться, не унывать и честно вкалывать, пока её не отпустят на покой. Планы изменились, когда до Маомао дошли вести о том, что детей императора одолел серьёзный недуг.',
-        '22-10-2023', 4, 'RELEASED', '2023', '2023');
+        '4-22-2023', 4, 'RELEASED', '2023', '2023');
 
 /*5 Тайтл*/
 INSERT INTO youmiteru_backend.title(title_image_url, name, description)
@@ -93,7 +93,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/31964/d94d5bd52edd33ec458fd338a2f0517c.jpeg',
         'Boku no Hero Academia', 'TV-show',
         'Четырнадцатилетний Идзуку Мидория рано осознал, что люди не рождаются равными. А пришло это понимание, когда его начали дразнить одноклассники, одарённые особой силой. Несмотря на то, что большинство людей в этом мире рождаются с необычными способностями, Идзуку оказался среди тех немногих, кто напрочь их лишён.',
-        '1-12-2016', 5, 'FINISHED', '2016', '2016');
+        '2-12-2016', 5, 'FINISHED', '2016', '2016');
 
 /*Сезон2*/
 INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
@@ -102,7 +102,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/33486/de1e7a755b37a416347ba4e0bb9de7d7.jpeg',
         'Boku no Hero Academia 2nd Season', 'TV-show',
         'Четырнадцатилетний Идзуку Мидория рано осознал, что люди не рождаются равными. А пришло это понимание, когда его начали дразнить одноклассники, одарённые особой силой. Несмотря на то, что большинство людей в этом мире рождаются с необычными способностями, Идзуку оказался среди тех немногих, кто напрочь их лишён.',
-        '17-04-2017', 5, 'FINISHED', '2017', '2017');
+        '7-04-2017', 5, 'FINISHED', '2017', '2017');
 
 /*Сезон3*/
 INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
@@ -129,7 +129,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/41587/3c927845258dcf5bbb81b1b03795f1d4.jpeg',
         'Boku no Hero Academia 5th Season', 'TV-show',
         'Четырнадцатилетний Идзуку Мидория рано осознал, что люди не рождаются равными. А пришло это понимание, когда его начали дразнить одноклассники, одарённые особой силой. Несмотря на то, что большинство людей в этом мире рождаются с необычными способностями, Идзуку оказался среди тех немногих, кто напрочь их лишён.',
-        '27-03-2021', 5, 'FINISHED', '2021', '2021');
+        '7-03-2021', 5, 'FINISHED', '2021', '2021');
 
 /*Сезон6*/
 INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
@@ -138,7 +138,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/49918/6aeb68676ce8f628ec1e923284de5f27.jpeg',
         'Boku no Hero Academia 6th Season', 'TV-show',
         'Четырнадцатилетний Идзуку Мидория рано осознал, что люди не рождаются равными. А пришло это понимание, когда его начали дразнить одноклассники, одарённые особой силой. Несмотря на то, что большинство людей в этом мире рождаются с необычными способностями, Идзуку оказался среди тех немногих, кто напрочь их лишён.',
-        '27-03-2022', 5, 'FINISHED', '2022', '2022');
+        '7-03-2022', 5, 'FINISHED', '2022', '2022');
 
 /*Сезон7*/
 INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
