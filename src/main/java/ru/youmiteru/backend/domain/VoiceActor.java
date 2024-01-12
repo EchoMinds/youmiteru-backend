@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @Table(name = "voice_actor", schema = "youmiteru_backend")
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class VoiceActor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
