@@ -1,4 +1,4 @@
-```sql
+
 INSERT INTO youmiteru_backend.user (profile_picture_url, name, email, role)
 VALUES ('https://example.com/john.png', 'John Doe', 'john@doe.com', 'USER');
 
@@ -199,4 +199,3 @@ INSERT INTO youmiteru_backend.seasons_voice_actors (
 ) 
 VALUES
   (1, 1);
-```
