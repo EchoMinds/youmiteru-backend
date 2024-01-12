@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 @Table(name = "video", schema = "youmiteru_backend")
 @Data
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
