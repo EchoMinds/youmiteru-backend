@@ -30,6 +30,27 @@ tasks.withType<JacocoReport> {
     })
 }
 
+val intTestImplementation: Configuration by configurations.creating {
+	extendsFrom(configurations.getByName("implementation"))
+}
+val intTestRuntimeOnly: Configuration by configurations.creating {
+	extendsFrom(configurations.getByName("runtimeOnly"))
+}
+
+val integrationTest: SourceSet by sourceSets.creating {
+	compileClasspath += sourceSets["main"].output + configurations["intTestImplementation"]
+	runtimeClasspath += output + compileClasspath + configurations["intTestRuntimeOnly"]
+}
+
+tasks.register<Test>("integrationTest") {
+	description = "Runs the integration tests."
+	group = "verification"
+	testClassesDirs = integrationTest.output.classesDirs
+	classpath = integrationTest.runtimeClasspath
+
+	useJUnitPlatform()
+}
+
 configurations {
     compileOnly {
         extendsFrom(configurations.annotationProcessor.get())
@@ -41,17 +62,23 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jdbc:3.0.4")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.0.4")
-    implementation("org.springframework.boot:spring-boot-starter-validation:3.0.4")
-    implementation("org.springframework.boot:spring-boot-starter-web:3.1.0")
-    implementation("org.postgresql:postgresql:42.5.4")
-    compileOnly("org.projectlombok:lombok:1.18.26")
-    runtimeOnly("org.postgresql:postgresql:42.5.4")
-    annotationProcessor("org.projectlombok:lombok:1.18.26")
 
-    testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.0")
-    testImplementation("com.h2database:h2:2.1.214")
+	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.flywaydb:flyway-core:10.4.1")
+	implementation("org.postgresql:postgresql")
+	compileOnly("org.projectlombok:lombok")
+	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
+	annotationProcessor("org.projectlombok:lombok")
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	intTestImplementation("org.springframework.boot:spring-boot-starter-test")
+	intTestImplementation("org.testcontainers:junit-jupiter:1.18.3")
+	intTestImplementation("org.testcontainers:testcontainers:1.18.3")
+	intTestImplementation("org.testcontainers:postgresql:1.18.3")
 }
 
 tasks.withType<Test> {
