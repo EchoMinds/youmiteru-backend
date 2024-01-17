@@ -12,25 +12,12 @@ import java.util.Map;
 public class ResponseHandler {
 
     //Response для Баннера
-    public static ResponseEntity<Object> generateResponseBanners(Object response){
+    public static ResponseEntity<Object> generateResponseBanners(Object banner, Object anons, Object popular, Object released){
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put("banners", response);
-
-        return new ResponseEntity<Object>( map, HttpStatus.OK);
-    }
-
-    //Response для Анонса
-    public static ResponseEntity<Object> generateResponseAnnouncement(Object response){
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("announced_seasons", response);
-
-        return new ResponseEntity<Object>( map, HttpStatus.OK);
-    }
-
-    //Response Популярных
-    public static ResponseEntity<Object> generateResponsePopular(Object response){
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("popular_seasons", response);
+        map.put("announced_seasons", anons);
+        map.put("banners", banner);
+        map.put("popular_seasons", popular);
+        map.put("recent-released_seasons", released);
 
         return new ResponseEntity<Object>( map, HttpStatus.OK);
     }

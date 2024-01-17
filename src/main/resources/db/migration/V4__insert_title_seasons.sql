@@ -10,7 +10,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/52578/6ca77a2fc65011e3d7053304b8b001e3.jpeg',
         'Boku no Kokoro no Yabai Yatsu Season 1', 'TV_SHOW',
         'Повседневная жизнь маленького социопата наполнена комичными ситуациями, которые можно увидеть, если смотреть аниме “Boku no Kokoro no Yabai Yatsu”. Очередная встреча Кётаро с очаровательной девчонкой произошла в книжном магазине, что выбило парня из колеи. Юноша не догадывается, что за милым образом скрывается совершенно другой человек.',
-        TO_DATE ('2023/04/2', 'yyyy/mm/dd'), 1, 'FINISHED', '2023', '2023');
+        TO_DATE ('2023/04/2', 'yyyy/mm/dd'), 1, 'ANNOUNCEMENT', '2023', '2023');
 /*Сезон2*/
 INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
                    description, release_date, title_id, title_state,
@@ -18,7 +18,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/55690/49d51b1c556632d0214a49831575b5e0.jpeg',
         'Boku no Kokoro no Yabai Yatsu Season 2', 'TV_SHOW',
         'Повседневная жизнь маленького социопата наполнена комичными ситуациями, которые можно увидеть, если смотреть аниме “Boku no Kokoro no Yabai Yatsu”. Очередная встреча Кётаро с очаровательной девчонкой произошла в книжном магазине, что выбило парня из колеи. Юноша не догадывается, что за милым образом скрывается совершенно другой человек.',
-        TO_DATE ('2024/01/7', 'yyyy/mm/dd'), 1, 'RELEASED', '2024', '2024');
+        TO_DATE ('2024/01/7', 'yyyy/mm/dd'), 1, 'ANNOUNCEMENT', '2024', '2024');
 
 /*2 Тайтл*/
 INSERT INTO youmiteru_backend.title(title_image_url, name, description)
@@ -63,7 +63,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/55813/378c027d13b5c9e8f01f370cb23da5e4.jpeg',
         'Mashle: Shinkakusha Kouho Senbatsu Shiken-hen', 'TV_SHOW',
         'Взмахни волшебной палочкой, произнеси заклинание — так делаются все дела в мире магии, от работы по дому до сражений за судьбу мира. Кажется, что всё должно быть легко и занимательно в этом мире, где каждый сам себе волшебник, способный наколдовать счастья и денег.',
-        TO_DATE ('2024/01/6', 'yyyy/mm/dd'), 3, 'RELEASED', '2024', '2024');
+        TO_DATE ('2024/01/6', 'yyyy/mm/dd'), 3, 'ANNOUNCEMENT', '2024', '2024');
 
 /*4 Тайтл*/
 INSERT INTO youmiteru_backend.title(title_image_url, name, description)
@@ -78,7 +78,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/54492/37693ebdb70f8b6edfb27b0361f04b1f.jpeg',
         'Kusuriya no Hitorigoto', 'TV_SHOW',
         'Уже полгода прошло с того момента, как 17-летнюю Маомао похитили и заставили трудиться в императорском дворце обычной служанкой. Работа тяжёлая, но девушка решила не сдаваться, не унывать и честно вкалывать, пока её не отпустят на покой. Планы изменились, когда до Маомао дошли вести о том, что детей императора одолел серьёзный недуг.',
-        TO_DATE ('2023/04/22', 'yyyy/mm/dd'), 4, 'RELEASED', '2023', '2023');
+        TO_DATE ('2023/04/22', 'yyyy/mm/dd'), 4, 'ANNOUNCEMENT', '2023', '2023');
 
 /*5 Тайтл*/
 INSERT INTO youmiteru_backend.title(title_image_url, name, description)
@@ -93,7 +93,7 @@ INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,
 VALUES ('https://desu.shikimori.one/uploads/poster/animes/31964/d94d5bd52edd33ec458fd338a2f0517c.jpeg',
         'Boku no Hero Academia', 'TV_SHOW',
         'Четырнадцатилетний Идзуку Мидория рано осознал, что люди не рождаются равными. А пришло это понимание, когда его начали дразнить одноклассники, одарённые особой силой. Несмотря на то, что большинство людей в этом мире рождаются с необычными способностями, Идзуку оказался среди тех немногих, кто напрочь их лишён.',
-        TO_DATE ('2016/12/2', 'yyyy/mm/dd'), 5, 'FINISHED', '2016', '2016');
+        TO_DATE ('2016/12/2', 'yyyy/mm/dd'), 5, 'ANNOUNCEMENT', '2016', '2016');
 
 /*Сезон2*/
 INSERT INTO youmiteru_backend.season(season_image_url, name, anime_format,

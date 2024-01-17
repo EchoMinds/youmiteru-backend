@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.dto.SeasonDTO;
@@ -15,6 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/youmitery")
 public class SeasonController {
     private final SeasonService seasonService;
 
@@ -23,35 +25,30 @@ public class SeasonController {
         this.seasonService = seasonService;
     }
 
-    //Возращает сезоны в баннер
-    @GetMapping("/banners")
-    public ResponseEntity<Object> getSeasonsForBanners(){
-        List<SeasonDTO> result = seasonService.getAllSeasonForBanners()
+    @GetMapping("/home-page")
+    public ResponseEntity<Object> getSeasonsForHome(){
+
+        //Возращает сезоны в баннер
+        List<SeasonDTO> banner = seasonService.getAllSeasonForBanners()
             .stream().map(this::convertToSeasonDTO)
             .collect(Collectors.toList());
 
-        return ResponseHandler.generateResponseBanners(result);
-    }
-
-
-    //Возвращает анонсированные сезоны
-    @GetMapping("/announced_seasons")
-    public ResponseEntity<Object> getAnnouncementSeasons(){
-        List<SeasonDTO> result = seasonService.getAllSeasonForAnnounced()
+        //Возвращает анонсированные сезоны
+        List<SeasonDTO> anons = seasonService.getAllSeasonForAnnounced()
             .stream().map(this::convertToSeasonDTO)
             .collect(Collectors.toList());
 
-        return ResponseHandler.generateResponseAnnouncement(result);
-    }
-
-    //Возвращает популярные сезоны
-    @GetMapping("/popular_seasons")
-    public ResponseEntity<Object> getPopularSeasons(){
-        List<SeasonDTO> result = seasonService.getAllPopularSeason()
+        //Возвращает популярные сезоны
+        List<SeasonDTO> popular = seasonService.getAllPopularSeason()
             .stream().map(this::convertToSeasonDTO)
             .collect(Collectors.toList());
 
-        return ResponseHandler.generateResponsePopular(result);
+        //Возвращает выпущенные сезоны
+        List<SeasonDTO> released = seasonService.getAllReleasedSeasons()
+            .stream().map(this::convertToSeasonDTO)
+            .collect(Collectors.toList());
+
+        return ResponseHandler.generateResponseBanners(banner, anons, popular, released);
     }
 
 

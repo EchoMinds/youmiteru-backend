@@ -1,7 +1,9 @@
 package ru.youmiteru.backend.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import ru.youmiteru.backend.domain.AnimeFormat;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.TitleState;
 import ru.youmiteru.backend.repositories.SeasonRepository;
@@ -22,16 +24,16 @@ public class SeasonService {
 
     //Возвращает лист сезонов с лимитом 7, для баннера
     public List<Season> getAllSeasonForBanners (){
-        List<Season> seasons = seasonRepository.findAll();
+        List<Season> seasons = seasonRepository.findAll(PageRequest.of(0, 10))
+            .stream().collect(Collectors.toList());
 
-        return seasons.stream().limit(7).collect(Collectors.toList());
+        return seasons;
     }
 
     //Возвращает лист анонсированных сезонов с лимитом 10
     public List<Season> getAllSeasonForAnnounced (){
-        List<Season> seasons = (seasonRepository.findAll()).stream()
-            .filter(state -> TitleState.ANNOUNCEMENT.equals(state.getTitle_state()))
-            .limit(10)
+        List<Season> seasons = (seasonRepository.findByTitleState( TitleState.ANNOUNCEMENT, PageRequest.of(0, 10)))
+            .stream()
             .collect(Collectors.toList());
 
         return seasons;
@@ -39,9 +41,18 @@ public class SeasonService {
 
     //Возвращает лист популярных сезонов
     public List<Season> getAllPopularSeason(){
-        List<Season> seasons = (seasonRepository.findAll()).stream()
+        List<Season> seasons = (seasonRepository.findAll(PageRequest.of(0, 10)))
+            .stream()
             .sorted((o1, o2) -> Math.toIntExact(o1.getId() - o2.getId()))
-            .limit(10)
+            .collect(Collectors.toList());
+
+        return seasons;
+    }
+
+    //Возвращает лист выпушенных сезонов
+    public List<Season> getAllReleasedSeasons(){
+        List<Season> seasons = (seasonRepository.findByTitleState( TitleState.RELEASED, PageRequest.of(0, 10)))
+            .stream()
             .collect(Collectors.toList());
 
         return seasons;

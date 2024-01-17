@@ -40,7 +40,7 @@ public class Season {
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "title_state")
-    private TitleState title_state;
+    private TitleState titleState;
 
 
     @Column(name = "age_restriction")
