@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 @RestController
 public class SeasonController {
-
     private final SeasonService seasonService;
 
     @Autowired
@@ -24,18 +23,35 @@ public class SeasonController {
         this.seasonService = seasonService;
     }
 
-    @GetMapping("/seasons")
-    public List<SeasonDTO> getSeasons(){
-        return seasonService.getAllSeason().stream().map(this::convertToSeasonDTO)
-            .collect(Collectors.toList());
-    }
-
-    @GetMapping()
-    public ResponseEntity<Object> get(){
-        List<SeasonDTO> result = seasonService.getAllSeason().stream().map(this::convertToSeasonDTO)
+    //Возращает сезоны в баннер
+    @GetMapping("/banners")
+    public ResponseEntity<Object> getSeasonsForBanners(){
+        List<SeasonDTO> result = seasonService.getAllSeasonForBanners()
+            .stream().map(this::convertToSeasonDTO)
             .collect(Collectors.toList());
 
         return ResponseHandler.generateResponseBanners(result);
+    }
+
+
+    //Возвращает анонсированные сезоны
+    @GetMapping("/announced_seasons")
+    public ResponseEntity<Object> getAnnouncementSeasons(){
+        List<SeasonDTO> result = seasonService.getAllSeasonForAnnounced()
+            .stream().map(this::convertToSeasonDTO)
+            .collect(Collectors.toList());
+
+        return ResponseHandler.generateResponseAnnouncement(result);
+    }
+
+    //Возвращает популярные сезоны
+    @GetMapping("/popular_seasons")
+    public ResponseEntity<Object> getPopularSeasons(){
+        List<SeasonDTO> result = seasonService.getAllPopularSeason()
+            .stream().map(this::convertToSeasonDTO)
+            .collect(Collectors.toList());
+
+        return ResponseHandler.generateResponsePopular(result);
     }
 
 
