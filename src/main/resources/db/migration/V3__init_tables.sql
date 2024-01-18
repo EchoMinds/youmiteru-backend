@@ -32,7 +32,7 @@ create table if not exists youmiteru_backend.season(
     title_state varchar(64) not null,
     age_restriction varchar(24),
     year_season varchar(24),
-    anime_pictures jsonb
+    anime_banner_url varchar
 );
 
 create table if not exists youmiteru_backend.comment(

@@ -67,9 +67,8 @@ public class Season {
     @OneToMany(mappedBy = "season")
     private List<Video> videoList;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "anime_pictures", columnDefinition = "jsonb")
-    private Map<String,String> animePictures;
+    @Column(name = "anime_banner_url")
+    private String AnimeBannerUrl;
 
     @OneToMany(mappedBy = "season")
     private List<Comment> seasonCommentList;
