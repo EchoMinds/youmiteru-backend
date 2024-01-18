@@ -1,6 +1,7 @@
 package ru.youmiteru.backend.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class Season {
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "title_id", referencedColumnName = "id")
     private Title title;

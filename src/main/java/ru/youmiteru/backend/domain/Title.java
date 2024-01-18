@@ -1,5 +1,6 @@
 package ru.youmiteru.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class Title {
     @Column(name = "description")
     private String description;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "title")
     private List<Season> seasonList;
 
