@@ -1,32 +1,41 @@
 package ru.youmiteru.backend.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import ru.youmiteru.backend.domain.Season;
-import ru.youmiteru.backend.domain.TitleState;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class SeasonDTO {
 
-    private Long id;
-    private String name;
-    private String description;
-    private String seasonImageUrl;
+    private interface seasonId {
+        Long getSeasonId();
+    }
+
+    private interface seasonName {
+        String getSeasonName();
+    }
+
+    private interface description {
+        String getDescription();
+    }
+
+    private interface imageUrl {
+        String getImageUrl();
+    }
+
+    public enum Request {;
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Data
+        public static class HomePage implements seasonId, seasonName, description, imageUrl{
+            Long seasonId;
+            String seasonName;
+            String description;
+            String imageUrl;
+        }
+    }
 
     public static Map<String, Object> generateResponseBanners(Object banner, Object anons, Object popular, Object released){
         Map<String, Object> map = new HashMap<String, Object>();

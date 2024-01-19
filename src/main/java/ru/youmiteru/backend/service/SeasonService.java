@@ -24,38 +24,38 @@ public class SeasonService {
         this.ratingRepository = ratingRepository;
     }
 
-    //Возвращает данные для Home-page
+    //Return data for HomePage
     public Map<String, Object> getAllSeasonForHomePage(){
+        //find popular seasons with rating
         List<Season> seasonsRating  = new ArrayList<>();
         List<Rating> ratings = ratingRepository.findRating();
-
         for(Rating rating : ratings){
             seasonsRating.add(rating.getSeason());
         }
 
-        List<SeasonDTO> anons = covertListSeasonDTO(seasonRepository.findAnnouncement());
-        List<SeasonDTO> release = covertListSeasonDTO(seasonRepository.findRelease());
-        List<SeasonDTO> banner = covertListSeasonDTO(seasonRepository.findBanner());
-        List<SeasonDTO> popular = covertListSeasonDTO(seasonsRating);
+        List<SeasonDTO.Request.HomePage> anons = covertListSeasonDTO(seasonRepository.findAnnouncement());
+        List<SeasonDTO.Request.HomePage> release = covertListSeasonDTO(seasonRepository.findRelease());
+        List<SeasonDTO.Request.HomePage> banner = covertListSeasonDTO(seasonRepository.findBanner());
+        List<SeasonDTO.Request.HomePage> popular = covertListSeasonDTO(seasonsRating);
         Map<String, Object> relust = SeasonDTO.generateResponseBanners(banner, anons, popular, release);
         return relust;
     }
 
 
-    //Конвертирует лист Сезонов в ДТО
-    private List<SeasonDTO> covertListSeasonDTO (List<Season> seasons){
+    //Convert List Seasons to DTO
+    private List<SeasonDTO.Request.HomePage> covertListSeasonDTO (List<Season> seasons){
         return seasons.stream().map(this::convertToSeasonDTO)
             .collect(Collectors.toList());
     }
 
-    //Конвертирует Сезон в ДТО
-    private SeasonDTO convertToSeasonDTO(Season season) {
-        SeasonDTO seasonDTO = new SeasonDTO();
+    //Convert Seasons to DTO
+    private SeasonDTO.Request.HomePage convertToSeasonDTO(Season season) {
+        SeasonDTO.Request.HomePage seasonDTO = new SeasonDTO.Request.HomePage();
 
-        seasonDTO.setId(season.getId());
-        seasonDTO.setName(season.getName());
+        seasonDTO.setSeasonId(season.getId());
+        seasonDTO.setSeasonName(season.getName());
         seasonDTO.setDescription(season.getDescription());
-        seasonDTO.setSeasonImageUrl(season.getSeasonImageUrl());
+        seasonDTO.setImageUrl(season.getSeasonImageUrl());
 
         return seasonDTO;
     }
