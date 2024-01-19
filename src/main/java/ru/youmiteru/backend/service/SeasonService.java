@@ -15,22 +15,15 @@ import java.util.stream.Collectors;
 @Service
 public class SeasonService {
     private final SeasonRepository seasonRepository;
-    private final RatingRepository ratingRepository;
 
     @Autowired
     public SeasonService(SeasonRepository seasonRepository, RatingRepository ratingRepository) {
         this.seasonRepository = seasonRepository;
-        this.ratingRepository = ratingRepository;
     }
 
     //Return data for HomePage
     public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage(){
-        //find popular seasons with rating
-        List<Season> seasonsRating  = new ArrayList<>();
-        List<Rating> ratings = ratingRepository.findRating();
-        for(Rating rating : ratings){
-            seasonsRating.add(rating.getSeason());
-        }
+
 
         SeasonDTO.Response.ListHomePage listHomePage = new SeasonDTO.Response.ListHomePage();
 
@@ -40,8 +33,8 @@ public class SeasonService {
             .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
         List<SeasonDTO.Response.HomePage> banner = seasonRepository.findBanner()
             .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
-        List<SeasonDTO.Response.HomePage> popular = seasonsRating.stream()
-            .map(this::convertToSeasonDTO).collect(Collectors.toList());
+        List<SeasonDTO.Response.HomePage> popular = seasonRepository.findPopular()
+            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
 
         listHomePage.setBanners(banner);
         listHomePage.setAnnounced_seasons(anons);

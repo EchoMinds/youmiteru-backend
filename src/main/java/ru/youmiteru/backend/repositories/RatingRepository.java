@@ -13,9 +13,4 @@ import java.util.stream.Collectors;
 @Repository
 public interface RatingRepository extends JpaRepository<Rating,Long> {
 
-    default List<Rating> findRating() {
-        return findAll(PageRequest.of(0, 10, Sort.Direction.DESC, "value"))
-            .stream().collect(Collectors.toList());
-    }
-
 }
