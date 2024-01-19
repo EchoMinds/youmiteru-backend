@@ -2,6 +2,7 @@ package ru.youmiteru.backend.repositories;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.youmiteru.backend.domain.*;
 
@@ -13,27 +14,18 @@ import java.util.stream.Collectors;
 public interface SeasonRepository extends JpaRepository<Season, Long> {
 
     //Возвращает анонсы
-    default List<Season> findAnnouncement(){
-        return findByTitleState(TitleState.ANNOUNCEMENT, PageRequest.of(0, 10));
-    }
+    @Query(value = "select * from youmiteru_backend.season u where u.title_state = 'ANNOUNCEMENT' LIMIT 10", nativeQuery = true)
+    List<Season> findAnnouncement();
 
     //Возвращает релизы
-    default List<Season> findRelease(){
-        return findByTitleState(TitleState.RELEASED, PageRequest.of(0, 10));
-    }
+    @Query(value = "select * from youmiteru_backend.season u where u.title_state = 'RELEASED' LIMIT 10", nativeQuery = true)
+    List<Season> findRecent();
 
     //Возвращает баннер
-    default List<Season> findBanner(){
-        return findAll(PageRequest.of(0, 10)).stream().collect(Collectors.toList());
-    }
+    @Query(value = "select * from youmiteru_backend.season LIMIT 10", nativeQuery = true)
+    List<Season> findBanner();
 
-    //Возвращает популярных
-    default List<Season> findPopular(){
-        return findByTitleState(TitleState.FINISHED, PageRequest.of(0, 10));
-    }
-
-    List<Season> findByTitleState(TitleState titleState, PageRequest pageRequest);
-
-
+    @Query(value = "select * from youmiteru_backend.rating  LIMIT 10", nativeQuery = true)
+    List<Season> findPopular();
 
 }

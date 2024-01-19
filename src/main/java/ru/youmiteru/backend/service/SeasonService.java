@@ -10,7 +10,6 @@ import ru.youmiteru.backend.repositories.SeasonRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +24,7 @@ public class SeasonService {
     }
 
     //Return data for HomePage
-    public Map<String, Object> getAllSeasonForHomePage(){
+    public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage(){
         //find popular seasons with rating
         List<Season> seasonsRating  = new ArrayList<>();
         List<Rating> ratings = ratingRepository.findRating();
@@ -33,24 +32,28 @@ public class SeasonService {
             seasonsRating.add(rating.getSeason());
         }
 
-        List<SeasonDTO.Request.HomePage> anons = covertListSeasonDTO(seasonRepository.findAnnouncement());
-        List<SeasonDTO.Request.HomePage> release = covertListSeasonDTO(seasonRepository.findRelease());
-        List<SeasonDTO.Request.HomePage> banner = covertListSeasonDTO(seasonRepository.findBanner());
-        List<SeasonDTO.Request.HomePage> popular = covertListSeasonDTO(seasonsRating);
-        Map<String, Object> relust = SeasonDTO.generateResponseBanners(banner, anons, popular, release);
-        return relust;
-    }
+        SeasonDTO.Response.ListHomePage listHomePage = new SeasonDTO.Response.ListHomePage();
 
+        List<SeasonDTO.Response.HomePage> anons = seasonRepository.findAnnouncement()
+            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
+        List<SeasonDTO.Response.HomePage> release = seasonRepository.findRecent()
+            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
+        List<SeasonDTO.Response.HomePage> banner = seasonRepository.findBanner()
+            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
+        List<SeasonDTO.Response.HomePage> popular = seasonsRating.stream()
+            .map(this::convertToSeasonDTO).collect(Collectors.toList());
 
-    //Convert List Seasons to DTO
-    private List<SeasonDTO.Request.HomePage> covertListSeasonDTO (List<Season> seasons){
-        return seasons.stream().map(this::convertToSeasonDTO)
-            .collect(Collectors.toList());
+        listHomePage.setBanners(banner);
+        listHomePage.setAnnounced_seasons(anons);
+        listHomePage.setPopular_seasons(popular);
+        listHomePage.setRecent_released_seasons(release);
+
+        return listHomePage;
     }
 
     //Convert Seasons to DTO
-    private SeasonDTO.Request.HomePage convertToSeasonDTO(Season season) {
-        SeasonDTO.Request.HomePage seasonDTO = new SeasonDTO.Request.HomePage();
+    private SeasonDTO.Response.HomePage convertToSeasonDTO(Season season) {
+        SeasonDTO.Response.HomePage seasonDTO = new SeasonDTO.Response.HomePage();
 
         seasonDTO.setSeasonId(season.getId());
         seasonDTO.setSeasonName(season.getName());
