@@ -35,6 +35,11 @@ public class SeasonTest {
         Assertions.assertEquals(result.getName(), "Boku no Kokoro no Yabai Yatsu Season 2");
         Assertions.assertEquals(result.getAnimeFormat(), AnimeFormat.TV_SHOW);
         Assertions.assertEquals(result.getAgeRestriction(), "18");
+        Assertions.assertEquals(result.getId(), 1);
+        Assertions.assertEquals(result.getDescription(), "Повседневная жизнь маленького социопата");
+        Assertions.assertEquals(result.getTitleState(), TitleState.ANNOUNCEMENT);
+        Assertions.assertEquals(result.getTitle(), new Title("https://desu.shikimori.one/uploads/poster/animes/55690/49d51b1c556632d0214a49831575b5e0.jpeg",
+            "Boku no Kokoro no Yabai Yatsu Season 2", "Повседневная жизнь маленького социопата"));
     }
 
 }
