@@ -46,7 +46,6 @@ class SeasonServiceTest {
         Assertions.assertEquals(result.getAnnounced_seasons().get(1).getSeasonName(), "Karakai Jouzu no Takagi-san 2");
     }
 
-    @BeforeEach
     private List<Season> setUp(){
         Season season1 = new Season();
         Season season2 = new Season();

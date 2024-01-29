@@ -1,11 +1,8 @@
 package ru.youmiteru.backend.domain;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -13,15 +10,8 @@ import java.time.LocalDate;
 @ExtendWith(MockitoExtension.class)
 public class SeasonTest {
 
-    @InjectMocks
-    Season season = new Season();
-
-    Season season1 = new Season();
-
-    @BeforeEach
-    void setUp(){
-        season1 = new Season();
-
+    Season getSeason(){
+        Season season1 = new Season();
 
         season1.setId(1L);
         season1.setSeasonImageUrl("https://desu.shikimori.one/uploads/poster/animes/55690/49d51b1c556632d0214a49831575b5e0.jpeg");
@@ -34,14 +24,17 @@ public class SeasonTest {
         season1.setAgeRestriction("18");
         season1.setYearSeason("2024");
         season1.setAnimeFormat(AnimeFormat.TV_SHOW);
+
+        return season1;
     }
 
     @Test
     void domainSeasonTest(){
+        Season result = getSeason();
 
-        Assertions.assertEquals(season1.getName(), "Boku no Kokoro no Yabai Yatsu Season 2");
-        Assertions.assertEquals(season1.getAnimeFormat(), AnimeFormat.TV_SHOW);
-        Assertions.assertEquals(season1.getAgeRestriction(), "18");
+        Assertions.assertEquals(result.getName(), "Boku no Kokoro no Yabai Yatsu Season 2");
+        Assertions.assertEquals(result.getAnimeFormat(), AnimeFormat.TV_SHOW);
+        Assertions.assertEquals(result.getAgeRestriction(), "18");
     }
 
 }
