@@ -1,6 +1,7 @@
 package ru.youmiteru.backend.service;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +31,7 @@ class SeasonServiceTest {
 
     @Test
     public void shouldReturnSeasons(){
-        List<Season> seasons = getSeason();
+        List<Season> seasons = setUp();
 
         Mockito.when(seasonRepository.findAnnouncement()).thenReturn(seasons);
 
@@ -45,7 +46,8 @@ class SeasonServiceTest {
         Assertions.assertEquals(result.getAnnounced_seasons().get(1).getSeasonName(), "Karakai Jouzu no Takagi-san 2");
     }
 
-    private List<Season> getSeason(){
+    @BeforeEach
+    private List<Season> setUp(){
         Season season1 = new Season();
         Season season2 = new Season();
 
