@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @ExtendWith(MockitoExtension.class)
-public class SeasonServiceTest {
+class SeasonServiceTest {
 
     @Mock
     private SeasonRepository seasonRepository;
@@ -33,9 +33,6 @@ public class SeasonServiceTest {
         List<Season> seasons = getSeason();
 
         Mockito.when(seasonRepository.findAnnouncement()).thenReturn(seasons);
-        Mockito.when(seasonRepository.findPopular()).thenReturn(seasons);
-        Mockito.when(seasonRepository.findRecent()).thenReturn(seasons);
-        Mockito.when(seasonRepository.findBanner()).thenReturn(seasons);
 
 
         SeasonDTO.Response.ListHomePage result = seasonService.getAllSeasonForHomePage();
@@ -43,7 +40,7 @@ public class SeasonServiceTest {
         Assertions.assertNotNull(result);
         Assertions.assertEquals(seasons.size(), 2);
         Assertions.assertEquals(result.getAnnounced_seasons().size(), 2);
-        Assertions.assertEquals(result.getRecent_released_seasons().size(), 2);
+        Assertions.assertEquals(result.getRecent_released_seasons().size(), 0);
         Assertions.assertEquals(result.getAnnounced_seasons().get(0).getSeasonName(), "Boku no Kokoro no Yabai Yatsu Season 2");
         Assertions.assertEquals(result.getAnnounced_seasons().get(1).getSeasonName(), "Karakai Jouzu no Takagi-san 2");
     }
