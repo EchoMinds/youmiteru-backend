@@ -1,15 +1,14 @@
 package ru.youmiteru.backend.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
+
 
 @Entity
 @Table(name = "season", schema = "youmiteru_backend")
@@ -34,13 +33,14 @@ public class Season {
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "title_id", referencedColumnName = "id")
     private Title title;
 
     @Enumerated(value = EnumType.STRING)
     @Column(name = "title_state")
-    private TitleState title_state;
+    private TitleState titleState;
 
 
     @Column(name = "age_restriction")
@@ -65,9 +65,8 @@ public class Season {
     @OneToMany(mappedBy = "season")
     private List<Video> videoList;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "anime_pictures", columnDefinition = "jsonb")
-    private Map<String,String> animePictures;
+    @Column(name = "anime_banner_url")
+    private String AnimeBannerUrl;
 
     @OneToMany(mappedBy = "season")
     private List<Comment> seasonCommentList;
