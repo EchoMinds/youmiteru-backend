@@ -1,20 +1,16 @@
 package ru.youmiteru.backend.service;
 
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.youmiteru.backend.domain.Rating;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.dto.SeasonDTO;
-import ru.youmiteru.backend.repositories.RatingRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SeasonService {
     private final SeasonRepository seasonRepository;
 
