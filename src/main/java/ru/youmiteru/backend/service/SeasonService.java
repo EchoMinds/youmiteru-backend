@@ -1,5 +1,6 @@
 package ru.youmiteru.backend.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.Rating;
@@ -13,13 +14,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class SeasonService {
     private final SeasonRepository seasonRepository;
-
-    @Autowired
-    public SeasonService(SeasonRepository seasonRepository, RatingRepository ratingRepository) {
-        this.seasonRepository = seasonRepository;
-    }
 
     //Return data for HomePage
     public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage(){

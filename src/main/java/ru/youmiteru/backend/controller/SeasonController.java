@@ -1,5 +1,8 @@
 package ru.youmiteru.backend.controller;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,13 +13,9 @@ import ru.youmiteru.backend.service.SeasonService;
 
 @RestController
 @RequestMapping("/youmiteru")
+@AllArgsConstructor
 public class SeasonController {
     private final SeasonService seasonService;
-
-    @Autowired
-    public SeasonController(SeasonService seasonService) {
-        this.seasonService = seasonService;
-    }
 
 
     @GetMapping("/all")
