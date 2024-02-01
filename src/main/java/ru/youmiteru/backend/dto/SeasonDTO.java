@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.youmiteru.backend.domain.TitleState;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class SeasonDTO {
     }
 
     private interface titleState {
-        @JsonProperty(value = "title_id")
+        @JsonProperty(value = "title_state")
         TitleState getTitleState();
     }
 
@@ -60,7 +61,10 @@ public class SeasonDTO {
     }
 
 
-    public enum Response {;
+    public enum Response {
+        ;
+
+        //home page
         @NoArgsConstructor
         @AllArgsConstructor
         @Data
@@ -79,6 +83,26 @@ public class SeasonDTO {
             List<Response.HomePage> announced_seasons;
             List<Response.HomePage> popular_seasons;
             List<Response.HomePage> recent_released_seasons;
+        }
+
+        //season page
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Data
+        public static class SeasonPage
+            implements seasonId, imageUrl, seasonName, animeFormat, description, releaseDate, titleId,
+            titleState, ageRestriction, yearSeason {
+
+            private Long seasonId;
+            private String imageUrl;
+            private String seasonName;
+            private String animeFormat;
+            private String description;
+            private LocalDate releaseDate;
+            private Long titleId;
+            private TitleState titleState;
+            private String ageRestriction;
+            private String yearSeason;
         }
     }
 }
