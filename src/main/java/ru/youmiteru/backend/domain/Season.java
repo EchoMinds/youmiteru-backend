@@ -67,7 +67,7 @@ public class Season {
     private List<Video> videoList;
 
     @Column(name = "anime_banner_url")
-    private String AnimeBannerUrl;
+    private String animeBannerUrl;
 
     @OneToMany(mappedBy = "season")
     private List<Comment> seasonCommentList;

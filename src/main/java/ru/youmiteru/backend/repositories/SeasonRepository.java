@@ -27,5 +27,4 @@ public interface SeasonRepository extends JpaRepository<Season, Long> {
 
     @Query(value = "select s.* from youmiteru_backend.season s JOIN youmiteru_backend.rating r ON (s.id = r.season_id) group by s.id order by AVG(value) desc LIMIT 10 ", nativeQuery = true)
     List<Season> findPopular();
-
 }

@@ -60,6 +60,11 @@ public class SeasonDTO {
         String getYearSeason();
     }
 
+    private interface animeBannerUrl {
+        @JsonProperty(value = "anime_banner_url")
+        String getAnimeBannerUrl();
+    }
+
 
     public enum Response {
         ;
@@ -91,8 +96,7 @@ public class SeasonDTO {
         @Data
         public static class SeasonPage
             implements seasonId, imageUrl, seasonName, animeFormat, description, releaseDate,
-            titleState, ageRestriction, yearSeason {
-
+            titleState, ageRestriction, yearSeason, animeBannerUrl {
             private Long seasonId;
             private String imageUrl;
             private String seasonName;
@@ -103,6 +107,8 @@ public class SeasonDTO {
             private TitleState titleState;
             private String ageRestriction;
             private String yearSeason;
+            private String animeBannerUrl;
+            List<CommentDTO.Response.Comments> commentsList;
         }
     }
 }

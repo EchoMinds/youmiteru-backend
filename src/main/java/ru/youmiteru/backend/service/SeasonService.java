@@ -2,8 +2,10 @@ package ru.youmiteru.backend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.youmiteru.backend.domain.Comment;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.Title;
+import ru.youmiteru.backend.dto.CommentDTO;
 import ru.youmiteru.backend.dto.SeasonDTO;
 import ru.youmiteru.backend.dto.TitleDTO;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
@@ -58,7 +60,7 @@ public class SeasonService {
         return convertToDtoForSeasonPage(seasonPage);
     }
 
-    public static SeasonDTO.Response.SeasonPage convertToDtoForSeasonPage(Season seasonPage) {
+    public SeasonDTO.Response.SeasonPage convertToDtoForSeasonPage(Season seasonPage) {
         SeasonDTO.Response.SeasonPage dto = new SeasonDTO.Response.SeasonPage();
         dto.setSeasonId(seasonPage.getId());
         dto.setImageUrl(seasonPage.getSeasonImageUrl());
@@ -69,14 +71,20 @@ public class SeasonService {
         dto.setTitleState(seasonPage.getTitleState());
         dto.setAgeRestriction(seasonPage.getAgeRestriction());
         dto.setYearSeason(seasonPage.getYearSeason());
-        //create set TitleInformationForSeasonPage!
         dto.setTitleInformationForSeasonPages(convertToTitleInformation(seasonPage.getTitle()));
+        List<CommentDTO.Response.Comments> commentsList = seasonPage.getSeasonCommentList().stream()
+            .map(this::convertToCommentDto).toList();
         return dto;
     }
 
-    private static TitleDTO.Response.TitleInformationForSeasonPage convertToTitleInformation(Title title) {
+    private TitleDTO.Response.TitleInformationForSeasonPage convertToTitleInformation(Title title) {
         return new TitleDTO.Response.TitleInformationForSeasonPage(title.getId(), title.getName(), title.getTitleImageUrl());
 
+    }
+
+    private CommentDTO.Response.Comments convertToCommentDto(Comment comment) {
+        return new CommentDTO.Response.Comments(comment.getId(), comment.getCreationDate(), comment.getMessage()
+            , comment.getWriter().getProfileImageUrl());
     }
 
 }
