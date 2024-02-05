@@ -3,7 +3,9 @@ package ru.youmiteru.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.Season;
+import ru.youmiteru.backend.domain.Title;
 import ru.youmiteru.backend.dto.SeasonDTO;
+import ru.youmiteru.backend.dto.TitleDTO;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 
@@ -64,10 +66,17 @@ public class SeasonService {
         dto.setAnimeFormat(String.valueOf(seasonPage.getAnimeFormat()));
         dto.setDescription(seasonPage.getDescription());
         dto.setReleaseDate(seasonPage.getReleaseDate());
-        dto.setTitleId(seasonPage.getTitle().getId());
         dto.setTitleState(seasonPage.getTitleState());
         dto.setAgeRestriction(seasonPage.getAgeRestriction());
         dto.setYearSeason(seasonPage.getYearSeason());
+        //create set TitleInformationForSeasonPage!
+        dto.setTitleInformationForSeasonPages(convertToTitleInformation(seasonPage.getTitle()));
         return dto;
     }
+
+    private static TitleDTO.Response.TitleInformationForSeasonPage convertToTitleInformation(Title title) {
+        return new TitleDTO.Response.TitleInformationForSeasonPage(title.getId(), title.getName(), title.getTitleImageUrl());
+
+    }
+
 }

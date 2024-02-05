@@ -13,17 +13,17 @@ public class TitleDTO {
 
     private interface titleImageUrl {
         @JsonProperty(value = "title_image_url")
-        Long getTitleImageUrl();
+        String getTitleImageUrl();
     }
 
     private interface titleName {
         @JsonProperty(value = "title_name")
-        Long getTitleName();
+        String getTitleName();
     }
 
     private interface titleDescription {
         @JsonProperty(value = "title_description")
-        Long getTitleDescription();
+        String getTitleDescription();
     }
 
     public enum Response {

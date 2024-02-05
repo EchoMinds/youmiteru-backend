@@ -38,6 +38,7 @@ public class Season {
     @JoinColumn(name = "title_id", referencedColumnName = "id")
     private Title title;
 
+    //считаю что надо переименовать в seasonState
     @Enumerated(value = EnumType.STRING)
     @Column(name = "title_state")
     private TitleState titleState;

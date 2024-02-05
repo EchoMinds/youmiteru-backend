@@ -90,7 +90,7 @@ public class SeasonDTO {
         @AllArgsConstructor
         @Data
         public static class SeasonPage
-            implements seasonId, imageUrl, seasonName, animeFormat, description, releaseDate, titleId,
+            implements seasonId, imageUrl, seasonName, animeFormat, description, releaseDate,
             titleState, ageRestriction, yearSeason {
 
             private Long seasonId;
@@ -99,7 +99,7 @@ public class SeasonDTO {
             private String animeFormat;
             private String description;
             private LocalDate releaseDate;
-            private Long titleId;
+            private TitleDTO.Response.TitleInformationForSeasonPage titleInformationForSeasonPages;
             private TitleState titleState;
             private String ageRestriction;
             private String yearSeason;
