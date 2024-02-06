@@ -9,15 +9,19 @@ import ru.youmiteru.backend.dto.CommentDTO;
 import ru.youmiteru.backend.dto.SeasonDTO;
 import ru.youmiteru.backend.dto.TitleDTO;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
+import ru.youmiteru.backend.repositories.CommentRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class SeasonService {
     private final SeasonRepository seasonRepository;
+    private final CommentRepository commentRepository;
 
     //Return data for HomePage
     public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage() {
@@ -62,6 +66,7 @@ public class SeasonService {
 
     public SeasonDTO.Response.SeasonPage convertToDtoForSeasonPage(Season seasonPage) {
         SeasonDTO.Response.SeasonPage dto = new SeasonDTO.Response.SeasonPage();
+
         dto.setSeasonId(seasonPage.getId());
         dto.setImageUrl(seasonPage.getSeasonImageUrl());
         dto.setSeasonName(seasonPage.getName());
@@ -72,8 +77,13 @@ public class SeasonService {
         dto.setAgeRestriction(seasonPage.getAgeRestriction());
         dto.setYearSeason(seasonPage.getYearSeason());
         dto.setTitleInformationForSeasonPages(convertToTitleInformation(seasonPage.getTitle()));
+
         List<CommentDTO.Response.Comments> commentsList = seasonPage.getSeasonCommentList().stream()
+            .filter(comment -> comment.getReplyTo() == null)
             .map(this::convertToCommentDto).toList();
+
+        dto.setCommentsList(commentsList);
+
         return dto;
     }
 
@@ -83,8 +93,32 @@ public class SeasonService {
     }
 
     private CommentDTO.Response.Comments convertToCommentDto(Comment comment) {
-        return new CommentDTO.Response.Comments(comment.getId(), comment.getCreationDate(), comment.getMessage()
-            , comment.getWriter().getProfileImageUrl());
+//        return new CommentDTO.Response.Comments(comment.getId(), comment.getCreationDate(), comment.getMessage()
+//            , comment.getWriter().getProfileImageUrl(), null);
+        CommentDTO.Response.Comments commentDTO = new CommentDTO.Response.Comments();
+
+        commentDTO.setCommentId(comment.getId());
+        commentDTO.setCreationDate(comment.getCreationDate());
+        commentDTO.setRating(comment.getRatingValue());
+        commentDTO.setMessage(comment.getMessage());
+        commentDTO.setWriterId(comment.getWriter().getId());
+        commentDTO.setProfileImageUrl(comment.getWriter().getProfileImageUrl());
+
+
+        List<CommentDTO.Response.Comments> subCommentsList = commentRepository.findByReplyTo(comment).stream()
+            .map(this::convertToCommentDto).toList();
+
+        commentDTO.setSubcommentsList(subCommentsList);
+
+        return commentDTO;
     }
 
+    private CommentDTO.Response.SubComments convertToSubCommentDto(Comment comment) {
+        CommentDTO.Response.SubComments subComment = new CommentDTO.Response.SubComments(
+            comment.getId(), comment.getCreationDate(), comment.getMessage(), comment.getWriter().getProfileImageUrl(),
+            comment.getReplyTo().getId(), comment.getWriter().getId(), comment.getRatingValue()
+        );
+
+        return subComment;
+    }
 }
