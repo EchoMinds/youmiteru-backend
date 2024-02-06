@@ -113,12 +113,12 @@ public class SeasonService {
         return commentDTO;
     }
 
-    private CommentDTO.Response.SubComments convertToSubCommentDto(Comment comment) {
-        CommentDTO.Response.SubComments subComment = new CommentDTO.Response.SubComments(
-            comment.getId(), comment.getCreationDate(), comment.getMessage(), comment.getWriter().getProfileImageUrl(),
-            comment.getReplyTo().getId(), comment.getWriter().getId(), comment.getRatingValue()
-        );
-
-        return subComment;
-    }
+//    private CommentDTO.Response.SubComments convertToSubCommentDto(Comment comment) {
+//        CommentDTO.Response.SubComments subComment = new CommentDTO.Response.SubComments(
+//            comment.getId(), comment.getCreationDate(), comment.getMessage(), comment.getWriter().getProfileImageUrl(),
+//            comment.getReplyTo().getId(), comment.getWriter().getId(), comment.getRatingValue()
+//        );
+//
+//        return subComment;
+//    }
 }

@@ -58,20 +58,20 @@ public class CommentDTO {
             int rating;
             List<Comments> subcommentsList;
         }
-
-        @NoArgsConstructor
-        @AllArgsConstructor
-        @Data
-        public static class SubComments
-            implements CommentDTO.commentId, CommentDTO.creationDate, CommentDTO.message,
-            UserDTO.profileImageUrl, CommentDTO.replyToId, CommentDTO.writerId, CommentDTO.rating {
-            Long commentId;
-            LocalDateTime creationDate;
-            String message;
-            String profileImageUrl;
-            Long replyToId;
-            Long writerId;
-            int rating;
-        }
+//
+//        @NoArgsConstructor
+//        @AllArgsConstructor
+//        @Data
+//        public static class SubComments
+//            implements CommentDTO.commentId, CommentDTO.creationDate, CommentDTO.message,
+//            UserDTO.profileImageUrl, CommentDTO.replyToId, CommentDTO.writerId, CommentDTO.rating {
+//            Long commentId;
+//            LocalDateTime creationDate;
+//            String message;
+//            String profileImageUrl;
+//            Long replyToId;
+//            Long writerId;
+//            int rating;
+//        }
     }
 }
