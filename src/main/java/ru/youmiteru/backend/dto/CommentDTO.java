@@ -58,7 +58,8 @@ public class CommentDTO {
             int rating;
             List<Comments> subcommentsList;
         }
-//
+
+        //safe moment
 //        @NoArgsConstructor
 //        @AllArgsConstructor
 //        @Data

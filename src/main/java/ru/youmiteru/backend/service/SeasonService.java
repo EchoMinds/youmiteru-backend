@@ -3,6 +3,7 @@ package ru.youmiteru.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.Comment;
+import ru.youmiteru.backend.domain.Rating;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.Title;
 import ru.youmiteru.backend.dto.CommentDTO;
@@ -10,11 +11,10 @@ import ru.youmiteru.backend.dto.SeasonDTO;
 import ru.youmiteru.backend.dto.TitleDTO;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
 import ru.youmiteru.backend.repositories.CommentRepository;
+import ru.youmiteru.backend.repositories.RatingRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public class SeasonService {
     private final SeasonRepository seasonRepository;
     private final CommentRepository commentRepository;
+    private final RatingRepository ratingRepository;
 
     //Return data for HomePage
     public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage() {
@@ -77,24 +78,28 @@ public class SeasonService {
         dto.setAgeRestriction(seasonPage.getAgeRestriction());
         dto.setYearSeason(seasonPage.getYearSeason());
         dto.setTitleInformationForSeasonPages(convertToTitleInformation(seasonPage.getTitle()));
-
-        List<CommentDTO.Response.Comments> commentsList = seasonPage.getSeasonCommentList().stream()
-            .filter(comment -> comment.getReplyTo() == null)
-            .map(this::convertToCommentDto).toList();
-
-        dto.setCommentsList(commentsList);
+        dto.setCommentsList(getCommentsList(seasonPage));
+        dto.setRating(getRating(seasonPage.getId()));
 
         return dto;
     }
 
+    //get comments
+    private List<CommentDTO.Response.Comments> getCommentsList(Season seasonPage) {
+        return seasonPage.getSeasonCommentList().stream()
+            .filter(comment -> comment.getReplyTo() == null)
+            .map(this::convertToCommentDto).toList();
+    }
+
+    //return TitleDto for season Page
     private TitleDTO.Response.TitleInformationForSeasonPage convertToTitleInformation(Title title) {
-        return new TitleDTO.Response.TitleInformationForSeasonPage(title.getId(), title.getName(), title.getTitleImageUrl());
+        return new TitleDTO.Response.TitleInformationForSeasonPage(title.getId(),
+            title.getName(), title.getTitleImageUrl());
 
     }
 
+    //return commentDTO for season Page
     private CommentDTO.Response.Comments convertToCommentDto(Comment comment) {
-//        return new CommentDTO.Response.Comments(comment.getId(), comment.getCreationDate(), comment.getMessage()
-//            , comment.getWriter().getProfileImageUrl(), null);
         CommentDTO.Response.Comments commentDTO = new CommentDTO.Response.Comments();
 
         commentDTO.setCommentId(comment.getId());
@@ -103,16 +108,34 @@ public class SeasonService {
         commentDTO.setMessage(comment.getMessage());
         commentDTO.setWriterId(comment.getWriter().getId());
         commentDTO.setProfileImageUrl(comment.getWriter().getProfileImageUrl());
-
-
-        List<CommentDTO.Response.Comments> subCommentsList = commentRepository.findByReplyTo(comment).stream()
-            .map(this::convertToCommentDto).toList();
-
-        commentDTO.setSubcommentsList(subCommentsList);
+        commentDTO.setSubcommentsList(getSubCommentsList(comment));
 
         return commentDTO;
     }
 
+    //get SubComments
+    private List<CommentDTO.Response.Comments> getSubCommentsList(Comment comment) {
+        return commentRepository.findByReplyTo(comment).stream()
+            .map(this::convertToCommentDto).toList();
+    }
+
+    private Double getRating(Long id) {
+
+        //get class rating for season
+        List<Rating> valueListWithRaitingClass = ratingRepository.findAllBySeason_Id(id);
+        //get only value
+        List<Integer> ratings = valueListWithRaitingClass.stream().map(Rating::getValue).toList();
+
+        double rating = ratings.stream().mapToDouble(d -> d).average().orElse(0.0);
+        double scaleRounding = 100;
+        //rounding
+        double result = Math.ceil(rating * scaleRounding) / scaleRounding;
+
+        return result;
+    }
+
+
+    //safe moment
 //    private CommentDTO.Response.SubComments convertToSubCommentDto(Comment comment) {
 //        CommentDTO.Response.SubComments subComment = new CommentDTO.Response.SubComments(
 //            comment.getId(), comment.getCreationDate(), comment.getMessage(), comment.getWriter().getProfileImageUrl(),

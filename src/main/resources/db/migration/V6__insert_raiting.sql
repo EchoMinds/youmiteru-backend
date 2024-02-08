@@ -2,6 +2,10 @@ INSERT INTO youmiteru_backend."user"(profile_picture_url, name, email, role, cre
 VALUES ('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/800px-Macaca_nigra_self-portrait_large.jpg',
         'nakermaz', 'jksdfbfsd@gmail.com', 'USER', TO_DATE ('2024/01/18', 'yyyy/mm/dd'));
 
+INSERT INTO youmiteru_backend."user"(profile_picture_url, name, email, role, creation_time)
+VALUES ('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Macaca_nigra_self-portrait_large.jpg/800px-Macaca_nigra_self-portrait_large.jpg',
+        'raingor', 'testedForDevs@gmail.com', 'ADMIN', TO_DATE ('2024/02/08', 'yyyy/mm/dd'));
+
 INSERT INTO youmiteru_backend.rating (value, user_id, season_id)
 VALUES (10, 1, 1);
 INSERT INTO youmiteru_backend.rating (value, user_id, season_id)

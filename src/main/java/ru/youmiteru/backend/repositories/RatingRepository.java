@@ -12,5 +12,5 @@ import java.util.stream.Collectors;
 
 @Repository
 public interface RatingRepository extends JpaRepository<Rating,Long> {
-
+    List<Rating> findAllBySeason_Id(Long id);
 }
