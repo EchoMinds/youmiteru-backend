@@ -69,6 +69,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.flywaydb:flyway-core:10.4.1")
 	implementation("org.postgresql:postgresql")
+	implementation("org.apache.logging.log4j:log4j-core:2.22.1")
+	implementation("org.apache.logging.log4j:log4j-api:2.22.1")
+
+
+
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
 	annotationProcessor("org.projectlombok:lombok")
