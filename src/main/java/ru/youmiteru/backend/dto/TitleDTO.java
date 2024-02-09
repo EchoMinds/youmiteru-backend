@@ -6,22 +6,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 public class TitleDTO {
-    private interface titleId {
+    protected interface titleId {
         @JsonProperty(value = "title_id")
         Long getTitleId();
     }
 
-    private interface titleImageUrl {
+    protected interface titleImageUrl {
         @JsonProperty(value = "title_image_url")
         String getTitleImageUrl();
     }
 
-    private interface titleName {
+    protected interface titleName {
         @JsonProperty(value = "title_name")
         String getTitleName();
     }
 
-    private interface titleDescription {
+    protected interface titleDescription {
         @JsonProperty(value = "title_description")
         String getTitleDescription();
     }

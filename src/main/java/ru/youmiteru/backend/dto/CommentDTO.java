@@ -4,39 +4,37 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.youmiteru.backend.domain.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public class CommentDTO {
-    private interface commentId {
+    protected interface commentId {
         @JsonProperty(value = "comment_id")
         Long getCommentId();
     }
 
-    private interface creationDate {
+    protected interface creationDate {
         @JsonProperty(value = "creation_date")
         LocalDateTime getCreationDate();
     }
 
-    private interface message {
+    protected interface message {
         @JsonProperty(value = "message")
         String getMessage();
     }
 
-    private interface replyToId {
+    protected interface replyToId {
         @JsonProperty(value = "reply_to_id")
         Long getReplyToId();
     }
 
-    private interface rating {
+    protected interface rating {
         @JsonProperty(value = "rating")
         int getRating();
     }
 
-    private interface writerId {
+    protected interface writerId {
         @JsonProperty(value = "writer_id")
         Long getWriterId();
     }

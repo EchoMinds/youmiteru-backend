@@ -2,13 +2,8 @@ package ru.youmiteru.backend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.youmiteru.backend.domain.Comment;
-import ru.youmiteru.backend.domain.Rating;
-import ru.youmiteru.backend.domain.Season;
-import ru.youmiteru.backend.domain.Title;
-import ru.youmiteru.backend.dto.CommentDTO;
-import ru.youmiteru.backend.dto.SeasonDTO;
-import ru.youmiteru.backend.dto.TitleDTO;
+import ru.youmiteru.backend.domain.*;
+import ru.youmiteru.backend.dto.*;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
 import ru.youmiteru.backend.repositories.CommentRepository;
 import ru.youmiteru.backend.repositories.RatingRepository;
@@ -47,6 +42,12 @@ public class SeasonService {
         return listHomePage;
     }
 
+    //return Data for Season page
+    public SeasonDTO.Response.SeasonPage getSeasonPage(Long id) {
+        Season seasonPage = seasonRepository.findById(id).orElseThrow(SeasonNotFoundException::new);
+        return convertToDtoForSeasonPage(seasonPage);
+    }
+
     //Convert Seasons to DTO FOR HOME PAGE!!!!
     private SeasonDTO.Response.HomePage convertToSeasonDtoForHomePage(Season season) {
         SeasonDTO.Response.HomePage seasonDTO = new SeasonDTO.Response.HomePage();
@@ -57,12 +58,6 @@ public class SeasonService {
         seasonDTO.setImageUrl(season.getSeasonImageUrl());
 
         return seasonDTO;
-    }
-
-    //return Data for Season page
-    public SeasonDTO.Response.SeasonPage getSeasonPage(Long id) {
-        Season seasonPage = seasonRepository.findById(id).orElseThrow(SeasonNotFoundException::new);
-        return convertToDtoForSeasonPage(seasonPage);
     }
 
     public SeasonDTO.Response.SeasonPage convertToDtoForSeasonPage(Season seasonPage) {
@@ -77,9 +72,11 @@ public class SeasonService {
         dto.setTitleState(seasonPage.getTitleState());
         dto.setAgeRestriction(seasonPage.getAgeRestriction());
         dto.setYearSeason(seasonPage.getYearSeason());
-        dto.setTitleInformationForSeasonPages(convertToTitleInformation(seasonPage.getTitle()));
+        dto.setTitleInformation(convertToTitleInformation(seasonPage.getTitle()));
         dto.setCommentsList(getCommentsList(seasonPage));
         dto.setRating(getRating(seasonPage.getId()));
+        dto.setVoiceActors(getVoiceActorList(seasonPage));
+        dto.setVideoDtoList(getVideoListForSeasonPage(seasonPage));
 
         return dto;
     }
@@ -134,6 +131,40 @@ public class SeasonService {
         return result;
     }
 
+    //voice actors
+    private VoiceActorDTO.Response.VoiceActorForSeason convertToVoiceActorForSeason(VoiceActor voiceActor) {
+        VoiceActorDTO.Response.VoiceActorForSeason voiceActorForSeason = new VoiceActorDTO.Response.VoiceActorForSeason();
+
+        voiceActorForSeason.setVoiceActorId(voiceActor.getId());
+        voiceActorForSeason.setUserId(voiceActor.getUser().getId());
+        voiceActorForSeason.setProfileImageUrl(voiceActor.getUser().getProfileImageUrl());
+
+        return voiceActorForSeason;
+    }
+
+    private List<VoiceActorDTO.Response.VoiceActorForSeason> getVoiceActorList(Season season) {
+        List<VoiceActorDTO.Response.VoiceActorForSeason> voiceActorForSeasonList = season.getVoiceActors()
+            .stream().map(this::convertToVoiceActorForSeason).toList();
+
+        return voiceActorForSeasonList;
+    }
+
+    private VideoDTO.Response.VideoDtoForSeason convertToVideoDtoForSeason(Video video) {
+        VideoDTO.Response.VideoDtoForSeason videoDtoForSeason = new VideoDTO.Response.VideoDtoForSeason();
+
+        videoDtoForSeason.setEpisode(video.getEpisode());
+        videoDtoForSeason.setLink(video.getPlayerUrl());
+        videoDtoForSeason.setPlayer(video.getPlayer());
+
+        return videoDtoForSeason;
+    }
+
+    private List<VideoDTO.Response.VideoDtoForSeason> getVideoListForSeasonPage(Season season) {
+        List<VideoDTO.Response.VideoDtoForSeason> videoDtoForSeasons = season.getVideoList()
+            .stream().map(this::convertToVideoDtoForSeason).toList();
+
+        return videoDtoForSeasons;
+    }
 
     //safe moment
 //    private CommentDTO.Response.SubComments convertToSubCommentDto(Comment comment) {
