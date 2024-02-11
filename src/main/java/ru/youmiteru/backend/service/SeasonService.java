@@ -42,12 +42,6 @@ public class SeasonService {
         return listHomePage;
     }
 
-    //return Data for Season page
-    public SeasonDTO.Response.SeasonPage getSeasonPage(Long id) {
-        Season seasonPage = seasonRepository.findById(id).orElseThrow(SeasonNotFoundException::new);
-        return convertToDtoForSeasonPage(seasonPage);
-    }
-
     //Convert Seasons to DTO FOR HOME PAGE!!!!
     private SeasonDTO.Response.HomePage convertToSeasonDtoForHomePage(Season season) {
         SeasonDTO.Response.HomePage seasonDTO = new SeasonDTO.Response.HomePage();
@@ -60,6 +54,13 @@ public class SeasonService {
         return seasonDTO;
     }
 
+    //return Data for Season page
+    public SeasonDTO.Response.SeasonPage getSeasonPage(Long id) {
+        Season seasonPage = seasonRepository.findById(id).orElseThrow(SeasonNotFoundException::new);
+        return convertToDtoForSeasonPage(seasonPage);
+    }
+
+    //convert season to seasonPage
     public SeasonDTO.Response.SeasonPage convertToDtoForSeasonPage(Season seasonPage) {
         SeasonDTO.Response.SeasonPage dto = new SeasonDTO.Response.SeasonPage();
 
@@ -116,6 +117,7 @@ public class SeasonService {
             .map(this::convertToCommentDto).toList();
     }
 
+    //get rating
     private Double getRating(Long id) {
 
         //get class rating for season
@@ -131,7 +133,7 @@ public class SeasonService {
         return result;
     }
 
-    //voice actors
+    //convert voice actors
     private VoiceActorDTO.Response.VoiceActorForSeason convertToVoiceActorForSeason(VoiceActor voiceActor) {
         VoiceActorDTO.Response.VoiceActorForSeason voiceActorForSeason = new VoiceActorDTO.Response.VoiceActorForSeason();
 
@@ -142,6 +144,7 @@ public class SeasonService {
         return voiceActorForSeason;
     }
 
+    // get voice actor list
     private List<VoiceActorDTO.Response.VoiceActorForSeason> getVoiceActorList(Season season) {
         List<VoiceActorDTO.Response.VoiceActorForSeason> voiceActorForSeasonList = season.getVoiceActors()
             .stream().map(this::convertToVoiceActorForSeason).toList();
@@ -149,6 +152,7 @@ public class SeasonService {
         return voiceActorForSeasonList;
     }
 
+    //convert video to videoDto
     private VideoDTO.Response.VideoDtoForSeason convertToVideoDtoForSeason(Video video) {
         VideoDTO.Response.VideoDtoForSeason videoDtoForSeason = new VideoDTO.Response.VideoDtoForSeason();
 
@@ -159,6 +163,7 @@ public class SeasonService {
         return videoDtoForSeason;
     }
 
+    //get video list
     private List<VideoDTO.Response.VideoDtoForSeason> getVideoListForSeasonPage(Season season) {
         List<VideoDTO.Response.VideoDtoForSeason> videoDtoForSeasons = season.getVideoList()
             .stream().map(this::convertToVideoDtoForSeason).toList();
@@ -166,7 +171,7 @@ public class SeasonService {
         return videoDtoForSeasons;
     }
 
-    //safe moment
+    // safe moment if we need another method to get comments in season page!
 //    private CommentDTO.Response.SubComments convertToSubCommentDto(Comment comment) {
 //        CommentDTO.Response.SubComments subComment = new CommentDTO.Response.SubComments(
 //            comment.getId(), comment.getCreationDate(), comment.getMessage(), comment.getWriter().getProfileImageUrl(),
