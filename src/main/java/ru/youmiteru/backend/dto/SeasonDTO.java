@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SeasonDTO {
     protected interface seasonId {
-        @JsonProperty(value = "seasons_id")
+        @JsonProperty(value = "season_id")
         Long getSeasonId();
     }
 
@@ -21,7 +21,7 @@ public class SeasonDTO {
     }
 
     protected interface seasonName {
-        @JsonProperty(value = "seasons_name")
+        @JsonProperty(value = "season_name")
         String getSeasonName();
     }
 
@@ -31,7 +31,7 @@ public class SeasonDTO {
     }
 
     protected interface description {
-        @JsonProperty(value = "seasons_description")
+        @JsonProperty(value = "season_description")
         String getDescription();
     }
 
