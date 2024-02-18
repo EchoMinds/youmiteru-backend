@@ -47,14 +47,22 @@ public class TitleService {
                 genreIds.add(searchGenre.getId());
             }
         }
-        System.out.println(genreIds);
 
-        for (Long id : genreIds){
-            for (Long idTitle : titleRepository.findTitleIdsByGenreIds(id)){
-                titleIds.add(idTitle);
+        List<Long> checkTitleIds = titleRepository.findTitleIdsByGenreIdsList(genreIds);
+
+        for (Long id : checkTitleIds){
+            int i = 0;
+            for (Long ids : titleRepository.findGenreIdsByTitleIds(id)){
+                for (Long oo : genreIds){
+                    if (oo.equals(ids)){
+                        i++;
+                    }
+                }
+            }
+            if (i == genreIds.size()){
+                titleIds.add(id);
             }
         }
-        System.out.println(titleIds);
 
         return titleRepository.findAllById(titleIds);
     }

@@ -13,6 +13,11 @@ import java.util.Optional;
 @Repository
 public interface TitleRepository extends JpaRepository<Title,Long>, JpaSpecificationExecutor<Title> {
 
-    @Query(value = "select (title_id) from youmiteru_backend.anime_genres where genre_id = :#{#id}", nativeQuery = true)
-    List<Long> findTitleIdsByGenreIds(@Param("id") Long id);
+
+    @Query(value = "select (genre_id) from youmiteru_backend.anime_genres where title_id = :#{#id}", nativeQuery = true)
+    List<Long> findGenreIdsByTitleIds(@Param("id") Long id);
+
+    @Query(value = "select (title_id) from youmiteru_backend.anime_genres where genre_id in :id", nativeQuery = true)
+    List<Long> findTitleIdsByGenreIdsList(@Param("id") List<Long> id);
+
 }
