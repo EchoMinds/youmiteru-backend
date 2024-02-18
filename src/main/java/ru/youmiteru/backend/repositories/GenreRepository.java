@@ -5,5 +5,4 @@ import org.springframework.stereotype.Repository;
 import ru.youmiteru.backend.domain.Genre;
 @Repository
 public interface GenreRepository extends JpaRepository<Genre,Long>{
-
 }

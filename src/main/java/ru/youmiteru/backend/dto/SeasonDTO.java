@@ -56,7 +56,7 @@ public class SeasonDTO {
     }
 
     protected interface animeBannerUrl {
-        @JsonProperty(value = "anime_banner_url")
+        @JsonProperty(value = "bg_image_url")
         String getAnimeBannerUrl();
     }
 
@@ -90,28 +90,38 @@ public class SeasonDTO {
             List<Response.HomePage> recent_released_seasons;
         }
 
+        // for season page a related seasons
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Data
+        public static class RelatedSeason implements seasonId, imageUrl {
+            Long seasonId;
+            String imageUrl;
+        }
+
         //season page
         @NoArgsConstructor
         @AllArgsConstructor
         @Data
         public static class SeasonPage
             implements seasonId, imageUrl, seasonName, animeFormat, description, releaseDate,
-            titleState, ageRestriction, yearSeason, animeBannerUrl, rating{
+            titleState, ageRestriction, yearSeason, animeBannerUrl, rating {
             private Long seasonId;
             private String imageUrl;
             private String seasonName;
             private String animeFormat;
             private String description;
             private LocalDate releaseDate;
-            private TitleDTO.Response.TitleInformationForSeasonPage titleInformation;
             private TitleState titleState;
             private String ageRestriction;
             private String yearSeason;
             private String animeBannerUrl;
             private Double rating;
             List<CommentDTO.Response.Comments> commentsList;
+            List<Response.RelatedSeason> relatedSeasons;
             List<VoiceActorDTO.Response.VoiceActorForSeason> voiceActors;
             List<VideoDTO.Response.VideoDtoForSeason> videoDtoList;
+            List<String> genres;
         }
     }
 }
