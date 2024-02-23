@@ -30,8 +30,67 @@ class CommentServiceTest {
     @Mock
     CommentRepository commentRepository;
 
+    private static final LocalDateTime localDateTime = LocalDateTime.now();
+    private static Comment fakeComm;
+    private static User fakeUser;
 
-    private User mockedUser() {
+    @BeforeAll
+    static void init() {
+        fakeComm = mockedComment();
+        fakeUser = mockedUser();
+    }
+
+    @Test
+    @DisplayName("shouldReturnListOfComments")
+    void shouldReturnListOfComments() {
+        when(seasonPage.getSeasonCommentList()).thenReturn(List.of(fakeComm, fakeComm));
+
+        List<CommentDTO.Response.Comments> comments = commentService.getCommentsList(seasonPage);
+
+        assertEquals(2, comments.size());
+    }
+
+    @Test
+    @DisplayName("shouldConvertCommentToCommentDto")
+    void shouldConvertCommentToCommentDto() {
+
+        CommentDTO.Response.Comments correctedCommentDTO = new CommentDTO.Response.Comments(
+            1L,
+            localDateTime,
+            "TEST!!!",
+            fakeUser.getProfileImageUrl(),
+            fakeUser.getId(),
+            10,
+            new ArrayList<>()
+        );
+
+        CommentDTO.Response.Comments checkedCommentDTO = commentService.convertToCommentDto(fakeComm);
+
+        assertEquals(correctedCommentDTO, checkedCommentDTO);
+    }
+
+    //whirlpool | endless cycle (DON"T TEST THIS!! HE KILL U!!!)
+//    @Test
+//    @DisplayName("shouldGetSubCommentsList")
+//    void shouldGetSubCommentsList() {
+//        CommentDTO.Response.Comments correctedCommentDTO = new CommentDTO.Response.Comments(
+//            1L,
+//            localDateTime,
+//            "TEST!!!",
+//            fakeUser.getProfileImageUrl(),
+//            fakeUser.getId(),
+//            10,
+//            new ArrayList<>()
+//        );
+//
+//        when(commentRepository.findByReplyTo(fakeComm)).thenReturn(List.of(fakeComm, fakeComm));
+//
+//        List<CommentDTO.Response.Comments> checkedSubCommentsList = commentService.getSubCommentsList(fakeComm);
+//
+//        assertEquals(List.of(correctedCommentDTO, correctedCommentDTO), checkedSubCommentsList);
+//    }
+
+    private static User mockedUser() {
         User user = new User();
 
         user.setId(1L);
@@ -41,29 +100,15 @@ class CommentServiceTest {
         return user;
     }
 
-    private Comment mockedComment() {
+    private static Comment mockedComment() {
         Comment fc = new Comment();
 
         fc.setId(1L);
-        fc.setCreationDate(LocalDateTime.now());
+        fc.setCreationDate(localDateTime);
         fc.setRatingValue(10);
         fc.setMessage("TEST!!!");
         fc.setWriter(mockedUser());
 
         return fc;
     }
-
-
-    @Test
-    void shouldReturnListOfComments() {
-        Comment fakeComm = mockedComment();
-
-        when(commentRepository.findByReplyTo(fakeComm)).thenReturn(new ArrayList<>());
-        when(seasonPage.getSeasonCommentList()).thenReturn(List.of(fakeComm, fakeComm));
-
-        List<CommentDTO.Response.Comments> comments = commentService.getCommentsList(seasonPage);
-
-        assertEquals(2, comments.size());
-    }
-
 }
