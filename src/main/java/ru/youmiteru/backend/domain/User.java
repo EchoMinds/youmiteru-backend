@@ -1,6 +1,7 @@
 package ru.youmiteru.backend.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.util.List;
 @Data
 @Table(name = "user", schema = "youmiteru_backend")
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

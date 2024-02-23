@@ -17,7 +17,7 @@ public class CommentService {
     //get comments
     public List<CommentDTO.Response.Comments> getCommentsList(Season seasonPage) {
         return seasonPage.getSeasonCommentList().stream()
-            .filter(comment -> comment.getReplyTo() == null)
+            .filter(comment -> comment.getReplyTo() == null)    // return only head comment
             .map(this::convertToCommentDto).toList();
     }
 
