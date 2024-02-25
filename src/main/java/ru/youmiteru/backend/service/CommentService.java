@@ -14,14 +14,18 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    //get comments
     public List<CommentDTO.Response.Comments> getCommentsList(Season seasonPage) {
         return seasonPage.getSeasonCommentList().stream()
             .filter(comment -> comment.getReplyTo() == null)    // return only head comment
             .map(this::convertToCommentDto).toList();
     }
 
-    //return commentDTO for season Page
+    public List<CommentDTO.Response.Comments> getSubCommentsList(Comment comment) {
+        return commentRepository.findByReplyTo(comment).stream()
+            .map(this::convertToCommentDto).toList();
+    }
+
+
     public CommentDTO.Response.Comments convertToCommentDto(Comment comment) {
         CommentDTO.Response.Comments commentDTO = new CommentDTO.Response.Comments();
 
@@ -36,11 +40,6 @@ public class CommentService {
         return commentDTO;
     }
 
-    //get SubComments
-    public List<CommentDTO.Response.Comments> getSubCommentsList(Comment comment) {
-        return commentRepository.findByReplyTo(comment).stream()
-            .map(this::convertToCommentDto).toList();
-    }
     // safe moment if we need another method to get comments in season page!
 //    private CommentDTO.Response.SubComments convertToSubCommentDto(Comment comment) {
 //        CommentDTO.Response.SubComments subComment = new CommentDTO.Response.SubComments(

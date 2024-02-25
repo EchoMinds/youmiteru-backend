@@ -12,7 +12,7 @@ import ru.youmiteru.backend.dto.SeasonDTO;
 import ru.youmiteru.backend.service.SeasonService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/youmiteru")
 @RequiredArgsConstructor
 public class SeasonController {
     private final SeasonService seasonService;

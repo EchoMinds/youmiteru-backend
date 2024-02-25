@@ -1,4 +1,4 @@
-package ru.youmiteru.backend.utils.convertors;
+package ru.youmiteru.backend.convertors;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

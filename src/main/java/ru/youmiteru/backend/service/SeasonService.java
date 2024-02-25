@@ -6,7 +6,7 @@ import ru.youmiteru.backend.domain.*;
 import ru.youmiteru.backend.dto.*;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
 import ru.youmiteru.backend.repositories.SeasonRepository;
-import ru.youmiteru.backend.utils.convertors.SeasonConvertors;
+import ru.youmiteru.backend.convertors.SeasonConvertors;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +17,6 @@ public class SeasonService {
     private final SeasonRepository seasonRepository;
     private final SeasonConvertors seasonConvertors;
 
-    //Return data for HomePage
     public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage() {
 
 
@@ -40,7 +39,6 @@ public class SeasonService {
         return listHomePage;
     }
 
-    //return Data for Season page
     public SeasonDTO.Response.SeasonPage getSeasonPage(Long id) {
         Season seasonPage = seasonRepository.findById(id).orElseThrow(SeasonNotFoundException::new);
         return seasonConvertors.seasonPageResponse(seasonPage, getRelatedSeasons(seasonPage.getTitle()));
