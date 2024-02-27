@@ -22,23 +22,35 @@ public class SeasonService {
 
     public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage() {
 
-
+        logger.info("Запуск метода Сервиса getAllSeasonForHomePage");
         SeasonDTO.Response.ListHomePage listHomePage = new SeasonDTO.Response.ListHomePage();
 
+        logger.info("Берёт из БД сезонов анонсы");
         List<SeasonDTO.Response.HomePage> anons = seasonRepository.findAnnouncement()
             .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
+
+        logger.info("Берёт из БД сезонов релизы");
         List<SeasonDTO.Response.HomePage> release = seasonRepository.findRecent()
             .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
+
+        logger.info("Берёт из БД сезонов баннер");
         List<SeasonDTO.Response.HomePage> banner = seasonRepository.findBanner()
             .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
+
+        logger.info("Берёт из БД сезонов популярные");
         List<SeasonDTO.Response.HomePage> popular = seasonRepository.findPopular()
             .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
 
+        logger.info("Конвертация анонсов в лист ДТО");
         listHomePage.setBanners(banner);
+        logger.info("Конвертация релизов в лист ДТО");
         listHomePage.setAnnounced_seasons(anons);
+        logger.info("Конвертация баннеров в лист ДТО");
         listHomePage.setPopular_seasons(popular);
+        logger.info("Конвертация популярных в лист ДТО");
         listHomePage.setRecent_released_seasons(release);
 
+        logger.info("возвращает listHomePage");
         return listHomePage;
     }
 

@@ -15,8 +15,8 @@ import ru.youmiteru.backend.service.SeasonService;
 @RequestMapping("/youmiteru")
 @RequiredArgsConstructor
 public class SeasonController {
-    private final SeasonService seasonService;
     private static final Logger logger = LogManager.getLogger();
+    private final SeasonService seasonService;
 
     @GetMapping("/all")
     public SeasonDTO.Response.ListHomePage getAllSeasons() {
