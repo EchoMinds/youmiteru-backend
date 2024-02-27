@@ -1,8 +1,8 @@
 package ru.youmiteru.backend.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +16,11 @@ import ru.youmiteru.backend.service.SeasonService;
 @RequiredArgsConstructor
 public class SeasonController {
     private final SeasonService seasonService;
+    private static final Logger logger = LogManager.getLogger();
 
     @GetMapping("/all")
     public SeasonDTO.Response.ListHomePage getAllSeasons() {
+        logger.info("Метод Контроллера getAllSeason делает запрос в сервис");
         return seasonService.getAllSeasonForHomePage();
     }
 

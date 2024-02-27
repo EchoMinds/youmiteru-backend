@@ -7,6 +7,8 @@ import ru.youmiteru.backend.dto.*;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.convertors.SeasonConvertors;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class SeasonService {
     private final SeasonRepository seasonRepository;
     private final SeasonConvertors seasonConvertors;
+    private static final Logger logger = LogManager.getLogger();
 
     public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage() {
 
