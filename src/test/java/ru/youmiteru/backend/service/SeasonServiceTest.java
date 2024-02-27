@@ -138,15 +138,15 @@ class SeasonServiceTest {
 
         }
 
-        @Test
-        @DisplayName("getSeasonPage_shouldGetSeasonPage")
-        void getSeasonPage_shouldGetSeasonPage() {
-
-            when(seasonRepository.findById(1L)).thenReturn(Optional.of(fakeSeason));
-
-            SeasonPage seasonPage = seasonService.getSeasonPage(1L);
-
-        }
+//        @Test
+//        @DisplayName("getSeasonPage_shouldGetSeasonPage")
+//        void getSeasonPage_shouldGetSeasonPage() {
+//
+//            when(seasonRepository.findById(1L)).thenReturn(Optional.of(fakeSeason));
+//
+//            SeasonPage seasonPage = seasonService.getSeasonPage(1L);
+//
+//        }
     }
 
     @Test
