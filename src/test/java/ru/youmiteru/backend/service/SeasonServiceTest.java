@@ -12,6 +12,7 @@ import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.dto.SeasonDTO.Response.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,16 +107,23 @@ class SeasonServiceTest {
         private List<Video> fakeVideoList;
         private List<Comment> fakeCommentList;
         private List<Rating> fakeRatingList;
+        private SeasonPage fakeDtoSeason;
 
         @BeforeEach
         void initClasses() {
             fakeTitle = new Title();
+            fakeTitle.setId(1L);
+            fakeTitle.setTitleImageUrl("test");
+            fakeTitle.setSeasonList(new ArrayList<>());
+
             fakeTitleState = TitleState.ANNOUNCEMENT;
             fakeAnimeFormat = AnimeFormat.OVA;
             fakeVoiceActors = List.of(new VoiceActor(), new VoiceActor());
             fakeVideoList = List.of(new Video(), new Video());
             fakeCommentList = List.of(new Comment(), new Comment());
-            fakeRatingList = List.of(new Rating(), new Rating());
+            Rating fakeRating = new Rating();
+            fakeRating.setValue(10);
+            fakeRatingList = List.of(fakeRating, fakeRating);
 
             //create fakeSeason
             fakeSeason = new Season();
@@ -135,18 +143,36 @@ class SeasonServiceTest {
             fakeSeason.setVideoList(fakeVideoList);
             fakeSeason.setSeasonCommentList(fakeCommentList);
             fakeSeason.setSeasonRatingList(fakeRatingList);
+            //
+            fakeDtoSeason = new SeasonPage();
 
+            fakeDtoSeason.setSeasonId(fakeSeason.getId());
+            fakeDtoSeason.setImageUrl(fakeSeason.getSeasonImageUrl());
+            fakeDtoSeason.setSeasonName(fakeSeason.getName());
+            fakeDtoSeason.setAnimeFormat(String.valueOf(fakeSeason.getAnimeFormat()));
+            fakeDtoSeason.setDescription(fakeSeason.getDescription());
+            fakeDtoSeason.setReleaseDate(fakeSeason.getReleaseDate());
+            fakeDtoSeason.setTitleState(fakeSeason.getTitleState());
+            fakeDtoSeason.setAgeRestriction(fakeSeason.getAgeRestriction());
+            fakeDtoSeason.setYearSeason(fakeSeason.getYearSeason());
+            fakeDtoSeason.setCommentsList(new ArrayList<>());
+            fakeDtoSeason.setRating(10.0);
+            fakeDtoSeason.setVoiceActors(new ArrayList<>());
+            fakeDtoSeason.setVideoDtoList(new ArrayList<>());
+            fakeDtoSeason.setGenres(new ArrayList<>());
+            fakeDtoSeason.setRelatedSeasons(new ArrayList<>());
         }
 
-//        @Test
-//        @DisplayName("getSeasonPage_shouldGetSeasonPage")
-//        void getSeasonPage_shouldGetSeasonPage() {
-//
-//            when(seasonRepository.findById(1L)).thenReturn(Optional.of(fakeSeason));
-//
-//            SeasonPage seasonPage = seasonService.getSeasonPage(1L);
-//
-//        }
+        @Test
+        @DisplayName("getSeasonPage_shouldGetSeasonPage")
+        void getSeasonPage_shouldGetSeasonPage() {
+
+            when(seasonRepository.findById(1L)).thenReturn(Optional.of(fakeSeason));
+            when(seasonConvertors.seasonPageResponse(fakeSeason, new ArrayList<>())).thenReturn(fakeDtoSeason);
+            SeasonPage seasonPage = seasonService.getSeasonPage(1L);
+
+            assertEquals(fakeDtoSeason, seasonPage);
+        }
     }
 
     @Test
