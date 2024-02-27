@@ -68,28 +68,6 @@ class CommentServiceTest {
 
         assertEquals(correctedCommentDTO, checkedCommentDTO);
     }
-
-    //whirlpool | endless cycle (DON"T TEST THIS!! HE KILL U!!!)
-//    @Test
-//    @DisplayName("shouldGetSubCommentsList")
-//    void shouldGetSubCommentsList() {
-//        CommentDTO.Response.Comments correctedCommentDTO = new CommentDTO.Response.Comments(
-//            1L,
-//            localDateTime,
-//            "TEST!!!",
-//            fakeUser.getProfileImageUrl(),
-//            fakeUser.getId(),
-//            10,
-//            new ArrayList<>()
-//        );
-//
-//        when(commentRepository.findByReplyTo(fakeComm)).thenReturn(List.of(fakeComm, fakeComm));
-//
-//        List<CommentDTO.Response.Comments> checkedSubCommentsList = commentService.getSubCommentsList(fakeComm);
-//
-//        assertEquals(List.of(correctedCommentDTO, correctedCommentDTO), checkedSubCommentsList);
-//    }
-
     private static User mockedUser() {
         User user = new User();
 

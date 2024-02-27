@@ -20,10 +20,6 @@ public class SeasonController {
 
     @GetMapping("/all")
     public SeasonDTO.Response.ListHomePage getAllSeasons() {
-    private static final Logger logger = LogManager.getLogger();
-
-    @GetMapping("/all")
-    public SeasonDTO.Response.ListHomePage getAllSeasons(){
         logger.info("Метод Контроллера getAllSeason делает запрос в сервис");
         return seasonService.getAllSeasonForHomePage();
     }

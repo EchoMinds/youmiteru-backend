@@ -6,11 +6,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.convertors.SeasonConvertors;
-import ru.youmiteru.backend.domain.Season;
+import ru.youmiteru.backend.domain.*;
 import ru.youmiteru.backend.dto.SeasonDTO;
 import ru.youmiteru.backend.repositories.SeasonRepository;
+import ru.youmiteru.backend.dto.SeasonDTO.Response.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -91,15 +94,75 @@ class SeasonServiceTest {
 
     }
 
-    @Test
-    @DisplayName("getSeasonPage")
-    void getSeasonPage() {
+    @Nested
+    @DisplayName("testSeasonPage")
+    @ExtendWith(MockitoExtension.class)
+    class testSeasonPage {
+        private Season fakeSeason;
+        private Title fakeTitle;
+        private TitleState fakeTitleState;
+        private AnimeFormat fakeAnimeFormat;
+        private List<VoiceActor> fakeVoiceActors;
+        private List<Video> fakeVideoList;
+        private List<Comment> fakeCommentList;
+        private List<Rating> fakeRatingList;
 
+        @BeforeEach
+        void initClasses() {
+            fakeTitle = new Title();
+            fakeTitleState = TitleState.ANNOUNCEMENT;
+            fakeAnimeFormat = AnimeFormat.OVA;
+            fakeVoiceActors = List.of(new VoiceActor(), new VoiceActor());
+            fakeVideoList = List.of(new Video(), new Video());
+            fakeCommentList = List.of(new Comment(), new Comment());
+            fakeRatingList = List.of(new Rating(), new Rating());
+
+            //create fakeSeason
+            fakeSeason = new Season();
+            fakeSeason.setId(1L);
+            fakeSeason.setSeasonImageUrl("https://example.com/season_image.jpg");
+            fakeSeason.setName("Fake Season");
+            fakeSeason.setDescription("This is a fake season for testing purposes.");
+            fakeSeason.setReleaseDate(LocalDate.now());
+            fakeSeason.setAgeRestriction("PG-13");
+            fakeSeason.setYearSeason("2024");
+            fakeSeason.setAnimeBannerUrl("https://example.com/banner.jpg");
+
+            fakeSeason.setTitle(fakeTitle);
+            fakeSeason.setTitleState(fakeTitleState);
+            fakeSeason.setAnimeFormat(fakeAnimeFormat);
+            fakeSeason.setVoiceActors(fakeVoiceActors);
+            fakeSeason.setVideoList(fakeVideoList);
+            fakeSeason.setSeasonCommentList(fakeCommentList);
+            fakeSeason.setSeasonRatingList(fakeRatingList);
+
+        }
+
+        @Test
+        @DisplayName("getSeasonPage_shouldGetSeasonPage")
+        void getSeasonPage_shouldGetSeasonPage() {
+
+            when(seasonRepository.findById(1L)).thenReturn(Optional.of(fakeSeason));
+
+            SeasonPage seasonPage = seasonService.getSeasonPage(1L);
+
+        }
     }
 
     @Test
     @DisplayName("getRelatedSeasons")
     void getRelatedSeasons() {
+        Title fakeTitle = new Title();
+        Season fakeSeason = new Season();
+
+        fakeTitle.setSeasonList(List.of(fakeSeason, fakeSeason));
+
+        when(seasonConvertors.convertToRelatedSeason(fakeSeason)).thenReturn(new RelatedSeason());
+
+        List<RelatedSeason> relatedSeasonsList = seasonService.getRelatedSeasons(fakeTitle);
+
+        assertEquals(List.of(new RelatedSeason(), new RelatedSeason()), relatedSeasonsList);
+
     }
 
 

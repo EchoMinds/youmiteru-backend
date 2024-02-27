@@ -1,10 +1,8 @@
 package ru.youmiteru.backend.domain;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 

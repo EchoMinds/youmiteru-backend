@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.convertors.VoiceActorConvertors;
 import ru.youmiteru.backend.domain.Season;
-import ru.youmiteru.backend.domain.VoiceActor;
 import ru.youmiteru.backend.dto.VoiceActorDTO;
 
 import java.util.List;
