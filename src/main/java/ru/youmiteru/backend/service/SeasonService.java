@@ -1,6 +1,8 @@
 package ru.youmiteru.backend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.*;
 import ru.youmiteru.backend.dto.*;
@@ -22,12 +24,17 @@ public class SeasonService {
 
     public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage() {
 
+
+    private static final Logger logger = LogManager.getLogger();
+
+    //Return data for HomePage
+    public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage(){
         logger.info("Запуск метода Сервиса getAllSeasonForHomePage");
         SeasonDTO.Response.ListHomePage listHomePage = new SeasonDTO.Response.ListHomePage();
 
         logger.info("Берёт из БД сезонов анонсы");
         List<SeasonDTO.Response.HomePage> anons = seasonRepository.findAnnouncement()
-            .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
+          .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
 
         logger.info("Берёт из БД сезонов релизы");
         List<SeasonDTO.Response.HomePage> release = seasonRepository.findRecent()
@@ -36,6 +43,15 @@ public class SeasonService {
         logger.info("Берёт из БД сезонов баннер");
         List<SeasonDTO.Response.HomePage> banner = seasonRepository.findBanner()
             .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
+
+
+            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
+        logger.info("Берёт из БД сезонов релизы");
+        List<SeasonDTO.Response.HomePage> release = seasonRepository.findRecent()
+            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
+        logger.info("Берёт из БД сезонов баннер");
+        List<SeasonDTO.Response.HomePage> banner = seasonRepository.findBanner()
+            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
 
         logger.info("Берёт из БД сезонов популярные");
         List<SeasonDTO.Response.HomePage> popular = seasonRepository.findPopular()
