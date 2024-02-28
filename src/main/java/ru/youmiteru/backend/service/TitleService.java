@@ -9,6 +9,7 @@ import ru.youmiteru.backend.dto.TitleDTO;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
+import ru.youmiteru.backend.util.CatalogFilter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,9 +26,10 @@ public class TitleService {
     private final SeasonRepository seasonRepository;
 
     //Возвращает каталог с сортировкой жанров
-    public List<TitleDTO.Response.Catalog> getCatalog (List<String> filter, List<Long> dates) {
+    public List<TitleDTO.Response.Catalog> getCatalog (List<String> filter, List<Long> dates, List<String> format,
+                                                       List<String> state, List<String> ageRestriction, List<String> yearSeason) {
 
-        List<TitleDTO.Response.Catalog> titleDto = filterConvertorCatalog(filter, dates)
+        List<TitleDTO.Response.Catalog> titleDto = filterConvertorCatalog(filter, dates, format, state, ageRestriction, yearSeason)
             .stream().map(this::convertToCatalog).collect(Collectors.toList());
 
         return titleDto;
@@ -44,85 +46,68 @@ public class TitleService {
         return dto;
     }
 
-    //фильтрация для каталога
-    public List<Title> filterConvertorCatalog(List<String> filter, List<Long> dates){
-        List<Long> genreIds = new ArrayList<>();
-        List<Long> titleIds = new ArrayList<>();
+    public List<Title> filterConvertorCatalog(List<String> genre, List<Long> dates,
+                                              List<String> format, List<String> state,
+                                              List<String> ageRestriction, List<String> yearSeason){
+
         List<Title> necessaryTitle = new ArrayList<>();
+        CatalogFilter catalogFilter = new CatalogFilter(titleRepository, genreRepository, seasonRepository);
 
-        if (filter != null && dates != null){
-            for (String name : filter){
-                for (Genre searchGenre : genreRepository.findByName(name)){
-                    genreIds.add(searchGenre.getId());
-                }
-            }
-
-            List<Long> checkTitleIds = titleRepository.findTitleIdsByGenreIdsList(genreIds);
-
-            for (Long id : checkTitleIds){
-                int i = 0;
-                for (Long ids : titleRepository.findGenreIdsByTitleIds(id)){
-                    for (Long oo : genreIds){
-                        if (oo.equals(ids)){
-                            i++;
-                        }
-                    }
-                }
-                if (i == genreIds.size()){
-                    titleIds.add(id);
-                }
-            }
-
-            for (Title title : titleRepository.findAllById(titleIds)) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(Long date : dates ){
-                        if ((seasons.getReleaseDate().getYear()) == date){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        } else if (filter == null && dates != null){
-            for (Title title : titleRepository.findAllForFilter()) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(Long date : dates ){
-                        if ((seasons.getReleaseDate().getYear()) == date){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        } else if (filter != null && dates == null){
-            for (String name : filter){
-                for (Genre searchGenre : genreRepository.findByName(name)){
-                    genreIds.add(searchGenre.getId());
-                }
-            }
-
-            List<Long> checkTitleIds = titleRepository.findTitleIdsByGenreIdsList(genreIds);
-
-            for (Long id : checkTitleIds){
-                int i = 0;
-                for (Long ids : titleRepository.findGenreIdsByTitleIds(id)){
-                    for (Long oo : genreIds){
-                        if (oo.equals(ids)){
-                            i++;
-                        }
-                    }
-                }
-                if (i == genreIds.size()){
-                    titleIds.add(id);
-                }
-            }
-            necessaryTitle = titleRepository.findAllById(titleIds);
+        if(genre == null &&dates == null &&format == null &&state == null &&ageRestriction == null&&yearSeason == null){
+            return titleRepository.findAllForFilter();
         } else {
-            necessaryTitle = titleRepository.findAllForFilter();
+            //жанры
+            if(genre != null){
+                necessaryTitle = catalogFilter.filterTitleGenre(genre);
+            }
+
+            //даты года
+            if(dates != null){
+                if(!necessaryTitle.isEmpty()){
+                    necessaryTitle = catalogFilter.filterTitleDate(dates, necessaryTitle);
+                } else {
+                    necessaryTitle = catalogFilter.filterTitleDate(dates, null);
+                }
+            } else {
+
+            }
+
+            //формат аниме(фильм, сериал, OVA)
+            if(format != null){
+                if(!necessaryTitle.isEmpty()){
+                    necessaryTitle = catalogFilter.filterTitleFormat(format, necessaryTitle);
+                } else {
+                    necessaryTitle = catalogFilter.filterTitleFormat(format, null);
+                }
+            }
+
+            //статус аниме (вышел, выходит, заброшен)
+            if(state != null){
+                if(!necessaryTitle.isEmpty()){
+                    necessaryTitle = catalogFilter.filterTitleState(state, necessaryTitle);
+                } else {
+                    necessaryTitle = catalogFilter.filterTitleState(state, null);
+                }
+            }
+
+            //возраст (18+, 12+, 6+)
+            if(ageRestriction != null){
+                if(!necessaryTitle.isEmpty()){
+                    necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, necessaryTitle);
+                } else {
+                    necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, null);
+                }
+            }
+
+            //сезонов месяца(зима, осень, весна, лето)
+            if(yearSeason != null) {
+                if (!necessaryTitle.isEmpty()) {
+                    necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle);
+                } else {
+                    necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, null);
+                }
+            }
+            return necessaryTitle;
         }
-
-
-
-
-
-        return necessaryTitle.stream().distinct().collect(Collectors.toList());
     }
 }

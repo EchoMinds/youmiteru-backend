@@ -20,8 +20,12 @@ public class TitleController {
 
     @GetMapping("/catalog")
     public List<TitleDTO.Response.Catalog> getCatalog(@RequestParam(value = "genres", required = false) List<String> genres,
-                                                      @RequestParam(value = "dates", required = false) List<Long> date){
-        return titleService.getCatalog(genres, date);
+                                                      @RequestParam(value = "dates", required = false) List<Long> date,
+                                                      @RequestParam(value = "format", required = false) List<String> format,
+                                                      @RequestParam(value = "state", required = false) List<String> state,
+                                                      @RequestParam(value = "AgeRestriction", required = false) List<String> ageRestriction,
+                                                      @RequestParam(value = "yearSeason", required = false) List<String> yearSeason){
+        return titleService.getCatalog(genres, date, format, state, ageRestriction, yearSeason);
     }
 
 
