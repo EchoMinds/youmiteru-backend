@@ -20,16 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @DisplayName("SeasonServiceTest")
-@ExtendWith(MockitoExtension.class)
 class SeasonServiceTest {
-    @Mock
-    private SeasonRepository seasonRepository;
-
-    @InjectMocks
-    private static SeasonService seasonService;
-
-    @Mock
-    private static SeasonConvertors seasonConvertors;
 
     @Nested
     @DisplayName("testHomePage")
@@ -99,6 +90,15 @@ class SeasonServiceTest {
     @DisplayName("testSeasonPage")
     @ExtendWith(MockitoExtension.class)
     class testSeasonPage {
+        @Mock
+        private SeasonRepository seasonRepository;
+
+        @InjectMocks
+        private static SeasonService seasonService;
+
+        @Mock
+        private static SeasonConvertors seasonConvertors;
+
         private Season fakeSeason;
         private Title fakeTitle;
         private TitleState fakeTitleState;
@@ -175,21 +175,34 @@ class SeasonServiceTest {
         }
     }
 
-    @Test
-    @DisplayName("getRelatedSeasons")
-    void getRelatedSeasons() {
-        Title fakeTitle = new Title();
-        Season fakeSeason = new Season();
+    @Nested
+    @DisplayName("testRelatedSeasons")
+    @ExtendWith(MockitoExtension.class)
+    class testRelatedSeasons{
+        @Mock
+        private SeasonRepository seasonRepository;
 
-        fakeTitle.setSeasonList(List.of(fakeSeason, fakeSeason));
+        @InjectMocks
+        private static SeasonService seasonService;
 
-        when(seasonConvertors.convertToRelatedSeason(fakeSeason)).thenReturn(new RelatedSeason());
+        @Mock
+        private static SeasonConvertors seasonConvertors;
 
-        List<RelatedSeason> relatedSeasonsList = seasonService.getRelatedSeasons(fakeTitle);
+        @Test
+        @DisplayName("getRelatedSeasons")
+        void getRelatedSeasons() {
+            Title fakeTitle2 = new Title();
+            Season fakeSeason2 = new Season();
 
-        assertEquals(List.of(new RelatedSeason(), new RelatedSeason()), relatedSeasonsList);
+            fakeTitle2.setSeasonList(List.of(fakeSeason2, fakeSeason2));
 
+            when(seasonConvertors.convertToRelatedSeason(fakeSeason2)).thenReturn(new RelatedSeason());
+
+            List<RelatedSeason> relatedSeasonsList = seasonService.getRelatedSeasons(fakeTitle2);
+
+            assertEquals(List.of(new RelatedSeason(), new RelatedSeason()), relatedSeasonsList);
+
+        }
     }
-
 
 }
