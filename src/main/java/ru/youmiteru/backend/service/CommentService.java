@@ -39,14 +39,4 @@ public class CommentService {
 
         return commentDTO;
     }
-
-    // safe moment if we need another method to get comments in season page!
-//    private CommentDTO.Response.SubComments convertToSubCommentDto(Comment comment) {
-//        CommentDTO.Response.SubComments subComment = new CommentDTO.Response.SubComments(
-//            comment.getId(), comment.getCreationDate(), comment.getMessage(), comment.getWriter().getProfileImageUrl(),
-//            comment.getReplyTo().getId(), comment.getWriter().getId(), comment.getRatingValue()
-//        );
-//
-//        return subComment;
-//    }
 }

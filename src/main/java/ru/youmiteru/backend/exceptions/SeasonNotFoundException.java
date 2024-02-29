@@ -1,4 +1,4 @@
 package ru.youmiteru.backend.exceptions;
 
-public class SeasonNotFoundException extends RuntimeException{
+public class SeasonNotFoundException extends RuntimeException {
 }

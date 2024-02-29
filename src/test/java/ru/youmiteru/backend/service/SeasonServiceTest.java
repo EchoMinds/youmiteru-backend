@@ -175,34 +175,5 @@ class SeasonServiceTest {
         }
     }
 
-    @Nested
-    @DisplayName("testRelatedSeasons")
-    @ExtendWith(MockitoExtension.class)
-    class testRelatedSeasons{
-        @Mock
-        private SeasonRepository seasonRepository;
-
-        @InjectMocks
-        private static SeasonService seasonService;
-
-        @Mock
-        private static SeasonConvertors seasonConvertors;
-
-        @Test
-        @DisplayName("getRelatedSeasons")
-        void getRelatedSeasons() {
-            Title fakeTitle2 = new Title();
-            Season fakeSeason2 = new Season();
-
-            fakeTitle2.setSeasonList(List.of(fakeSeason2, fakeSeason2));
-
-            when(seasonConvertors.convertToRelatedSeason(fakeSeason2)).thenReturn(new RelatedSeason());
-
-            List<RelatedSeason> relatedSeasonsList = seasonService.getRelatedSeasons(fakeTitle2);
-
-            assertEquals(List.of(new RelatedSeason(), new RelatedSeason()), relatedSeasonsList);
-
-        }
-    }
 
 }

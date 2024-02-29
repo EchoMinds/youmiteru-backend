@@ -11,10 +11,5 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class VideoService {
-    private final VideoConvertors videoConvertors;
-    public List<VideoDTO.Response.VideoDtoForSeason> getVideoListForSeasonPage(Season season) {
-        return season.getVideoList()
-            .stream().map(videoConvertors::convertToVideoDtoForSeason).toList();
-    }
 
 }

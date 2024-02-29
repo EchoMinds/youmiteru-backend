@@ -56,10 +56,8 @@ public class SeasonService {
 
     public SeasonDTO.Response.SeasonPage getSeasonPage(Long id) {
         Season seasonPage = seasonRepository.findById(id).orElseThrow(SeasonNotFoundException::new);
-        return seasonConvertors.seasonPageResponse(seasonPage, getRelatedSeasons(seasonPage.getTitle()));
-    }
-
-    public List<SeasonDTO.Response.RelatedSeason> getRelatedSeasons(Title title) {
-        return title.getSeasonList().stream().map(seasonConvertors::convertToRelatedSeason).toList();
+        List<SeasonDTO.Response.RelatedSeason>  relatedSeasons =seasonPage.getTitle().getSeasonList().stream().map(seasonConvertors::convertToRelatedSeason).toList();
+        return seasonConvertors.seasonPageResponse(seasonPage,
+            relatedSeasons);
     }
 }

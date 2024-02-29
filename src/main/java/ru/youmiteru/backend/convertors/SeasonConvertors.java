@@ -2,11 +2,14 @@ package ru.youmiteru.backend.convertors;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.youmiteru.backend.domain.Genre;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.dto.SeasonDTO;
+import ru.youmiteru.backend.dto.VideoDTO;
 import ru.youmiteru.backend.service.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /*
  *
@@ -19,8 +22,7 @@ public class SeasonConvertors {
     private final CommentService commentService;
     private final RatingService ratingService;
     private final VoiceActorService voiceActorService;
-    private final VideoService videoService;
-    private final GenreService genreService;
+    private final VideoConvertors videoConvertors;
 
     //home page
     public SeasonDTO.Response.HomePage homePageResponse(Season season) {
@@ -51,8 +53,12 @@ public class SeasonConvertors {
         dto.setCommentsList(commentService.getCommentsList(seasonPage));
         dto.setRating(ratingService.getRating(seasonPage.getId()));
         dto.setVoiceActors(voiceActorService.getVoiceActorList(seasonPage));
-        dto.setVideoDtoList(videoService.getVideoListForSeasonPage(seasonPage));
-        dto.setGenres(genreService.getGenre(seasonPage.getTitle()));
+        List<VideoDTO.Response.VideoDtoForSeason> videoDtoList = seasonPage.getVideoList()
+            .stream().map(videoConvertors::convertToVideoDtoForSeason).toList();
+        dto.setVideoDtoList(videoDtoList);
+        List<String> genres = seasonPage.getTitle().getGenres().stream().map(Genre::getName)
+            .toList();
+        dto.setGenres(genres);
         dto.setRelatedSeasons(relatedSeasonList);
 
         return dto;

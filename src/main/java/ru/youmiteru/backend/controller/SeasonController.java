@@ -12,18 +12,18 @@ import ru.youmiteru.backend.dto.SeasonDTO;
 import ru.youmiteru.backend.service.SeasonService;
 
 @RestController
-@RequestMapping("/youmiteru")
+@RequestMapping("/api/season")
 @RequiredArgsConstructor
 public class SeasonController {
     private static final Logger logger = LogManager.getLogger();
     private final SeasonService seasonService;
 
-    @GetMapping("/all")
+    @GetMapping
     public SeasonDTO.Response.ListHomePage getAllSeasons() {
         return seasonService.getAllSeasonForHomePage();
     }
 
-    @GetMapping("/season/{id}")
+    @GetMapping("/{id}")
     private SeasonDTO.Response.SeasonPage getSeasonPage(@PathVariable Long id) {
         return seasonService.getSeasonPage(id);
     }
