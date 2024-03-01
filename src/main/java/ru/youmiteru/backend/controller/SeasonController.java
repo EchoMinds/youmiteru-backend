@@ -18,7 +18,7 @@ public class SeasonController {
     private static final Logger logger = LogManager.getLogger();
     private final SeasonService seasonService;
 
-    @GetMapping
+    @GetMapping("/homepage")
     public SeasonDTO.Response.ListHomePage getAllSeasons() {
         return seasonService.getAllSeasonForHomePage();
     }
