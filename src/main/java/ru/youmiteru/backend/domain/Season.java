@@ -38,6 +38,7 @@ public class Season {
     @JoinColumn(name = "title_id", referencedColumnName = "id")
     private Title title;
 
+    //считаю что надо переименовать в seasonState
     @Enumerated(value = EnumType.STRING)
     @Column(name = "title_state")
     private TitleState titleState;
@@ -66,7 +67,7 @@ public class Season {
     private List<Video> videoList;
 
     @Column(name = "anime_banner_url")
-    private String AnimeBannerUrl;
+    private String animeBannerUrl;
 
     @OneToMany(mappedBy = "season")
     private List<Comment> seasonCommentList;

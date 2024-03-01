@@ -2,6 +2,7 @@ package ru.youmiteru.backend.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Table(name = "title", schema = "youmiteru_backend")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Title {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

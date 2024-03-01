@@ -1,12 +1,14 @@
 package ru.youmiteru.backend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ru.youmiteru.backend.domain.*;
+import ru.youmiteru.backend.dto.*;
+import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
+import ru.youmiteru.backend.repositories.SeasonRepository;
+import ru.youmiteru.backend.convertors.SeasonConvertors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Service;
-import ru.youmiteru.backend.domain.Season;
-import ru.youmiteru.backend.dto.SeasonDTO;
-import ru.youmiteru.backend.repositories.SeasonRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,26 +17,29 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SeasonService {
     private final SeasonRepository seasonRepository;
+    private final SeasonConvertors seasonConvertors;
     private static final Logger logger = LogManager.getLogger();
 
-    //Return data for HomePage
-    public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage(){
+    public SeasonDTO.Response.ListHomePage getAllSeasonForHomePage() {
+
         logger.info("Запуск метода Сервиса getAllSeasonForHomePage");
         SeasonDTO.Response.ListHomePage listHomePage = new SeasonDTO.Response.ListHomePage();
 
         logger.info("Берёт из БД сезонов анонсы");
         List<SeasonDTO.Response.HomePage> anons = seasonRepository.findAnnouncement()
-            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
+            .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
+
         logger.info("Берёт из БД сезонов релизы");
         List<SeasonDTO.Response.HomePage> release = seasonRepository.findRecent()
-            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
+            .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
+
         logger.info("Берёт из БД сезонов баннер");
         List<SeasonDTO.Response.HomePage> banner = seasonRepository.findBanner()
-            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
+            .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
+
         logger.info("Берёт из БД сезонов популярные");
         List<SeasonDTO.Response.HomePage> popular = seasonRepository.findPopular()
-            .stream().map(this::convertToSeasonDTO).collect(Collectors.toList());
-
+            .stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList());
 
         logger.info("Конвертация анонсов в лист ДТО");
         listHomePage.setBanners(banner);
@@ -49,15 +54,10 @@ public class SeasonService {
         return listHomePage;
     }
 
-    //Convert Seasons to DTO
-    private SeasonDTO.Response.HomePage convertToSeasonDTO(Season season) {
-        SeasonDTO.Response.HomePage seasonDTO = new SeasonDTO.Response.HomePage();
-
-        seasonDTO.setSeasonId(season.getId());
-        seasonDTO.setSeasonName(season.getName());
-        seasonDTO.setDescription(season.getDescription());
-        seasonDTO.setImageUrl(season.getSeasonImageUrl());
-
-        return seasonDTO;
+    public SeasonDTO.Response.SeasonPage getSeasonPage(Long id) {
+        Season seasonPage = seasonRepository.findById(id).orElseThrow(SeasonNotFoundException::new);
+        List<SeasonDTO.Response.RelatedSeason>  relatedSeasons =seasonPage.getTitle().getSeasonList().stream().map(seasonConvertors::convertToRelatedSeason).toList();
+        return seasonConvertors.seasonPageResponse(seasonPage,
+            relatedSeasons);
     }
 }
