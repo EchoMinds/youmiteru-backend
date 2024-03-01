@@ -38,5 +38,13 @@ public class TitleDTO {
             String titleName;
             String titleImageUrl;
         }
+
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Data
+        public static class Catalog implements titleName, titleImageUrl {
+            String titleName;
+            String titleImageUrl;
+        }
     }
 }

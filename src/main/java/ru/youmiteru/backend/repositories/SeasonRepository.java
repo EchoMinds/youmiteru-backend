@@ -1,5 +1,6 @@
 package ru.youmiteru.backend.repositories;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -7,6 +8,7 @@ import ru.youmiteru.backend.domain.*;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public interface SeasonRepository extends JpaRepository<Season, Long> {
@@ -25,4 +27,6 @@ public interface SeasonRepository extends JpaRepository<Season, Long> {
 
     @Query(value = "select s.* from youmiteru_backend.season s JOIN youmiteru_backend.rating r ON (s.id = r.season_id) group by s.id order by AVG(value) desc LIMIT 10 ", nativeQuery = true)
     List<Season> findPopular();
+
+    List<Season> findByTitle(Title title);
 }
