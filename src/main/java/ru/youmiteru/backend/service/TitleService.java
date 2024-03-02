@@ -52,19 +52,26 @@ public class TitleService {
 
         List<Title> necessaryTitle = new ArrayList<>();
         CatalogFilter catalogFilter = new CatalogFilter(titleRepository, genreRepository, seasonRepository);
+        int error_count = 0;
 
         if(genre == null &&dates == null &&format == null &&state == null &&ageRestriction == null&&yearSeason == null){
             return titleRepository.findAllForFilter();
         } else {
             //жанры
             if(genre != null){
-                necessaryTitle = catalogFilter.filterTitleGenre(genre);
+                if(!catalogFilter.filterTitleGenre(genre).isEmpty()){
+                    necessaryTitle = catalogFilter.filterTitleGenre(genre);
+                } else
+                    error_count++;
             }
 
             //даты года
             if(dates != null){
                 if(!necessaryTitle.isEmpty()){
-                    necessaryTitle = catalogFilter.filterTitleDate(dates, necessaryTitle);
+                    if(!catalogFilter.filterTitleDate(dates, necessaryTitle).isEmpty()){
+                        necessaryTitle = catalogFilter.filterTitleDate(dates, necessaryTitle);
+                    } else
+                        error_count++;
                 } else {
                     necessaryTitle = catalogFilter.filterTitleDate(dates, null);
                 }
@@ -75,7 +82,10 @@ public class TitleService {
             //формат аниме(фильм, сериал, OVA)
             if(format != null){
                 if(!necessaryTitle.isEmpty()){
-                    necessaryTitle = catalogFilter.filterTitleFormat(format, necessaryTitle);
+                    if (!catalogFilter.filterTitleFormat(format, necessaryTitle).isEmpty()){
+                        necessaryTitle = catalogFilter.filterTitleFormat(format, necessaryTitle);
+                    } else
+                        error_count++;
                 } else {
                     necessaryTitle = catalogFilter.filterTitleFormat(format, null);
                 }
@@ -84,7 +94,10 @@ public class TitleService {
             //статус аниме (вышел, выходит, заброшен)
             if(state != null){
                 if(!necessaryTitle.isEmpty()){
-                    necessaryTitle = catalogFilter.filterTitleState(state, necessaryTitle);
+                    if (!catalogFilter.filterTitleState(state, necessaryTitle).isEmpty()) {
+                        necessaryTitle = catalogFilter.filterTitleState(state, necessaryTitle);
+                    } else
+                        error_count++;
                 } else {
                     necessaryTitle = catalogFilter.filterTitleState(state, null);
                 }
@@ -93,7 +106,10 @@ public class TitleService {
             //возраст (18+, 12+, 6+)
             if(ageRestriction != null){
                 if(!necessaryTitle.isEmpty()){
-                    necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, necessaryTitle);
+                    if(!catalogFilter.filterTitleAgeRestriction(ageRestriction, necessaryTitle).isEmpty()){
+                        necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, necessaryTitle);
+                    } else
+                        error_count++;
                 } else {
                     necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, null);
                 }
@@ -102,12 +118,23 @@ public class TitleService {
             //сезонов месяца(зима, осень, весна, лето)
             if(yearSeason != null) {
                 if (!necessaryTitle.isEmpty()) {
-                    necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle);
+                    if(!catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle).isEmpty()){
+                        necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle);
+                    } else
+                        error_count++;
                 } else {
                     necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, null);
                 }
             }
-            return necessaryTitle;
+
+            if (error_count == 0){
+                return necessaryTitle;
+            } else {
+                List<Title> emptyTitle = new ArrayList<>();
+                return emptyTitle;
+            }
+
+
         }
     }
 }
