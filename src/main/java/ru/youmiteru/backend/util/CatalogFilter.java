@@ -22,178 +22,84 @@ public class CatalogFilter {
 
     //----------Фильтрация для жанра
     public List<Title> filterTitleGenre(List<String> filter){
-        List<Long> genreIds = new ArrayList<>();
-        List<Long> titleIds = new ArrayList<>();
-
-        for (String name : filter){
-            for (Genre searchGenre : genreRepository.findByName(name)){
-                genreIds.add(searchGenre.getId());
-            }
-        }
+        List<Long> genreIds = filter.stream()
+            .flatMap(name -> genreRepository.findByName(name).stream())
+            .map(Genre::getId)
+            .collect(Collectors.toList());
 
         List<Long> checkTitleIds = titleRepository.findTitleIdsByGenreIdsList(genreIds);
 
-        for (Long id : checkTitleIds){
-            int i = 0;
-            for (Long ids : titleRepository.findGenreIdsByTitleIds(id)){
-                for (Long oo : genreIds){
-                    if (oo.equals(ids)){
-                        i++;
-                    }
-                }
-            }
-            if (i == genreIds.size()){
-                titleIds.add(id);
-            }
-        }
-        return titleRepository.findAllById(titleIds).stream().distinct().collect(Collectors.toList());
+        List<Long> titleIds = checkTitleIds.stream()
+            .filter(id -> titleRepository.findGenreIdsByTitleIds(id).stream()
+                .filter(ids -> genreIds.contains(ids))
+                .count() == genreIds.size())
+            .collect(Collectors.toList());
+
+        return titleRepository.findAllById(titleIds).stream()
+            .distinct()
+            .collect(Collectors.toList());
     }
 
 
     //----------Фильтрация для даты года
     public List<Title> filterTitleDate(List<Long> dates, List<Title> checkTitle){
-        List<Title> necessaryTitle = new ArrayList<>();
+        List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
+            .flatMap(title -> seasonRepository.findByTitle(title).stream())
+            .filter(seasons -> dates.contains((long) seasons.getReleaseDate().getYear()))
+            .map(Season::getTitle)
+            .distinct()
+            .collect(Collectors.toList());
 
-        if (checkTitle!=null){
-            for (Title title : checkTitle) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(Long date : dates ){
-                        if ((seasons.getReleaseDate().getYear()) == date){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        } else {
-            for (Title title : titleRepository.findAllForFilter()) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(Long date : dates ){
-                        if ((seasons.getReleaseDate().getYear()) == date){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        }
-
-        return necessaryTitle.stream().distinct().collect(Collectors.toList());
+        return necessaryTitle;
     }
 
 
     //----------Фильтрация формата аниме(фильм, сериал, OVA)
     public List<Title> filterTitleFormat(List<String> formats, List<Title> checkTitle){
-        List<Title> necessaryTitle = new ArrayList<>();
+        List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
+            .flatMap(title -> seasonRepository.findByTitle(title).stream())
+            .filter(seasons -> formats.stream().anyMatch(format -> seasons.getAnimeFormat().toString().equalsIgnoreCase(format)))
+            .map(Season::getTitle)
+            .distinct()
+            .collect(Collectors.toList());
 
-        if(checkTitle!=null){
-            for (Title title : checkTitle) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(String format : formats){
-                        if ((seasons.getAnimeFormat().toString()).equalsIgnoreCase(format)){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        } else {
-            for (Title title : titleRepository.findAllForFilter()) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(String format : formats){
-                        if ((seasons.getAnimeFormat().toString()).equals(format)){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        }
-
-        return necessaryTitle.stream().distinct().collect(Collectors.toList());
+        return necessaryTitle;
     }
 
     //----------Фильтрация статуса аниме (вышел, выходит, заброшен)
     public List<Title> filterTitleState(List<String> states, List<Title> checkTitle){
-        List<Title> necessaryTitle = new ArrayList<>();
+        List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
+            .flatMap(title -> seasonRepository.findByTitle(title).stream())
+            .filter(seasons -> states.contains(seasons.getTitleState().toString()))
+            .map(Season::getTitle)
+            .distinct()
+            .collect(Collectors.toList());
 
-        if(checkTitle!=null){
-            for (Title title : checkTitle) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(String state : states){
-                        if ((seasons.getTitleState().toString()).equals(state)){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        } else {
-            for (Title title : titleRepository.findAllForFilter()) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(String state : states){
-                        if ((seasons.getTitleState().toString()).equals(state)){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        }
-
-        return necessaryTitle.stream().distinct().collect(Collectors.toList());
+        return necessaryTitle;
     }
 
     //----------Фильтрация возраста (18+, 12+, 6+)
     public List<Title> filterTitleAgeRestriction(List<String> ageRestrictions,List<Title> checkTitle){
-        List<Title> necessaryTitle = new ArrayList<>();
+        List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
+            .flatMap(title -> seasonRepository.findByTitle(title).stream())
+            .filter(seasons -> ageRestrictions.contains(seasons.getAgeRestriction()))
+            .map(Season::getTitle)
+            .distinct()
+            .collect(Collectors.toList());
 
-        if (checkTitle!=null){
-            for (Title title : checkTitle) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(String age : ageRestrictions){
-                        if ((seasons.getAgeRestriction()).equals(age)){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        } else {
-            for (Title title : titleRepository.findAllForFilter()) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(String age : ageRestrictions){
-                        if ((seasons.getAgeRestriction()).equals(age)){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        }
-
-        return necessaryTitle.stream().distinct().collect(Collectors.toList());
+        return necessaryTitle;
     }
 
     //----------Фильтрация сезонов месяца(зима, осень, весна, лето)
     public List<Title> filterTitleYearSeason(List<String> yearSeasons,List<Title> checkTitle){
-        List<Title> necessaryTitle = new ArrayList<>();
+        List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
+            .flatMap(title -> seasonRepository.findByTitle(title).stream())
+            .filter(seasons -> yearSeasons.contains(seasons.getYearSeason()))
+            .map(Season::getTitle)
+            .distinct()
+            .collect(Collectors.toList());
 
-        if (checkTitle!=null){
-            for (Title title : checkTitle) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(String year : yearSeasons){
-                        if ((seasons.getYearSeason()).equals(year)){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        } else {
-            for (Title title : titleRepository.findAllForFilter()) {
-                for (Season seasons : seasonRepository.findByTitle(title)){
-                    for(String year : yearSeasons){
-                        if ((seasons.getYearSeason()).equals(year)){
-                            necessaryTitle.add(title);
-                        }
-                    }
-                }
-            }
-        }
-
-        return necessaryTitle.stream().distinct().collect(Collectors.toList());
+        return necessaryTitle;
     }
 
 }
