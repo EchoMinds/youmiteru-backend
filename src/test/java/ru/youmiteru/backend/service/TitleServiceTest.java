@@ -98,8 +98,8 @@ public class TitleServiceTest {
             yearSeason = List.of("WINTER");
         }
         @Test
-        @DisplayName("getCatalogTest")
-        void getCatalogTest(){
+        @DisplayName("filterConvertorCatalog")
+        void filterConvertorCatalog(){
             assertEquals(fakeTitle.getGenres().get(0).getName(), genre.get(0));
             assertEquals(fakeTitle.getSeasonList().get(0).getReleaseDate().getYear(), date.get(0));
             assertEquals(fakeTitle.getSeasonList().get(0).getAnimeFormat().name(), format.get(0));
