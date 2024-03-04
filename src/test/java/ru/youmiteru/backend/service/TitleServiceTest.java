@@ -9,24 +9,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.domain.Title;
+import ru.youmiteru.backend.dto.TitleDTO;
+import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
 import ru.youmiteru.backend.util.CatalogFilter;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import ru.youmiteru.backend.convertors.SeasonConvertors;
 import ru.youmiteru.backend.domain.*;
-import ru.youmiteru.backend.dto.SeasonDTO;
-import ru.youmiteru.backend.repositories.SeasonRepository;
-import ru.youmiteru.backend.dto.SeasonDTO.Response.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -44,15 +35,25 @@ public class TitleServiceTest {
         @Mock
         private TitleRepository titleRepositoryMock;
 
+        @Mock
+        private GenreRepository genreRepositoryMock;
+
+        @Mock
+        private SeasonRepository seasonRepositoryMock;
+
+        @Mock
+        private TitleDTO.Response.Catalog titleDTO;
+
         @InjectMocks
         private static TitleService titleServiceMock;
 
         @Mock
         private static CatalogFilter catalogFilter;
 
-        private Season fakeSeason;
-        private Title fakeTitle;
+        private Season fakeSeason1, fakeSeason2;
+        private Title fakeTitle1, fakeTitle2;
         private Genre fakeGenre;
+        private TitleDTO.Response.Catalog testDto;
 
         private List<String> genre;
         private List<Long> date;
@@ -62,50 +63,88 @@ public class TitleServiceTest {
         private List<String> yearSeason;
         @BeforeEach
         void init(){
-            fakeTitle = new Title();
-            fakeTitle.setId(1L);
-            fakeTitle.setTitleImageUrl("url");
-            fakeTitle.setName("Boku no Kokoro no Yabai Yatsu Season 2");
-            fakeTitle.setDescription("Повседневная жизнь маленького");
+            fakeTitle1 = new Title();
+            fakeTitle1.setId(1L);
+            fakeTitle1.setTitleImageUrl("url");
+            fakeTitle1.setName("Boku no Kokoro no Yabai Yatsu Season 2");
+            fakeTitle1.setDescription("Повседневная жизнь маленького");
 
-            fakeSeason = new Season();
-            fakeSeason.setId(1L);
-            fakeSeason.setSeasonImageUrl("https://example.com/season_image.jpg");
-            fakeSeason.setName("Fake Season");
-            fakeSeason.setDescription("This is a fake season for testing purposes.");
-            fakeSeason.setReleaseDate(LocalDate.of(2024, 1, 1));
-            fakeSeason.setAgeRestriction("18+");
-            fakeSeason.setYearSeason("WINTER");
-            fakeSeason.setAnimeBannerUrl("https://example.com/banner.jpg");
-            fakeSeason.setTitle(fakeTitle);
-            fakeSeason.setTitleState(TitleState.ANNOUNCEMENT);
-            fakeSeason.setAnimeFormat(AnimeFormat.TV_SHOW);
+            fakeTitle2 = new Title();
+            fakeTitle2.setId(2L);
+            fakeTitle2.setName("Boku no Kokoro");
+            fakeTitle2.setTitleImageUrl("url2");
+            fakeTitle2.setDescription("Повседневная жизнь маленького");
+
+            fakeSeason1 = new Season();
+            fakeSeason1.setId(1L);
+            fakeSeason1.setSeasonImageUrl("https://example.com/season_image.jpg");
+            fakeSeason1.setName("Fake Season");
+            fakeSeason1.setDescription("This is a fake season for testing purposes.");
+            fakeSeason1.setReleaseDate(LocalDate.of(2023, 1, 1));
+            fakeSeason1.setAgeRestriction("2023");
+            fakeSeason1.setYearSeason("2023");
+            fakeSeason1.setAnimeBannerUrl("https://example.com/banner.jpg");
+            fakeSeason1.setTitle(fakeTitle1);
+            fakeSeason1.setTitleState(TitleState.ANNOUNCEMENT);
+            fakeSeason1.setAnimeFormat(AnimeFormat.TV_SHOW);
+
+            fakeSeason2 = new Season();
+            fakeSeason2.setId(2L);
+            fakeSeason2.setSeasonImageUrl("urlSeason1");
+            fakeSeason2.setName("Fake Season2");
+            fakeSeason2.setReleaseDate(LocalDate.of(2023, 1, 1));
+            fakeSeason2.setDescription("This is a fake season");
+            fakeSeason2.setAgeRestriction("2023");
+            fakeSeason2.setYearSeason("2023");
+            fakeSeason2.setAnimeBannerUrl("urlBanner2");
+            fakeSeason2.setTitle(fakeTitle2);
+            fakeSeason2.setTitleState(TitleState.ANNOUNCEMENT);
+            fakeSeason2.setAnimeFormat(AnimeFormat.TV_SHOW);
 
             fakeGenre = new Genre();
             fakeGenre.setId(1L);
             fakeGenre.setName("Shoujo");
-            fakeGenre.setTitles(List.of(fakeTitle));
+            fakeGenre.setTitles(List.of(fakeTitle1, fakeTitle2));
 
-            fakeTitle.setSeasonList(List.of(fakeSeason));
-            fakeTitle.setGenres(List.of(fakeGenre));
+            fakeTitle1.setSeasonList(List.of(fakeSeason1));
+            fakeTitle1.setGenres(List.of(fakeGenre));
+            fakeTitle2.setSeasonList(List.of(fakeSeason2));
+            fakeTitle2.setGenres(List.of(fakeGenre));
 
             //спецификации для фильтра
             genre = List.of("Shoujo");
-            date = List.of(2024L);
+            date = List.of(2023L);
             format = List.of("TV_SHOW");
             state = List.of("ANNOUNCEMENT");
-            ageRestriction = List.of("18+");
-            yearSeason = List.of("WINTER");
+            ageRestriction = List.of("2023");
+            yearSeason = List.of("2023");
+
+            testDto = new TitleDTO.Response.Catalog();
+            testDto.setTitleName("Boku no Kokoro no Yabai Yatsu Season 2");
+            testDto.setTitleImageUrl("url");
         }
         @Test
         @DisplayName("filterConvertorCatalog")
-        void filterConvertorCatalog(){
-            assertEquals(fakeTitle.getGenres().get(0).getName(), genre.get(0));
-            assertEquals(fakeTitle.getSeasonList().get(0).getReleaseDate().getYear(), date.get(0));
-            assertEquals(fakeTitle.getSeasonList().get(0).getAnimeFormat().name(), format.get(0));
-            assertEquals(fakeTitle.getSeasonList().get(0).getTitleState().name(), state.get(0));
-            assertEquals(fakeTitle.getSeasonList().get(0).getAgeRestriction(), ageRestriction.get(0));
-            assertEquals(fakeTitle.getSeasonList().get(0).getYearSeason(), yearSeason.get(0));
+        void getCatalog(){
+            when(titleServiceMock.filterConvertorCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1,fakeTitle2));
+
+            List<TitleDTO.Response.Catalog> testDtoTitle = titleServiceMock.getCatalog(genre, date, format, state, ageRestriction, yearSeason);
+            assertNotNull(testDtoTitle);
+            for (TitleDTO.Response.Catalog test : testDtoTitle){
+                assertEquals(fakeTitle1.getName(), test.getTitleName());
+                assertEquals(fakeTitle1.getTitleImageUrl(), test.getTitleImageUrl());
+            }
+
+            List<Title> filteredTitleTest = titleServiceMock.filterConvertorCatalog(genre, date, format, state, ageRestriction, yearSeason);
+            assertNotNull(filteredTitleTest);
+            for (Title test : filteredTitleTest){
+                assertEquals(test.getName(), "Boku no Kokoro no Yabai Yatsu Season 2");
+                assertEquals(test.getGenres().get(0).getName(), genre.get(0));
+                assertEquals(test.getSeasonList().get(0).getAnimeFormat().name(), format.get(0));
+                assertEquals(test.getSeasonList().get(0).getTitleState().name(), state.get(0));
+                assertEquals(test.getSeasonList().get(0).getAgeRestriction(), ageRestriction.get(0));
+                assertEquals(test.getSeasonList().get(0).getYearSeason(), yearSeason.get(0));
+            }
         }
     }
 }
