@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  db:
+    ports:
+      - 5432:5432
+    container_name: postgresql_conatiner
+    image: postgres
+    environment:
+      - POSTGRES_DB=MYDB2
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=postgres
+    volumes:
+      - D:\postgres_datapart:/var/lib/postgresql/data
+    restart: always
+  backend:
+    build: .
+    container_name: testapp_container
+    volumes:
+      - D:\filles\project_programming\java\spring\youmiteru-backend\build\libs:/app
+    ports:
+      - 8089:8089
+    environment:
+      db-url: jdbc:postgresql://db:5432/MYDB2
+      db-username: postgres
+      db-password: 123
+    depends_on:
+      - db
+    restart: always
