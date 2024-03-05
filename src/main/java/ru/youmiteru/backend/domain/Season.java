@@ -50,6 +50,9 @@ public class Season {
     @Column(name = "year_season")
     private String yearSeason;
 
+    @Column(name = "reduced_description")
+    private String reducedDescription;
+
     @Column(name = "anime_format")
     @Enumerated(value = EnumType.STRING)
     private AnimeFormat animeFormat;

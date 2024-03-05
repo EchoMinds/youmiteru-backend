@@ -50,6 +50,7 @@ public class SeasonConvertors {
         dto.setTitleState(seasonPage.getTitleState());
         dto.setAgeRestriction(seasonPage.getAgeRestriction());
         dto.setYearSeason(seasonPage.getYearSeason());
+        dto.setReducedDescription(seasonPage.getReducedDescription());
         dto.setCommentsList(commentService.getCommentsList(seasonPage));
         dto.setRating(ratingService.getRating(seasonPage.getId()));
         dto.setVoiceActors(voiceActorService.getVoiceActorList(seasonPage));
