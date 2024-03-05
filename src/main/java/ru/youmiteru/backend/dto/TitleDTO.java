@@ -42,7 +42,7 @@ public class TitleDTO {
         @NoArgsConstructor
         @AllArgsConstructor
         @Data
-        public static class Catalog implements titleName, titleImageUrl {
+        public static class TitleCatalogDTO implements titleName, titleImageUrl {
             String titleName;
             String titleImageUrl;
         }

@@ -1,6 +1,8 @@
 package ru.youmiteru.backend.util;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.flywaydb.core.extensibility.Tier;
 import ru.youmiteru.backend.domain.Genre;
 import ru.youmiteru.backend.domain.Season;
@@ -18,10 +20,11 @@ public class CatalogFilter {
     private final TitleRepository titleRepository;
     private final GenreRepository genreRepository;
     private final SeasonRepository seasonRepository;
-
+    private static final Logger logger = LogManager.getLogger();
 
     //----------Фильтрация для жанра
     public List<Title> filterTitleGenre(List<String> filter){
+        logger.info("запуск метода filterTitleGenre в классе CatalogFilter");
         List<Long> genreIds = filter.stream()
             .flatMap(name -> genreRepository.findByName(name).stream())
             .map(Genre::getId)
@@ -43,6 +46,7 @@ public class CatalogFilter {
 
     //----------Фильтрация для даты года
     public List<Title> filterTitleDate(List<Long> dates, List<Title> checkTitle){
+        logger.info("запуск метода filterTitleDate в классе CatalogFilter");
         List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
             .flatMap(title -> seasonRepository.findByTitle(title).stream())
             .filter(seasons -> dates.contains((long) seasons.getReleaseDate().getYear()))
@@ -56,6 +60,7 @@ public class CatalogFilter {
 
     //----------Фильтрация формата аниме(фильм, сериал, OVA)
     public List<Title> filterTitleFormat(List<String> formats, List<Title> checkTitle){
+        logger.info("запуск метода filterTitleFormat в классе CatalogFilter");
         List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
             .flatMap(title -> seasonRepository.findByTitle(title).stream())
             .filter(seasons -> formats.stream().anyMatch(format -> seasons.getAnimeFormat().toString().equalsIgnoreCase(format)))
@@ -68,6 +73,7 @@ public class CatalogFilter {
 
     //----------Фильтрация статуса аниме (вышел, выходит, заброшен)
     public List<Title> filterTitleState(List<String> states, List<Title> checkTitle){
+        logger.info("запуск метода filterTitleState в классе CatalogFilter");
         List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
             .flatMap(title -> seasonRepository.findByTitle(title).stream())
             .filter(seasons -> states.contains(seasons.getTitleState().toString()))
@@ -80,6 +86,7 @@ public class CatalogFilter {
 
     //----------Фильтрация возраста (18+, 12+, 6+)
     public List<Title> filterTitleAgeRestriction(List<String> ageRestrictions,List<Title> checkTitle){
+        logger.info("запуск метода filterTitleAgeRestriction в классе CatalogFilter");
         List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
             .flatMap(title -> seasonRepository.findByTitle(title).stream())
             .filter(seasons -> ageRestrictions.contains(seasons.getAgeRestriction()))
@@ -92,6 +99,7 @@ public class CatalogFilter {
 
     //----------Фильтрация сезонов месяца(зима, осень, весна, лето)
     public List<Title> filterTitleYearSeason(List<String> yearSeasons,List<Title> checkTitle){
+        logger.info("запуск метода filterTitleYearSeason в классе CatalogFilter");
         List<Title> necessaryTitle = (checkTitle != null ? checkTitle : titleRepository.findAllForFilter()).stream()
             .flatMap(title -> seasonRepository.findByTitle(title).stream())
             .filter(seasons -> yearSeasons.contains(seasons.getYearSeason()))
