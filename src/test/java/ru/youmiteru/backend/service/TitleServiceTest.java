@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.convertors.TitleConvertors;
 import ru.youmiteru.backend.domain.Title;
-import ru.youmiteru.backend.dto.TitleDTO;
+import ru.youmiteru.backend.dto.TitleDTO.Response.TitleCatalogDTO;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
@@ -35,9 +35,9 @@ public class TitleServiceTest {
     @Mock
     private SeasonRepository seasonRepositoryMock;
     @Mock
-    private TitleDTO.Response.TitleCatalogDTO titleDTO;
+    private TitleCatalogDTO titleDTO;
     @Mock
-    private TitleConvertors titleConvertors;
+    private TitleConvertors titleConvertorsMock;
     @InjectMocks
     private static TitleService titleServiceMock;
     @Mock
@@ -46,7 +46,7 @@ public class TitleServiceTest {
     private Season fakeSeason1, fakeSeason2;
     private Title fakeTitle1, fakeTitle2;
     private Genre fakeGenre;
-    private TitleDTO.Response.TitleCatalogDTO testDto;
+    private TitleCatalogDTO testDto1, testDto2;
 
     private List<String> genre;
     private List<Long> date;
@@ -112,20 +112,27 @@ public class TitleServiceTest {
         ageRestriction = List.of("2023");
         yearSeason = List.of("2023");
 
-        testDto = new TitleDTO.Response.TitleCatalogDTO();
-        testDto.setTitleName("Boku no Kokoro no Yabai Yatsu Season 2");
-        testDto.setTitleImageUrl("url");
+        testDto1 = new TitleCatalogDTO();
+        testDto1.setTitleName(fakeTitle1.getName());
+        testDto1.setTitleImageUrl(fakeTitle1.getTitleImageUrl());
+
+        testDto2 = new TitleCatalogDTO();
+        testDto2.setTitleName(fakeTitle2.getName());
+        testDto2.setTitleImageUrl(fakeTitle2.getTitleImageUrl());
     }
     @Test
     @DisplayName("filterForCatalog")
     void getCatalog(){
         when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1,fakeTitle2));
 
-        List<TitleDTO.Response.TitleCatalogDTO> testDtoTitle = titleServiceMock.getCatalog(genre, date, format, state, ageRestriction, yearSeason);
+        List<TitleCatalogDTO> testDtoTitle = titleServiceMock.getCatalog(genre, date, format, state, ageRestriction, yearSeason);
+
+
         assertNotNull(testDtoTitle);
-        for (TitleDTO.Response.TitleCatalogDTO test : testDtoTitle){
-            assertEquals(fakeTitle1.getName(), test.getTitleName());
-            assertEquals(fakeTitle1.getTitleImageUrl(), test.getTitleImageUrl());
+        for (TitleCatalogDTO test : testDtoTitle){
+            assertEquals(testDto1, test);
+            assertEquals(testDto1.getTitleImageUrl(), test.getTitleImageUrl());
+            assertEquals(testDto1.getTitleName(), test.getTitleName());
         }
 
         List<Title> filteredTitleTest = titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason);
