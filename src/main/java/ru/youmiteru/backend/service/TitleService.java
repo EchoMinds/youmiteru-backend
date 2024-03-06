@@ -42,6 +42,7 @@ public class TitleService {
 
         List<Title> necessaryTitle = new ArrayList<>();
         CatalogFilter catalogFilter = new CatalogFilter(titleRepository, genreRepository, seasonRepository);
+        int error_count = 0;
 
         if(genre == null &&dates == null &&format == null &&state == null &&ageRestriction == null&&yearSeason == null){
             return titleRepository.findAllForFilter();
@@ -53,7 +54,7 @@ public class TitleService {
                     necessaryTitle = catalogFilter.filterTitleGenre(genre);
                 } else{
                     logger.info("фильтр genre не могу найти нужный тайтл");
-                    return new ArrayList<>();
+                    error_count++;
                 }
             }
 
@@ -65,7 +66,7 @@ public class TitleService {
                         necessaryTitle = catalogFilter.filterTitleDate(dates, necessaryTitle);
                     } else{
                         logger.info("фильтр date не могу найти нужный тайтл");
-                        return new ArrayList<>();
+                        error_count++;
                     }
                 } else {
                     necessaryTitle = catalogFilter.filterTitleDate(dates, null);
@@ -82,7 +83,7 @@ public class TitleService {
                         necessaryTitle = catalogFilter.filterTitleFormat(format, necessaryTitle);
                     } else{
                         logger.info("фильтр animeFormat не могу найти нужный тайтл");
-                        return new ArrayList<>();
+                        error_count++;
                     }
                 } else {
                     necessaryTitle = catalogFilter.filterTitleFormat(format, null);
@@ -97,7 +98,7 @@ public class TitleService {
                         necessaryTitle = catalogFilter.filterTitleState(state, necessaryTitle);
                     } else{
                         logger.info("фильтр TitleState не могу найти нужный тайтл");
-                        return new ArrayList<>();
+                        error_count++;
                     }
                 } else {
                     necessaryTitle = catalogFilter.filterTitleState(state, null);
@@ -112,7 +113,7 @@ public class TitleService {
                         necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, necessaryTitle);
                     } else{
                         logger.info("фильтр AgeRestriction не могу найти нужный тайтл");
-                        return new ArrayList<>();
+                        error_count++;
                     }
                 } else {
                     necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, null);
@@ -126,15 +127,19 @@ public class TitleService {
                     if(!catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle).isEmpty()){
                         necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle);
                     } else{
-                        logger.info("фильтр YearSeason не могу найти нужный тайтл");
-                        return new ArrayList<>();
+                        logger.info("фильтр yearSeason не могу найти нужный тайтл");
+                        error_count++;
                     }
                 } else {
                     necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, null);
                 }
             }
 
-        return necessaryTitle;
+            if (error_count == 0){
+                return necessaryTitle;
+            } else {
+                return new ArrayList<>();
+            }
         }
     }
 }
