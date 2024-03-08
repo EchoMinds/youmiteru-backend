@@ -1,2 +1,5 @@
 FROM eclipse-temurin:17-jdk-alpine
-ENTRYPOINT ["java","-jar","/app/backend-0.0.1-SNAPSHOT.jar"]
+EXPOSE 8080
+WORKDIR /opt/app
+COPY build/libs/*.jar app.jar
+ENTRYPOINT ["java","-jar","app.jar"]
