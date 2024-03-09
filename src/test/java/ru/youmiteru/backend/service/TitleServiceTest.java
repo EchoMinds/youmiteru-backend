@@ -48,6 +48,7 @@ public class TitleServiceTest {
     private Genre fakeGenre;
     private TitleCatalogDTO testDto1, testDto2;
 
+    private Integer offset;
     private List<String> genre;
     private List<Long> date;
     private List<String> format;
@@ -105,6 +106,7 @@ public class TitleServiceTest {
         fakeTitle2.setGenres(List.of(fakeGenre));
 
         //спецификации для фильтра
+        offset = 0;
         genre = List.of("Shoujo");
         date = List.of(2023L);
         format = List.of("TV_SHOW");
@@ -125,7 +127,7 @@ public class TitleServiceTest {
     void getCatalog(){
         when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1,fakeTitle2));
 
-        List<TitleCatalogDTO> testDtoTitle = titleServiceMock.getCatalog(genre, date, format, state, ageRestriction, yearSeason);
+        List<TitleCatalogDTO> testDtoTitle = titleServiceMock.getCatalog(offset ,genre, date, format, state, ageRestriction, yearSeason);
 
 
         assertNotNull(testDtoTitle);

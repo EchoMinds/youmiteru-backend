@@ -3,6 +3,9 @@ package ru.youmiteru.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.convertors.TitleConvertors;
 import ru.youmiteru.backend.domain.Title;
@@ -26,14 +29,18 @@ public class TitleService {
     private static final Logger logger = LogManager.getLogger();
 
     //Возвращает каталог с сортировкой жанров
-    public List<TitleDTO.Response.TitleCatalogDTO> getCatalog (List<String> filter, List<Long> dates, List<String> format,
+    public List<TitleDTO.Response.TitleCatalogDTO> getCatalog (Integer offset ,List<String> filter, List<Long> dates, List<String> format,
                                                                List<String> state, List<String> ageRestriction, List<String> yearSeason) {
 
         List<TitleDTO.Response.TitleCatalogDTO> titleDto = filterForCatalog(filter, dates, format, state, ageRestriction, yearSeason)
             .stream().map(titleConvertors::convertToCatalogDTO).collect(Collectors.toList());
 
-        return titleDto;
 
+        Pageable pageable = PageRequest.of(offset, 3);
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), titleDto.size());
+
+        return new PageImpl<>(titleDto.subList(start, end), pageable, titleDto.size()).getContent();
     }
 
     public List<Title> filterForCatalog(List<String> genre, List<Long> dates,
@@ -45,6 +52,7 @@ public class TitleService {
         int error_count = 0;
 
         if(genre == null &&dates == null &&format == null &&state == null &&ageRestriction == null&&yearSeason == null){
+            logger.info("метод filterForCatalog возвращает все данные из бд, так как требования были пустыми");
             return titleRepository.findAllForFilter();
         } else {
             //жанры
