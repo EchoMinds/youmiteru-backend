@@ -3,11 +3,11 @@ services:
   db:
     ports:
       - 5432:5432
-    container_name: postgresql_conatiner
+    container_name: postgresql_container
     image: postgres
     environment:
       - POSTGRES_DB=postgres #//Your DB
-      - POSTGRES_PASSWORD=123456 #//Your password
+      - POSTGRES_PASSWORD=relocate #//Your password
       - POSTGRES_USER=postgres #//Your name
     volumes:
       - /var/lib/postgresql/data
@@ -22,7 +22,7 @@ services:
     environment:
       db-url: jdbc:postgresql://db:5432/postgres #//Your DB
       db-username: postgres #//Your name
-      db-password: 123456 #//Your password
+      db-password: relocate #//Your password
     depends_on:
       - db
     restart: always
