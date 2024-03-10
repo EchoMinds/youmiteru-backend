@@ -2,7 +2,6 @@ package ru.youmiteru.backend.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,7 +13,6 @@ import ru.youmiteru.backend.dto.TitleDTO.Response.TitleCatalogDTO;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
-import ru.youmiteru.backend.util.CatalogFilter;
 import ru.youmiteru.backend.domain.*;
 
 import java.time.LocalDate;
@@ -41,7 +39,7 @@ public class TitleServiceTest {
     @InjectMocks
     private static TitleService titleServiceMock;
     @Mock
-    private static CatalogFilter catalogFilter;
+    private static CatalogFilterService catalogFilter;
 
     private Season fakeSeason1, fakeSeason2;
     private Title fakeTitle1, fakeTitle2;
@@ -111,8 +109,8 @@ public class TitleServiceTest {
         date = List.of(2023L);
         format = List.of("TV_SHOW");
         state = List.of("ANNOUNCEMENT");
-        ageRestriction = List.of("2023");
-        yearSeason = List.of("2023");
+        ageRestriction = List.of("18");
+        yearSeason = List.of("WINTER");
 
         testDto1 = new TitleCatalogDTO();
         testDto1.setTitleName(fakeTitle1.getName());

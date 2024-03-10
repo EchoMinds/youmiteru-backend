@@ -13,7 +13,6 @@ import ru.youmiteru.backend.dto.TitleDTO;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
-import ru.youmiteru.backend.util.CatalogFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,104 +47,84 @@ public class TitleService {
                                         List<String> ageRestriction, List<String> yearSeason){
 
         List<Title> necessaryTitle = new ArrayList<>();
-        CatalogFilter catalogFilter = new CatalogFilter(titleRepository, genreRepository, seasonRepository);
+        CatalogFilterService catalogFilter = new CatalogFilterService(titleRepository, genreRepository, seasonRepository);
         int error_count = 0;
 
-        if(genre == null &&dates == null &&format == null &&state == null &&ageRestriction == null&&yearSeason == null){
+        if(genre == null && dates == null && format == null && state == null
+            && ageRestriction == null && yearSeason == null){
             logger.info("метод filterForCatalog возвращает все данные из бд, так как требования были пустыми");
             return titleRepository.findAllForFilter();
         } else {
-            //жанры
-            if(genre != null){
-                logger.info("метод filterForCatalog просит у TitleConvertors Genre");
-                if(!catalogFilter.filterTitleGenre(genre).isEmpty()){
-                    necessaryTitle = catalogFilter.filterTitleGenre(genre);
-                } else{
-                    logger.info("фильтр genre не cмог найти нужный тайтл");
-                    error_count++;
+            try {
+                //жанры
+                if(genre != null){
+                    logger.info("метод filterForCatalog просит у TitleConvertors Genre");
+                    if(!catalogFilter.filterTitleGenre(genre).isEmpty()){
+                        necessaryTitle = catalogFilter.filterTitleGenre(genre);
+                    } else throw new Exception("TitleConvertors вернул genre пустым");
                 }
-            }
-
-            //даты года
-            if(dates != null){
-                logger.info("метод filterForCatalog просит у TitleConvertors Dates");
-                if(!necessaryTitle.isEmpty()){
-                    if(!catalogFilter.filterTitleDate(dates, necessaryTitle).isEmpty()){
-                        necessaryTitle = catalogFilter.filterTitleDate(dates, necessaryTitle);
-                    } else{
-                        logger.info("фильтр date не cмог найти нужный тайтл");
-                        error_count++;
+                //даты года
+                if(dates != null){
+                    logger.info("метод filterForCatalog просит у TitleConvertors Dates");
+                    if(!necessaryTitle.isEmpty()){
+                        if(!catalogFilter.filterTitleDate(dates, necessaryTitle).isEmpty()){
+                            necessaryTitle = catalogFilter.filterTitleDate(dates, necessaryTitle);
+                        } else throw new Exception("TitleConvertors вернул dates пустым");
+                    } else {
+                        necessaryTitle = catalogFilter.filterTitleDate(dates, null);
                     }
-                } else {
-                    necessaryTitle = catalogFilter.filterTitleDate(dates, null);
                 }
-            } else {
 
-            }
-
-            //формат аниме(фильм, сериал, OVA)
-            if(format != null){
-                logger.info("метод filterForCatalog просит у TitleConvertors AnimeFormat");
-                if(!necessaryTitle.isEmpty()){
-                    if (!catalogFilter.filterTitleFormat(format, necessaryTitle).isEmpty()){
-                        necessaryTitle = catalogFilter.filterTitleFormat(format, necessaryTitle);
-                    } else{
-                        logger.info("фильтр animeFormat не cмог найти нужный тайтл");
-                        error_count++;
+                //формат аниме(фильм, сериал, OVA)
+                if(format != null){
+                    logger.info("метод filterForCatalog просит у TitleConvertors AnimeFormat");
+                    if(!necessaryTitle.isEmpty()){
+                        if (!catalogFilter.filterTitleFormat(format, necessaryTitle).isEmpty()){
+                            necessaryTitle = catalogFilter.filterTitleFormat(format, necessaryTitle);
+                        } else throw new Exception("TitleConvertors вернул format пустым");
+                    } else {
+                        necessaryTitle = catalogFilter.filterTitleFormat(format, null);
                     }
-                } else {
-                    necessaryTitle = catalogFilter.filterTitleFormat(format, null);
                 }
-            }
 
-            //статус аниме (вышел, выходит, заброшен)
-            if(state != null){
-                logger.info("метод filterForCatalog просит у TitleConvertors TitleState");
-                if(!necessaryTitle.isEmpty()){
-                    if (!catalogFilter.filterTitleState(state, necessaryTitle).isEmpty()) {
-                        necessaryTitle = catalogFilter.filterTitleState(state, necessaryTitle);
-                    } else{
-                        logger.info("фильтр TitleState не cмог найти нужный тайтл");
-                        error_count++;
+                //статус аниме (вышел, выходит, заброшен)
+                if(state != null){
+                    logger.info("метод filterForCatalog просит у TitleConvertors TitleState");
+                    if(!necessaryTitle.isEmpty()){
+                        if (!catalogFilter.filterTitleState(state, necessaryTitle).isEmpty()) {
+                            necessaryTitle = catalogFilter.filterTitleState(state, necessaryTitle);
+                        } else throw new Exception("TitleConvertors вернул state пустым");
+                    } else {
+                        necessaryTitle = catalogFilter.filterTitleState(state, null);
                     }
-                } else {
-                    necessaryTitle = catalogFilter.filterTitleState(state, null);
                 }
-            }
 
-            //возраст (18+, 12+, 6+)
-            if(ageRestriction != null){
-                logger.info("метод filterForCatalog просит у TitleConvertors AgeRestriction");
-                if(!necessaryTitle.isEmpty()){
-                    if(!catalogFilter.filterTitleAgeRestriction(ageRestriction, necessaryTitle).isEmpty()){
-                        necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, necessaryTitle);
-                    } else{
-                        logger.info("фильтр AgeRestriction не cмог найти нужный тайтл");
-                        error_count++;
+                //возраст (18+, 12+, 6+)
+                if(ageRestriction != null){
+                    logger.info("метод filterForCatalog просит у TitleConvertors AgeRestriction");
+                    if(!necessaryTitle.isEmpty()){
+                        if(!catalogFilter.filterTitleAgeRestriction(ageRestriction, necessaryTitle).isEmpty()){
+                            necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, necessaryTitle);
+                        } else throw new Exception("TitleConvertors вернул ageRestriction пустым");
+                    } else {
+                        necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, null);
                     }
-                } else {
-                    necessaryTitle = catalogFilter.filterTitleAgeRestriction(ageRestriction, null);
                 }
-            }
 
-            //сезонов месяца(зима, осень, весна, лето)
-            if(yearSeason != null) {
-                logger.info("метод filterForCatalog просит у TitleConvertors YearSeason");
-                if (!necessaryTitle.isEmpty()) {
-                    if(!catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle).isEmpty()){
-                        necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle);
-                    } else{
-                        logger.info("фильтр yearSeason не cмог найти нужный тайтл");
-                        error_count++;
+                //сезонов месяца(зима, осень, весна, лето)
+                if(yearSeason != null) {
+                    logger.info("метод filterForCatalog просит у TitleConvertors YearSeason");
+                    if (!necessaryTitle.isEmpty()) {
+                        if(!catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle).isEmpty()){
+                            necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, necessaryTitle);
+                        } else throw new Exception("TitleConvertors вернул yearSeason пустым");
+                    } else {
+                        necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, null);
                     }
-                } else {
-                    necessaryTitle = catalogFilter.filterTitleYearSeason(yearSeason, null);
                 }
-            }
-
-            if (error_count == 0){
-                return necessaryTitle;
-            } else {
+                 return necessaryTitle;
+            } catch (Exception e){
+                System.out.println(e.getMessage());
                 return new ArrayList<>();
             }
         }

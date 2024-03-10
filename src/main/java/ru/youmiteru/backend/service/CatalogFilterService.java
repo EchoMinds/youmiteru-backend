@@ -1,9 +1,9 @@
-package ru.youmiteru.backend.util;
+package ru.youmiteru.backend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.flywaydb.core.extensibility.Tier;
+import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.Genre;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.Title;
@@ -11,12 +11,12 @@ import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 @RequiredArgsConstructor
-public class CatalogFilter {
+public class CatalogFilterService {
     private final TitleRepository titleRepository;
     private final GenreRepository genreRepository;
     private final SeasonRepository seasonRepository;

@@ -15,7 +15,7 @@ import java.util.List;
 public class TitleController {
     private final TitleService titleService;
 
-    @GetMapping("/catalog")
+    @GetMapping
     public ResponseEntity<List<TitleCatalogDTO>> getCatalog(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
                                                            @RequestParam(value = "genres", required = false) List<String> genres,
                                                            @RequestParam(value = "dates", required = false) List<Long> date,
