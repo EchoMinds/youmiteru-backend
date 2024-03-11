@@ -65,6 +65,10 @@ public class SeasonDTO {
         Double getRating();
     }
 
+    protected interface reducedDescription {
+        @JsonProperty(value = "reduced_description")
+        String getReducedDescription();
+    }
 
     public enum Response {
         ;
@@ -105,7 +109,7 @@ public class SeasonDTO {
         @Data
         public static class SeasonPage
             implements seasonId, imageUrl, seasonName, animeFormat, description, releaseDate,
-            titleState, ageRestriction, yearSeason, animeBannerUrl, rating {
+            titleState, ageRestriction, yearSeason, animeBannerUrl, rating, reducedDescription {
             private Long seasonId;
             private String imageUrl;
             private String seasonName;
@@ -117,6 +121,7 @@ public class SeasonDTO {
             private String yearSeason;
             private String animeBannerUrl;
             private Double rating;
+            private String reducedDescription;
             List<CommentDTO.Response.Comments> commentsList;
             List<Response.RelatedSeason> relatedSeasons;
             List<VoiceActorDTO.Response.VoiceActorForSeason> voiceActors;
