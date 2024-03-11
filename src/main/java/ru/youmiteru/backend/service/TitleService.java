@@ -3,13 +3,14 @@ package ru.youmiteru.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.convertors.TitleConvertors;
 import ru.youmiteru.backend.domain.Title;
-import ru.youmiteru.backend.dto.TitleDTO;
+import ru.youmiteru.backend.dto.TitleDTO.Response.*;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
@@ -28,18 +29,21 @@ public class TitleService {
     private static final Logger logger = LogManager.getLogger();
 
     //Возвращает каталог с сортировкой жанров
-    public List<TitleDTO.Response.TitleCatalogDTO> getCatalog (Integer offset ,List<String> filter, List<Long> dates, List<String> format,
+    public TitlePageCountDTO getCatalog (Integer offset ,List<String> filter, List<Long> dates, List<String> format,
                                                                List<String> state, List<String> ageRestriction, List<String> yearSeason) {
 
-        List<TitleDTO.Response.TitleCatalogDTO> titleDto = filterForCatalog(filter, dates, format, state, ageRestriction, yearSeason)
+        List<TitleCatalogDTO> titleDto = filterForCatalog(filter, dates, format, state, ageRestriction, yearSeason)
             .stream().map(titleConvertors::convertToCatalogDTO).collect(Collectors.toList());
 
-
-        Pageable pageable = PageRequest.of(offset, 3);
+        Pageable pageable = PageRequest.of(offset, 20);
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), titleDto.size());
 
-        return new PageImpl<>(titleDto.subList(start, end), pageable, titleDto.size()).getContent();
+        TitlePageCountDTO resultDto = new TitlePageCountDTO();
+        resultDto.setTitlesForCatalog(new PageImpl<>(titleDto.subList(start, end), pageable, titleDto.size()).getContent());
+        resultDto.setCurrentPage(offset);
+        resultDto.setTotalPage((int) Math.ceil((double) titleDto.size()/20));
+        return resultDto;
     }
 
     public List<Title> filterForCatalog(List<String> genre, List<Long> dates,

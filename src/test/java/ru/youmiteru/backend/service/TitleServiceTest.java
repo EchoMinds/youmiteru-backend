@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.convertors.TitleConvertors;
 import ru.youmiteru.backend.domain.Title;
+import ru.youmiteru.backend.dto.TitleDTO;
 import ru.youmiteru.backend.dto.TitleDTO.Response.TitleCatalogDTO;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
@@ -125,11 +126,10 @@ public class TitleServiceTest {
     void getCatalog(){
         when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1,fakeTitle2));
 
-        List<TitleCatalogDTO> testDtoTitle = titleServiceMock.getCatalog(offset ,genre, date, format, state, ageRestriction, yearSeason);
-
+        TitleDTO.Response.TitlePageCountDTO testDtoTitle = titleServiceMock.getCatalog(offset ,genre, date, format, state, ageRestriction, yearSeason);
 
         assertNotNull(testDtoTitle);
-        for (TitleCatalogDTO test : testDtoTitle){
+        for (TitleCatalogDTO test : testDtoTitle.getTitlesForCatalog()){
             assertEquals(testDto1, test);
             assertEquals(testDto1.getTitleImageUrl(), test.getTitleImageUrl());
             assertEquals(testDto1.getTitleName(), test.getTitleName());
@@ -145,6 +145,17 @@ public class TitleServiceTest {
             assertEquals(test.getSeasonList().get(0).getAgeRestriction(), ageRestriction.get(0));
             assertEquals(test.getSeasonList().get(0).getYearSeason(), yearSeason.get(0));
         }
+    }
+
+    @Test
+    @DisplayName("testPageCount")
+    void testCount(){
+        when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1,fakeTitle2));
+        TitleDTO.Response.TitlePageCountDTO testDtoTitle = titleServiceMock.getCatalog(offset ,genre, date, format, state, ageRestriction, yearSeason);
+
+        assertNotNull(testDtoTitle);
+        assertEquals(testDtoTitle.getTotalPage(), (int) Math.ceil((double) testDtoTitle.getTitlesForCatalog().size()/20));
+        assertEquals(testDtoTitle.getCurrentPage(), offset);
     }
 
 }
