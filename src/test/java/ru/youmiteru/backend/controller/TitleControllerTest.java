@@ -1,61 +1,62 @@
 package ru.youmiteru.backend.controller;
 
+import static org.mockito.Mockito.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import ru.youmiteru.backend.dto.TitleDTO.Response.TitleCatalogDTO;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import ru.youmiteru.backend.dto.TitleDTO.Response.TitlePageCountDTO;
 import ru.youmiteru.backend.service.TitleService;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.Arrays;
 
 @DisplayName("TitleControllerTest")
 @ExtendWith(MockitoExtension.class)
-@WebMvcTest(TitleController.class)
 public class TitleControllerTest {
-    @Autowired
-    MockMvc mockMvc;
-    @MockBean
-    TitleService titleService;
+    @InjectMocks
+    private TitleController catalogController;
+    @Mock
+    private TitleService titleService;
 
-    private Integer offset = 0;
-    private List<String> genre = List.of("Shoujo");
-    private List<Long> date = List.of(2023L);
-    private List<String> format = List.of("TV_SHOW");
-    private List<String> state = List.of("ANNOUNCEMENT");
-    private List<String> ageRestriction = List.of("18");
-    private List<String> yearSeason = List.of("WINTER");
-
-    /*@Test
-    void getCatalog() throws Exception {
-        Mockito.when(this.titleService.getCatalog(offset, genre, date, format, state, ageRestriction, yearSeason))
-            .thenReturn(getResultForTest());
-
-        mockMvc.perform(get("/api/title"))
-            .andExpect(status().isNotFound());
-    }*/
-
-    private List<TitleCatalogDTO> getResultForTest(){
-        TitleCatalogDTO catalogDTO1 = new TitleCatalogDTO();
-        TitleCatalogDTO catalogDTO2 = new TitleCatalogDTO();
-
-        catalogDTO1.setTitleName("Boku no Kokoro no Yabai Yatsu Season 2");
-        catalogDTO1.setTitleImageUrl("https://example.com/season_image.jpg");
-
-        catalogDTO2.setTitleName("Boku no Kokoro");
-        catalogDTO2.setTitleImageUrl("https://example.com/banner.jpg");
-
-        return List.of(catalogDTO1, catalogDTO2);
+    @BeforeEach
+    void setUp() {
+        titleService = mock(TitleService.class);
+        catalogController = new TitleController(titleService);
     }
 
+    @Test
+    void testGetCatalog() {
+        List<String> genres = Arrays.asList("Action", "Adventure");
+        List<Long> dates = Arrays.asList(2022L, 2023L);
+        List<String> format = Arrays.asList("DVD", "Blu-ray");
+        List<String> state = Arrays.asList("Released", "In Production");
+        List<String> ageRestriction = Arrays.asList("PG", "R");
+        List<String> yearSeason = Arrays.asList("2022", "2023");
+        TitlePageCountDTO catalogDTO = new TitlePageCountDTO();
+        when(titleService.getCatalog(anyInt(), eq(genres), eq(dates), eq(format), eq(state), eq(ageRestriction), eq(yearSeason)))
+            .thenReturn(catalogDTO);
+
+        ResponseEntity<TitlePageCountDTO> responseEntity = catalogController.getCatalog(0, genres, dates, format, state, ageRestriction, yearSeason);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(catalogDTO, responseEntity.getBody());
+    }
+
+    @Test
+    void testGetCatalog_NotFound() {
+        when(titleService.getCatalog(anyInt(), any(), any(), any(), any(), any(), any())).thenReturn(null);
+
+        ResponseEntity<TitlePageCountDTO> responseEntity = catalogController.getCatalog(0, null, null, null, null, null, null);
+
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+    }
 }

@@ -128,7 +128,7 @@ public class TitleService {
                 }
                  return necessaryTitle;
             } catch (Exception e){
-                System.out.println(e.getMessage());
+                logger.info("ошибка, вернулась пустая страница " + e.getMessage());
                 return new ArrayList<>();
             }
         }
