@@ -215,3 +215,34 @@ VALUES ('https://desu.shikimori.one/uploads/poster/animes/918/5b04621235daaa6f1e
         'Gintama 5', 'TV_SHOW',
         'Жить в феодальной Японии непросто... особенно если вас завоевали инопланетяне. Да, конечно, новая система здравоохранения хороша, но запрет на ношение меча ставит истинных самураев в безвыходное положение.',
         TO_DATE ('2017/01/11', 'yyyy/mm/dd'), 7, 'RELEASED', '16', 'WINTER');
+
+/*8 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/52299/main_2x-464c78cefbef27e2e592598a4b756761.webp', 'Ore dake Level Up na Ken', 'Десять лет назад по всему миру стали открываться некие «врата», ведущие в подземелья с монстрами, противостоять которым оказалось не под силу даже военным.');
+/*9 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/52701/main_2x-5869fd1cb8bb79757b4e69cc52831b0f.webp', 'Dungeon Meshi', 'Голод не тётка — пирожка не поднесёт» — эту истину не понаслышке знает любой авантюрист, бывающий в подземелье и вынужденный таскать с собой огромный запас провианта.');
+/*10 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/49889/main_2x-ecc9dad17cfe75f396e64775a9201e67.webp', 'Tsuki ga Michibiku Isekai Douchuu 2nd Season', 'Когда Макото Мисуми внезапно отправили в другой мир, да к тому же чтобы он стал в нём героем, Макото был напуган и пребывал в замешательстве');
+/*11 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/49613/main_2x-9583c4131192a80864028c49e39c59ee.webp', 'Chiyu Mahou no Machigatta Tsukaikata', 'Застряв в школьном холле и глядя на проливной дождь на улице, старшеклассник Кэн Усато размышлял об унылости собственной жизни, в которой ничегошеньки не происходит');
+/*12 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/52347/main_2x-c30aaf75c27664a82b9b495dc339ccce.webp', 'Shangri-La Frontier: Kusoge Hunter, Kamige ni Idoman to su', 'Как правило, у старшеклассников насыщенная загруженная жизнь: одни добиваются успехов в спорте, вторые усиленно вгрызаются в гранит науки, третьи ищут романтики и любви.');
+/*13 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/53590/main_2x-80585235f29a4402576be770bea76cb6.webp', 'Saijaku Tamer wa Gomi Hiroi no Tabi wo Hajimemashita.', 'Жизнь маленькой Фемиции изменилась в один день: любящие родные возненавидели её, безобидные доселе соседи стали врагами, а сама она превратилась в изгоя.');
+/*14 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/55528/main_2x-e99f4a5626718c650d8118e9b01f9648.webp', 'Yuuki Bakuhatsu Bang Bravern', 'Десять лет назад по всему миру стали открываться некие «врата», ведущие в подземелья с монстрами, противостоять которым оказалось не под силу даже военным.');
+/*15 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/54617/main_2x-34650dbbda6b1e7881311bb2342fa7b0.webp', 'Kyuujitsu no Warumono-san', 'Испокон веков величайшие злодеи заставляли героев и простой люд трепетать от страха.');
+/*16 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/1199/main_2x-273a1f654c2b529f2910a252b3c8c91d.webp', 'Binghuo Mochu 2', '');
+/*17 Тайтл*/
+INSERT INTO youmiteru_backend.title(title_image_url, name, description)
+VALUES ('https://desu.shikimori.one/uploads/poster/animes/53477/main_2x-38aed83f952e8bbb7f19a0eb6ccd8ac6.webp', 'Nintama Rantarou', '');
