@@ -11,6 +11,7 @@ public class TitleConvertors {
     public TitleCatalogDTO convertToCatalogDTO(Title title){
         TitleCatalogDTO dto = new TitleCatalogDTO();
 
+        dto.setTitleId(title.getId());
         dto.setTitleName(title.getName());
         dto.setTitleImageUrl(title.getTitleImageUrl());
 

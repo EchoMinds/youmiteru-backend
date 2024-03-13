@@ -44,7 +44,8 @@ public class TitleDTO {
         @NoArgsConstructor
         @AllArgsConstructor
         @Data
-        public static class TitleCatalogDTO implements titleName, titleImageUrl {
+        public static class TitleCatalogDTO implements titleId, titleName, titleImageUrl {
+            Long titleId;
             String titleName;
             String titleImageUrl;
         }
