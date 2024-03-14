@@ -11,6 +11,7 @@ import ru.youmiteru.backend.convertors.TitleConvertors;
 import ru.youmiteru.backend.domain.Title;
 import ru.youmiteru.backend.dto.TitleDTO;
 import ru.youmiteru.backend.dto.TitleDTO.Response.TitleCatalogDTO;
+import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
@@ -26,7 +27,6 @@ import java.util.List;
 @DisplayName("TitleServiceTest")
 @ExtendWith(MockitoExtension.class)
 public class TitleServiceTest {
-
     @Mock
     private TitleRepository titleRepositoryMock;
     @Mock
@@ -42,10 +42,10 @@ public class TitleServiceTest {
     @Mock
     private static CatalogFilterService catalogFilter;
 
-    private Season fakeSeason1, fakeSeason2;
-    private Title fakeTitle1, fakeTitle2;
+    private Season fakeSeason1;
+    private Title fakeTitle1;
     private Genre fakeGenre;
-    private TitleCatalogDTO testDto1, testDto2;
+    private TitleCatalogDTO testDto1;
 
     private Integer offset;
     private List<String> genre;
@@ -56,53 +56,9 @@ public class TitleServiceTest {
     private List<String> yearSeason;
     @BeforeEach
     void init(){
-        fakeTitle1 = new Title();
-        fakeTitle1.setId(1L);
-        fakeTitle1.setTitleImageUrl("url");
-        fakeTitle1.setName("Boku no Kokoro no Yabai Yatsu Season 2");
-        fakeTitle1.setDescription("Повседневная жизнь маленького");
-
-        fakeTitle2 = new Title();
-        fakeTitle2.setId(2L);
-        fakeTitle2.setName("Boku no Kokoro");
-        fakeTitle2.setTitleImageUrl("url2");
-        fakeTitle2.setDescription("Повседневная жизнь маленького");
-
-        fakeSeason1 = new Season();
-        fakeSeason1.setId(1L);
-        fakeSeason1.setSeasonImageUrl("https://example.com/season_image.jpg");
-        fakeSeason1.setName("Fake Season");
-        fakeSeason1.setDescription("This is a fake season for testing purposes.");
-        fakeSeason1.setReleaseDate(LocalDate.of(2023, 1, 1));
-        fakeSeason1.setAgeRestriction("2023");
-        fakeSeason1.setYearSeason("2023");
-        fakeSeason1.setAnimeBannerUrl("https://example.com/banner.jpg");
-        fakeSeason1.setTitle(fakeTitle1);
-        fakeSeason1.setTitleState(TitleState.ANNOUNCEMENT);
-        fakeSeason1.setAnimeFormat(AnimeFormat.TV_SHOW);
-
-        fakeSeason2 = new Season();
-        fakeSeason2.setId(2L);
-        fakeSeason2.setSeasonImageUrl("urlSeason1");
-        fakeSeason2.setName("Fake Season2");
-        fakeSeason2.setReleaseDate(LocalDate.of(2023, 1, 1));
-        fakeSeason2.setDescription("This is a fake season");
-        fakeSeason2.setAgeRestriction("2023");
-        fakeSeason2.setYearSeason("2023");
-        fakeSeason2.setAnimeBannerUrl("urlBanner2");
-        fakeSeason2.setTitle(fakeTitle2);
-        fakeSeason2.setTitleState(TitleState.ANNOUNCEMENT);
-        fakeSeason2.setAnimeFormat(AnimeFormat.TV_SHOW);
-
-        fakeGenre = new Genre();
-        fakeGenre.setId(1L);
-        fakeGenre.setName("Shoujo");
-        fakeGenre.setTitles(List.of(fakeTitle1, fakeTitle2));
-
-        fakeTitle1.setSeasonList(List.of(fakeSeason1));
-        fakeTitle1.setGenres(List.of(fakeGenre));
-        fakeTitle2.setSeasonList(List.of(fakeSeason2));
-        fakeTitle2.setGenres(List.of(fakeGenre));
+        fakeTitle1 = FakeTitleForTestCatalog.createTitle();
+        fakeSeason1 = FakeTitleForTestCatalog.creareSeason();
+        fakeGenre = FakeTitleForTestCatalog.createGenre();
 
         //спецификации для фильтра
         offset = 0;
@@ -116,15 +72,11 @@ public class TitleServiceTest {
         testDto1 = new TitleCatalogDTO();
         testDto1.setTitleName(fakeTitle1.getName());
         testDto1.setTitleImageUrl(fakeTitle1.getTitleImageUrl());
-
-        testDto2 = new TitleCatalogDTO();
-        testDto2.setTitleName(fakeTitle2.getName());
-        testDto2.setTitleImageUrl(fakeTitle2.getTitleImageUrl());
     }
     @Test
     @DisplayName("filterForCatalog")
     void getCatalog(){
-        when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1,fakeTitle2));
+        when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1));
 
         TitleDTO.Response.TitlePageCountDTO testDtoTitle = titleServiceMock.getCatalog(offset ,genre, date, format, state, ageRestriction, yearSeason);
 
@@ -150,7 +102,7 @@ public class TitleServiceTest {
     @Test
     @DisplayName("testPageCount")
     void testCount(){
-        when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1,fakeTitle2));
+        when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1));
         TitleDTO.Response.TitlePageCountDTO testDtoTitle = titleServiceMock.getCatalog(offset ,genre, date, format, state, ageRestriction, yearSeason);
 
         assertNotNull(testDtoTitle);

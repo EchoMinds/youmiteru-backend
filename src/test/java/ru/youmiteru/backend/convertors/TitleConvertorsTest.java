@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.domain.*;
 import ru.youmiteru.backend.dto.TitleDTO;
+import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,32 +30,9 @@ public class TitleConvertorsTest {
 
     @BeforeEach
     void init(){
-        fakeTitle = new Title();
-        fakeTitle.setId(1L);
-        fakeTitle.setTitleImageUrl("url");
-        fakeTitle.setName("Boku no Kokoro no Yabai Yatsu Season 2");
-        fakeTitle.setDescription("Повседневная жизнь маленького");
-
-        fakeSeason = new Season();
-        fakeSeason.setId(1L);
-        fakeSeason.setSeasonImageUrl("https://example.com/season_image.jpg");
-        fakeSeason.setName("Fake Season");
-        fakeSeason.setDescription("This is a fake season for testing purposes.");
-        fakeSeason.setReleaseDate(LocalDate.of(2023, 1, 1));
-        fakeSeason.setAgeRestriction("2023");
-        fakeSeason.setYearSeason("2023");
-        fakeSeason.setAnimeBannerUrl("https://example.com/banner.jpg");
-        fakeSeason.setTitle(fakeTitle);
-        fakeSeason.setTitleState(TitleState.ANNOUNCEMENT);
-        fakeSeason.setAnimeFormat(AnimeFormat.TV_SHOW);
-
-        fakeGenre = new Genre();
-        fakeGenre.setId(1L);
-        fakeGenre.setName("Shoujo");
-        fakeGenre.setTitles(List.of(fakeTitle));
-
-        fakeTitle.setSeasonList(List.of(fakeSeason));
-        fakeTitle.setGenres(List.of(fakeGenre));
+        fakeTitle = FakeTitleForTestCatalog.createTitle();
+        fakeSeason = FakeTitleForTestCatalog.creareSeason();
+        fakeGenre = FakeTitleForTestCatalog.createGenre();
 
         testDto1 = new TitleDTO.Response.TitleCatalogDTO();
         testDto1.setTitleId(fakeTitle.getId());
