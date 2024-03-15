@@ -24,6 +24,8 @@ public class Season {
     @Column(name = "season_image_url")
     private String seasonImageUrl;
 
+    @Column(name = "reduced_description")
+    private String reducedDescription;
     @Column(name = "name")
     private String name;
 
