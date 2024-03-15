@@ -8,9 +8,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class FakeTitleForTestCatalog {
+    private static Title fakeTitle;
+    private static Season fakeSeason;
+    private static Genre fakeGenre;
 
     public static Title createTitle(){
-        Title fakeTitle = new Title();
+        fakeTitle = new Title();
         fakeTitle.setId(1L);
         fakeTitle.setName("Boku no Kokoro no Yabai Yatsu Season 2");
         fakeTitle.setTitleImageUrl("url");
@@ -21,14 +24,14 @@ public class FakeTitleForTestCatalog {
         return fakeTitle;
     }
     public static Season creareSeason(){
-        Title fakeTitle = new Title();
+        fakeTitle = new Title();
         fakeTitle.setId(1L);
         fakeTitle.setName("Boku no Kokoro no Yabai Yatsu Season 2");
         fakeTitle.setTitleImageUrl("url");
         fakeTitle.setDescription("Повседневная жизнь маленького");
         fakeTitle.setGenres(List.of(new Genre("Shoujo")));
 
-        Season fakeSeason = new Season();
+        fakeSeason = new Season();
         fakeSeason.setId(1L);
         fakeSeason.setSeasonImageUrl("https://example.com/season_image.jpg");
         fakeSeason.setName("Fake Season");
@@ -45,7 +48,7 @@ public class FakeTitleForTestCatalog {
         return fakeSeason;
     }
     public static Genre createGenre(){
-        Genre fakeGenre = new Genre();
+        fakeGenre = new Genre();
 
         fakeGenre.setId(1L);
         fakeGenre.setName("Shoujo");
