@@ -136,6 +136,7 @@ class SeasonServiceTest {
             fakeSeason.setYearSeason("2024");
             fakeSeason.setAnimeBannerUrl("https://example.com/banner.jpg");
 
+
             fakeSeason.setTitle(fakeTitle);
             fakeSeason.setTitleState(fakeTitleState);
             fakeSeason.setAnimeFormat(fakeAnimeFormat);
@@ -143,6 +144,7 @@ class SeasonServiceTest {
             fakeSeason.setVideoList(fakeVideoList);
             fakeSeason.setSeasonCommentList(fakeCommentList);
             fakeSeason.setSeasonRatingList(fakeRatingList);
+
             //
             fakeDtoSeason = new SeasonPage();
 
