@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 public class TitleDTO {
     protected interface titleId {
         @JsonProperty(value = "title_id")
@@ -37,6 +39,24 @@ public class TitleDTO {
             Long titleId;
             String titleName;
             String titleImageUrl;
+        }
+
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Data
+        public static class TitleCatalogDTO implements titleId, titleName, titleImageUrl {
+            Long titleId;
+            String titleName;
+            String titleImageUrl;
+        }
+
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Data
+        public static class TitlePageCountDTO {
+            Integer currentPage;
+            Integer totalPage;
+            List<Response.TitleCatalogDTO> titlesForCatalog;
         }
     }
 }
