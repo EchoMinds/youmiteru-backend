@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ru.youmiteru.backend.dto.TitleDTO.Response.TitlePageCountDTO;
 import ru.youmiteru.backend.service.TitleService;
 
 import static org.junit.jupiter.api.Assertions.*;

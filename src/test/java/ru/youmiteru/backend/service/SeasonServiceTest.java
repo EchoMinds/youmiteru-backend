@@ -7,16 +7,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.convertors.SeasonConvertors;
 import ru.youmiteru.backend.domain.*;
-import ru.youmiteru.backend.dto.SeasonDTO;
 import ru.youmiteru.backend.repositories.SeasonRepository;
-import ru.youmiteru.backend.dto.SeasonDTO.Response.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @DisplayName("SeasonServiceTest")

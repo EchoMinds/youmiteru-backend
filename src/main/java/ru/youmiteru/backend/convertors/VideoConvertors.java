@@ -9,13 +9,17 @@ import ru.youmiteru.backend.dto.VideoDTO;
 @RequiredArgsConstructor
 public class VideoConvertors {
     //convert video to videoDto
-    public VideoDTO.Response.VideoDtoForSeason convertToVideoDtoForSeason(Video video) {
-        VideoDTO.Response.VideoDtoForSeason videoDtoForSeason = new VideoDTO.Response.VideoDtoForSeason();
+    public VideoDTO convertToVideoDtoForSeason(Video video) {
+//        VideoDTO videoDtoForSeason = new VideoDTO.Response.VideoDtoForSeason();
+//
+//        videoDtoForSeason.setEpisode(video.getEpisode());
+//        videoDtoForSeason.setLink(video.getPlayerUrl());
+//        videoDtoForSeason.setPlayer(video.getPlayer());
 
-        videoDtoForSeason.setEpisode(video.getEpisode());
-        videoDtoForSeason.setLink(video.getPlayerUrl());
-        videoDtoForSeason.setPlayer(video.getPlayer());
-
-        return videoDtoForSeason;
+        return new VideoDTO(
+            video.getEpisode(),
+            video.getPlayer(),
+            video.getPlayerUrl()
+        );
     }
 }

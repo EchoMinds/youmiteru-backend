@@ -7,14 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.domain.*;
-import ru.youmiteru.backend.dto.TitleDTO;
 import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @DisplayName("TitleConvertorsTest")
 @ExtendWith(MockitoExtension.class)

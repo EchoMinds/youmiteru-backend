@@ -64,7 +64,7 @@ class CommentServiceTest {
             new ArrayList<>()
         );
 
-        CommentDTO.Response.Comments checkedCommentDTO = commentService.convertToCommentDto(fakeComm);
+        CommentDTO checkedCommentDTO = commentService.convertToCommentDto(fakeComm);
 
         assertEquals(correctedCommentDTO, checkedCommentDTO);
     }

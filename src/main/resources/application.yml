@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${db-url:jdbc:postgresql://localhost:5432/postgres} #//Your DB
-    username: ${db-username:postgres}  #//Your name
-    password: ${db-password:relocate} #//Your password
+    url: jdbc:postgresql://localhost:5432/youmiteru-n2 #//Your DB
+    username: postgres  #//Your name
+    password: 123 #//Your password
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -14,3 +14,5 @@ spring:
     baseline-description: "init"
     locations: classpath:db/migration
     default-schema: flyway_schema
+server:
+  port: 8081
