@@ -14,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TitleController {
     private final TitleService titleService;
+
     @GetMapping
     public ResponseEntity<TitlePageCountDto> getCatalog(@RequestParam(value = "offset", defaultValue = "0") Integer offset,
                                                         @RequestParam(value = "genres", required = false) List<String> genres,
@@ -24,7 +25,7 @@ public class TitleController {
                                                         @RequestParam(value = "yearSeason", required = false) List<String> yearSeason){
 
         TitlePageCountDto catalog = titleService.getCatalog(offset ,genres, date, format, state, ageRestriction, yearSeason);
-        if(catalog != null){
+        if(!catalog.titlesForCatalog().isEmpty()){
             return new ResponseEntity<>(catalog, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
