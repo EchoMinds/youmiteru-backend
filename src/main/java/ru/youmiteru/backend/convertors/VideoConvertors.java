@@ -10,11 +10,6 @@ import ru.youmiteru.backend.dto.VideoDTO;
 public class VideoConvertors {
     //convert video to videoDto
     public VideoDTO convertToVideoDtoForSeason(Video video) {
-//        VideoDTO videoDtoForSeason = new VideoDTO.Response.VideoDtoForSeason();
-//
-//        videoDtoForSeason.setEpisode(video.getEpisode());
-//        videoDtoForSeason.setLink(video.getPlayerUrl());
-//        videoDtoForSeason.setPlayer(video.getPlayer());
 
         return new VideoDTO(
             video.getEpisode(),

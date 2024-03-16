@@ -16,6 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Season {
+    public void setTitle(Title title) {
+        this.title = title;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -79,4 +83,6 @@ public class Season {
 
     public Season(long l, Title title, String testSeason, String testDescription, boolean b, boolean b1, boolean b2, boolean b3) {
     }
+
+
 }

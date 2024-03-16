@@ -27,16 +27,6 @@ public class CommentService {
 
 
     public CommentDTO convertToCommentDto(Comment comment) {
-//        CommentDTO.Response.Comments commentDTO = new CommentDTO.Response.Comments();
-//
-//        commentDTO.setCommentId(comment.getId());
-//        commentDTO.setCreationDate(comment.getCreationDate());
-//        commentDTO.setRating(comment.getRatingValue());
-//        commentDTO.setMessage(comment.getMessage());
-//        commentDTO.setWriterId(comment.getWriter().getId());
-//        commentDTO.setProfileImageUrl(comment.getWriter().getProfileImageUrl());
-//        commentDTO.setSubcommentsList(getSubCommentsList(comment));
-
         return new CommentDTO(
             comment.getId(),
             comment.getCreationDate(),

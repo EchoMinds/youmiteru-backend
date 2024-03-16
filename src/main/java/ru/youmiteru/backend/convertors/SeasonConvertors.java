@@ -56,32 +56,6 @@ public class SeasonConvertors {
             voiceActorService.getVoiceActorList(seasonPage),
             videoDtoList
         );
-
-        /*SeasonDTO.Response.SeasonPage dto = new SeasonDTO.Response.SeasonPage();
-
-        dto.setSeasonId(seasonPage.getId());
-        dto.setImageUrl(seasonPage.getSeasonImageUrl());
-        dto.setSeasonName(seasonPage.getName());
-        dto.setAnimeFormat(String.valueOf(seasonPage.getAnimeFormat()));
-        dto.setDescription(seasonPage.getDescription());
-        dto.setReleaseDate(seasonPage.getReleaseDate());
-        dto.setTitleState(seasonPage.getTitleState());
-        dto.setAgeRestriction(seasonPage.getAgeRestriction());
-        dto.setYearSeason(seasonPage.getYearSeason());
-        dto.setReducedDescription(seasonPage.getReducedDescription());
-        dto.setCommentsList(commentService.getCommentsList(seasonPage));
-        dto.setRating(ratingService.getRating(seasonPage.getId()));
-        dto.setVoiceActors(voiceActorService.getVoiceActorList(seasonPage));
-        List<VideoDTO.Response.VideoDtoForSeason> videoDtoList = seasonPage.getVideoList()
-            .stream().map(videoConvertors::convertToVideoDtoForSeason).toList();
-        dto.setVideoDtoList(videoDtoList);
-        List<String> genres = seasonPage.getTitle().getGenres().stream().map(Genre::getName)
-            .toList();
-        dto.setGenres(genres);
-        dto.setRelatedSeasons(relatedSeasonList);
-
-        return dto;
-        */
     }
 
 

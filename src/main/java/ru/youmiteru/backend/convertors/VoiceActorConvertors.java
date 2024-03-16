@@ -10,11 +10,6 @@ import ru.youmiteru.backend.dto.VoiceActorDTO;
 public class VoiceActorConvertors {
     //convert voice actors
     public VoiceActorDTO convertToVoiceActorForSeason(VoiceActor voiceActor) {
-//        VoiceActorDTO.Response.VoiceActorForSeason voiceActorForSeason = new VoiceActorDTO.Response.VoiceActorForSeason();
-//
-//        voiceActorForSeason.setVoiceActorId(voiceActor.getId());
-//        voiceActorForSeason.setUserId(voiceActor.getUser().getId());
-//        voiceActorForSeason.setProfileImageUrl(voiceActor.getUser().getProfileImageUrl());
 
         return new VoiceActorDTO(
             voiceActor.getId(),
