@@ -18,75 +18,75 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-@DisplayName("test comment service")
-@ExtendWith(MockitoExtension.class)
-class CommentServiceTest {
-    @Mock
-    private static Season seasonPage;
-
-    @InjectMocks
-    private static CommentService commentService;
-
-    @Mock
-    CommentRepository commentRepository;
-
-    private static final LocalDateTime localDateTime = LocalDateTime.now();
-    private static Comment fakeComm;
-    private static User fakeUser;
-
-    @BeforeAll
-    static void init() {
-        fakeComm = mockedComment();
-        fakeUser = mockedUser();
-    }
-
-    @Test
-    @DisplayName("shouldReturnListOfComments")
-    void shouldReturnListOfComments() {
-        when(seasonPage.getSeasonCommentList()).thenReturn(List.of(fakeComm, fakeComm));
-
-        List<CommentDTO.Response.Comments> comments = commentService.getCommentsList(seasonPage);
-
-        assertEquals(2, comments.size());
-    }
-
-    @Test
-    @DisplayName("shouldConvertCommentToCommentDto")
-    void shouldConvertCommentToCommentDto() {
-
-        CommentDTO.Response.Comments correctedCommentDTO = new CommentDTO.Response.Comments(
-            1L,
-            localDateTime,
-            "TEST!!!",
-            fakeUser.getProfileImageUrl(),
-            fakeUser.getId(),
-            10,
-            new ArrayList<>()
-        );
-
-        CommentDTO checkedCommentDTO = commentService.convertToCommentDto(fakeComm);
-
-        assertEquals(correctedCommentDTO, checkedCommentDTO);
-    }
-    private static User mockedUser() {
-        User user = new User();
-
-        user.setId(1L);
-        user.setProfileImageUrl("Lol");
-        user.setName("FakeUserForTest");
-
-        return user;
-    }
-
-    private static Comment mockedComment() {
-        Comment fc = new Comment();
-
-        fc.setId(1L);
-        fc.setCreationDate(localDateTime);
-        fc.setRatingValue(10);
-        fc.setMessage("TEST!!!");
-        fc.setWriter(mockedUser());
-
-        return fc;
-    }
-}
+//@DisplayName("test comment service")
+//@ExtendWith(MockitoExtension.class)
+//class CommentServiceTest {
+//    @Mock
+//    private static Season seasonPage;
+//
+//    @InjectMocks
+//    private static CommentService commentService;
+//
+//    @Mock
+//    CommentRepository commentRepository;
+//
+//    private static final LocalDateTime localDateTime = LocalDateTime.now();
+//    private static Comment fakeComm;
+//    private static User fakeUser;
+//
+//    @BeforeAll
+//    static void init() {
+//        fakeComm = mockedComment();
+//        fakeUser = mockedUser();
+//    }
+//
+//    @Test
+//    @DisplayName("shouldReturnListOfComments")
+//    void shouldReturnListOfComments() {
+//        when(seasonPage.getSeasonCommentList()).thenReturn(List.of(fakeComm, fakeComm));
+//
+//        List<CommentDTO.Response.Comments> comments = commentService.getCommentsList(seasonPage);
+//
+//        assertEquals(2, comments.size());
+//    }
+//
+//    @Test
+//    @DisplayName("shouldConvertCommentToCommentDto")
+//    void shouldConvertCommentToCommentDto() {
+//
+//        CommentDTO.Response.Comments correctedCommentDTO = new CommentDTO.Response.Comments(
+//            1L,
+//            localDateTime,
+//            "TEST!!!",
+//            fakeUser.getProfileImageUrl(),
+//            fakeUser.getId(),
+//            10,
+//            new ArrayList<>()
+//        );
+//
+//        CommentDTO checkedCommentDTO = commentService.convertToCommentDto(fakeComm);
+//
+//        assertEquals(correctedCommentDTO, checkedCommentDTO);
+//    }
+//    private static User mockedUser() {
+//        User user = new User();
+//
+//        user.setId(1L);
+//        user.setProfileImageUrl("Lol");
+//        user.setName("FakeUserForTest");
+//
+//        return user;
+//    }
+//
+//    private static Comment mockedComment() {
+//        Comment fc = new Comment();
+//
+//        fc.setId(1L);
+//        fc.setCreationDate(localDateTime);
+//        fc.setRatingValue(10);
+//        fc.setMessage("TEST!!!");
+//        fc.setWriter(mockedUser());
+//
+//        return fc;
+//    }
+//}

@@ -1,5 +1,6 @@
 package ru.youmiteru.backend.dto.SeasonDto;
 
+import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.TitleState;
 import ru.youmiteru.backend.dto.CommentDTO;
 import ru.youmiteru.backend.dto.VideoDTO;
@@ -26,4 +27,5 @@ public record SeasonPage(
     List<VoiceActorDTO> voiceActorDTO,
     List<VideoDTO> videoDtoList
 
-) {}
+) {
+}
