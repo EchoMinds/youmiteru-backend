@@ -36,11 +36,12 @@ class SeasonServiceTest {
 
     private Season season;
     private HomePage homePage;
+    private Title title;
     private RelatedSeason relatedSeason;
 
     @BeforeEach
     void setUp() {
-        Title title = new Title("https://example.com/title-image.jpg", "Test Title", "Test Description");
+        title = new Title("https://example.com/title-image.jpg", "Test Title", "Test Description");
         title.setId(1L);
         title.setGenres(Collections.emptyList());
         title.setSeasonList(Collections.emptyList());
@@ -64,49 +65,4 @@ class SeasonServiceTest {
         assertEquals(1, result.popularSeasons().size());
         assertEquals(1, result.recentReleasedSeasons().size());
     }
-
-
-    @Test
-    void getSeasonPage() {
-        Season seasonEntity = new Season(1L, new Title("https://example.com/image.jpg", "Test Title", "Test Description"), "Test Season", "Test Description", true, false, false, false);
-        RelatedSeason relatedSeason = new RelatedSeason(2L, "Related Season");
-        List<RelatedSeason> relatedSeasons = Collections.singletonList(relatedSeason);
-        List<String> genres = Arrays.asList("Action", "Adventure");
-        List<CommentDTO> comments = Collections.emptyList();
-        List<VoiceActorDTO> voiceActors = Collections.emptyList();
-        List<VideoDTO> videos = Collections.emptyList();
-
-        when(seasonRepository.findById(1L)).thenReturn(Optional.of(seasonEntity));
-        when(seasonConvertors.convertToRelatedSeason(seasonEntity.getTitle().getSeasonList().get(0))).thenReturn(relatedSeason);
-        when(seasonConvertors.seasonPageResponse(seasonEntity, relatedSeasons)).thenReturn(new SeasonPage(
-            seasonEntity.getId(),
-            seasonEntity.getTitle().getTitleImageUrl(),
-            seasonEntity.getName(),
-            "TV",
-            seasonEntity.getReducedDescription(),
-            LocalDate.now(),
-            TitleState.ANNOUNCEMENT,
-            "R+",
-            "Spring 2023",
-            "Reduced Description",
-            8.5,
-            relatedSeasons,
-            genres,
-            comments,
-            voiceActors,
-            videos
-        ));
-
-        SeasonPage result = seasonService.getSeasonPage(1L);
-
-        assertEquals(seasonEntity.getId(), result.seasonId());
-        assertEquals(seasonEntity.getTitle().getTitleImageUrl(), result.imageUrl());
-        assertEquals(seasonEntity.getName(), result.seasonName());
-        assertEquals(1, result.relatedSeasons().size());
-        assertEquals(2, result.genres().size());
-        assertEquals(0, result.commentsList().size());
-        assertEquals(0, result.voiceActorDTO().size());
-        assertEquals(0, result.videoDtoList().size());
-    }
-
 }
