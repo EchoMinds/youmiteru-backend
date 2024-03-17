@@ -45,7 +45,7 @@ class CommentServiceTest {
     void shouldReturnListOfComments() {
         when(seasonPage.getSeasonCommentList()).thenReturn(List.of(fakeComm, fakeComm));
 
-        List<CommentDTO.Response.Comments> comments = commentService.getCommentsList(seasonPage);
+        List<CommentDTO> comments = commentService.getCommentsList(seasonPage);
 
         assertEquals(2, comments.size());
     }
@@ -54,7 +54,7 @@ class CommentServiceTest {
     @DisplayName("shouldConvertCommentToCommentDto")
     void shouldConvertCommentToCommentDto() {
 
-        CommentDTO.Response.Comments correctedCommentDTO = new CommentDTO.Response.Comments(
+        CommentDTO correctedCommentDTO = new CommentDTO(
             1L,
             localDateTime,
             "TEST!!!",
@@ -64,7 +64,7 @@ class CommentServiceTest {
             new ArrayList<>()
         );
 
-        CommentDTO.Response.Comments checkedCommentDTO = commentService.convertToCommentDto(fakeComm);
+        CommentDTO checkedCommentDTO = commentService.convertToCommentDto(fakeComm);
 
         assertEquals(correctedCommentDTO, checkedCommentDTO);
     }

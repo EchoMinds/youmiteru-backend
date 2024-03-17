@@ -13,7 +13,7 @@ import java.util.List;
 public class VoiceActorService {
     private final VoiceActorConvertors voiceActorConvertors;
 
-    public List<VoiceActorDTO.Response.VoiceActorForSeason> getVoiceActorList(Season season) {
+    public List<VoiceActorDTO> getVoiceActorList(Season season) {
         return season.getVoiceActors()
             .stream().map(voiceActorConvertors::convertToVoiceActorForSeason).toList();
     }

@@ -16,6 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Season {
+    public void setTitle(Title title) {
+        this.title = title;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -76,5 +80,8 @@ public class Season {
 
     @OneToMany(mappedBy = "season")
     private List<Rating> seasonRatingList;
+
+    public Season(long id, Title title, String testSeason, String testDescription, boolean date, boolean titleState, boolean animeFormat, boolean videoList) {
+    }
 
 }

@@ -1,8 +1,6 @@
 package ru.youmiteru.backend.fakeDomain;
 
-import org.junit.jupiter.api.BeforeEach;
 import ru.youmiteru.backend.domain.*;
-import ru.youmiteru.backend.dto.TitleDTO;
 
 import java.time.LocalDate;
 import java.util.List;

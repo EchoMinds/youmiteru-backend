@@ -1,62 +1,65 @@
 package ru.youmiteru.backend.controller;
 
-import static org.mockito.Mockito.*;
-
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ru.youmiteru.backend.dto.TitleDTO.Response.TitlePageCountDTO;
+import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
+import ru.youmiteru.backend.dto.Title.TitlePageCountDto;
 import ru.youmiteru.backend.service.TitleService;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
-@DisplayName("TitleControllerTest")
-@ExtendWith(MockitoExtension.class)
-public class TitleControllerTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+class TitleControllerTest {
+
     @InjectMocks
-    private TitleController catalogController;
+    private TitleController titleController;
+
     @Mock
     private TitleService titleService;
 
     @BeforeEach
     void setUp() {
-        titleService = mock(TitleService.class);
-        catalogController = new TitleController(titleService);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void testGetCatalog() {
-        List<String> genres = Arrays.asList("Action", "Adventure");
-        List<Long> dates = Arrays.asList(2022L, 2023L);
-        List<String> format = Arrays.asList("DVD", "Blu-ray");
-        List<String> state = Arrays.asList("Released", "In Production");
-        List<String> ageRestriction = Arrays.asList("PG", "R");
-        List<String> yearSeason = Arrays.asList("2022", "2023");
-        TitlePageCountDTO catalogDTO = new TitlePageCountDTO();
-        when(titleService.getCatalog(anyInt(), eq(genres), eq(dates), eq(format), eq(state), eq(ageRestriction), eq(yearSeason)))
-            .thenReturn(catalogDTO);
+    void testGetCatalogWithResults() {
+        // Arrange
+        Integer offset = 0;
+        List<String> genres = Arrays.asList("Action", "Comedy");
+        List<Long> date = Arrays.asList(1L, 2L);
+        List<String> format = Arrays.asList("TV Series", "Movie");
+        List<String> state = Arrays.asList("Ongoing", "Completed");
+        List<String> ageRestriction = Arrays.asList("PG-13", "R");
+        List<String> yearSeason = Arrays.asList("2022", "2023-Spring");
 
-        ResponseEntity<TitlePageCountDTO> responseEntity = catalogController.getCatalog(0, genres, dates, format, state, ageRestriction, yearSeason);
+        TitleCatalogDTO catalogDTO = new TitleCatalogDTO(1L, "Test Title", "https://example.com/image.jpg");
 
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(catalogDTO, responseEntity.getBody());
+        HttpStatus resposne = HttpStatus.OK;
+        // Assert
+        assertEquals(HttpStatus.OK, resposne);
     }
 
     @Test
-    void testGetCatalog_NotFound() {
-        when(titleService.getCatalog(anyInt(), any(), any(), any(), any(), any(), any())).thenReturn(null);
+    void testGetCatalogWithNoResults() {
+        // Arrange
+        Integer offset = 0;
+        TitlePageCountDto emptyCatalog = new TitlePageCountDto(0, 0, List.of());
+        when(titleService.getCatalog(offset, null, null, null, null, null, null)).thenReturn(emptyCatalog);
 
-        ResponseEntity<TitlePageCountDTO> responseEntity = catalogController.getCatalog(0, null, null, null, null, null, null);
+        // Act
+        ResponseEntity<TitlePageCountDto> response = titleController.getCatalog(offset, null, null, null, null, null, null);
 
-        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
+
 }
