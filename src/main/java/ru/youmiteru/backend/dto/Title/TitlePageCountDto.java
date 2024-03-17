@@ -8,6 +8,7 @@ public record TitlePageCountDto (
     List<TitleCatalogDTO> titlesForCatalog
 
 ){
+
     public Integer currentPage() {
         return currentPage;
     }
