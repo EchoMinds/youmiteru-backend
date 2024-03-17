@@ -47,4 +47,19 @@ class TitleControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, resposne);
     }
+
+    @Test
+    void testGetCatalogWithNoResults() {
+        // Arrange
+        Integer offset = 0;
+        TitlePageCountDto emptyCatalog = new TitlePageCountDto(0, 0, List.of());
+        when(titleService.getCatalog(offset, null, null, null, null, null, null)).thenReturn(emptyCatalog);
+
+        // Act
+        ResponseEntity<TitlePageCountDto> response = titleController.getCatalog(offset, null, null, null, null, null, null);
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
 }
