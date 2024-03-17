@@ -81,8 +81,7 @@ public class Season {
     @OneToMany(mappedBy = "season")
     private List<Rating> seasonRatingList;
 
-    public Season(long l, Title title, String testSeason, String testDescription, boolean b, boolean b1, boolean b2, boolean b3) {
+    public Season(long id, Title title, String testSeason, String testDescription, boolean date, boolean titleState, boolean animeFormat, boolean videoList) {
     }
-
 
 }

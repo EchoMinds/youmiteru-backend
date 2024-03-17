@@ -25,33 +25,26 @@ public class SeasonService {
     private static final Logger logger = LogManager.getLogger();
 
     public ListHomePage getAllSeasonForHomePage() {
-        logger.info("Запуск метода Сервиса getAllSeasonForHomePage");
-
-        logger.info("Берёт из БД сезонов анонсы");
         List<HomePage> anons = seasonRepository.findAnnouncement()
             .stream()
             .map(seasonConvertors::homePageResponse)
             .collect(Collectors.toList());
 
-        logger.info("Берёт из БД сезонов релизы");
         List<HomePage> release = seasonRepository.findRecent()
             .stream()
             .map(seasonConvertors::homePageResponse)
             .collect(Collectors.toList());
 
-        logger.info("Берёт из БД сезонов баннер");
         List<HomePage> banner = seasonRepository.findBanner()
             .stream()
             .map(seasonConvertors::homePageResponse)
             .collect(Collectors.toList());
 
-        logger.info("Берёт из БД сезонов популярные");
         List<HomePage> popular = seasonRepository.findPopular()
             .stream()
             .map(seasonConvertors::homePageResponse)
             .collect(Collectors.toList());
 
-        logger.info("возвращает listHomePage");
         return new ListHomePage(banner, anons, popular, release);
     }
 
