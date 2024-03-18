@@ -15,9 +15,12 @@ import java.util.ArrayList;
 public class UserService {
     private final UserRepository userRepository;
     private final UsersConvertors usersConvertors;
+    private final SeasonService seasonService;
 
     public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        return usersConvertors.convertUserToUserDto(user, new ArrayList<>(), new ArrayList<>());
+
+        return usersConvertors.convertUserToUserDto(
+            user, seasonService.getFavoriteSeasonList(id), new ArrayList<>());
     }
 }
