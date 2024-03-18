@@ -3,7 +3,7 @@ package ru.youmiteru.backend.convertors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.youmiteru.backend.domain.Video;
-import ru.youmiteru.backend.dto.VideoDTO;
+import ru.youmiteru.backend.dto.VideoDTO.VideoDTO;
 
 @Component
 @RequiredArgsConstructor

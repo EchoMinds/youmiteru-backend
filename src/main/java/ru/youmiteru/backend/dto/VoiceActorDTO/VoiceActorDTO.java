@@ -1,4 +1,4 @@
-package ru.youmiteru.backend.dto;
+package ru.youmiteru.backend.dto.VoiceActorDTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

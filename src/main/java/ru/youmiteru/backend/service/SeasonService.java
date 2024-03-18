@@ -1,6 +1,7 @@
 package ru.youmiteru.backend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.*;
 import ru.youmiteru.backend.dto.*;
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,5 +55,16 @@ public class SeasonService {
         List<RelatedSeason>  relatedSeasons =seasonPages.getTitle().getSeasonList().stream().map(seasonConvertors::convertToRelatedSeason).toList();
         return seasonConvertors.seasonPageResponse(seasonPages,
             relatedSeasons);
+    }
+
+    public ResponseEntity<?> updateSeasonService(Long id, Season season){
+        Optional<Season> seasonOptional = seasonRepository.findById(id);
+        if (seasonOptional.isPresent()) {
+            Season existingSeason = seasonOptional.get();
+            existingSeason.setName(season.getName());
+            return ResponseEntity.ok(seasonRepository.save(existingSeason));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

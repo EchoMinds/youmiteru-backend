@@ -1,4 +1,4 @@
-package ru.youmiteru.backend.dto;
+package ru.youmiteru.backend.dto.VideoDTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

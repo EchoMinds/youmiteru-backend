@@ -7,16 +7,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.convertors.SeasonConvertors;
 import ru.youmiteru.backend.domain.*;
-import ru.youmiteru.backend.dto.CommentDTO;
 import ru.youmiteru.backend.dto.SeasonDto.HomePage;
 import ru.youmiteru.backend.dto.SeasonDto.ListHomePage;
 import ru.youmiteru.backend.dto.SeasonDto.RelatedSeason;
-import ru.youmiteru.backend.dto.SeasonDto.SeasonPage;
-import ru.youmiteru.backend.dto.VideoDTO;
-import ru.youmiteru.backend.dto.VoiceActorDTO;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 
-import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -7,7 +7,7 @@ import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.dto.SeasonDto.HomePage;
 import ru.youmiteru.backend.dto.SeasonDto.RelatedSeason;
 import ru.youmiteru.backend.dto.SeasonDto.SeasonPage;
-import ru.youmiteru.backend.dto.VideoDTO;
+import ru.youmiteru.backend.dto.VideoDTO.VideoDTO;
 import ru.youmiteru.backend.service.*;
 
 import java.util.List;

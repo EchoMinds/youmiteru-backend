@@ -71,6 +71,7 @@ dependencies {
 	implementation("org.postgresql:postgresql")
 	implementation("org.apache.logging.log4j:log4j-core:2.22.1")
 	implementation("org.apache.logging.log4j:log4j-api:2.22.1")
+	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
 
 
@@ -84,6 +85,8 @@ dependencies {
 	intTestImplementation("org.testcontainers:junit-jupiter:1.18.3")
 	intTestImplementation("org.testcontainers:testcontainers:1.18.3")
 	intTestImplementation("org.testcontainers:postgresql:1.18.3")
+
+
 }
 
 tasks.withType<Test> {
