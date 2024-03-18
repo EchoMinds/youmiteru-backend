@@ -34,7 +34,7 @@ public class TitleController {
     }
 
     @GetMapping("/{id}")
-    private TitlePageDTO getTitlePage(@PathVariable Long id){
+    public TitlePageDTO getTitlePage(@PathVariable Long id){
         return titleService.getTitlePage(id);
     }
 }
