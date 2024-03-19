@@ -4,6 +4,6 @@ public record RatedSeason(
     Long seasonId,
     String seasonName,
     String imageUrl,
-    Double seasonRating
+    int seasonRating
 ) {
 }

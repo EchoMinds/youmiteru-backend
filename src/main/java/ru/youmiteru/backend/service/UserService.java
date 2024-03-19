@@ -21,6 +21,6 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
         return usersConvertors.convertUserToUserDto(
-            user, seasonService.getFavoriteSeasonList(id), new ArrayList<>());
+            user, seasonService.getUserFavoriteSeasonList(id), seasonService.getUserRatedSeasonList(id));
     }
 }
