@@ -52,15 +52,4 @@ public class SeasonService {
         return seasonConvertors.seasonPageResponse(seasonPages,
             relatedSeasons);
     }
-
-    public List<FavoriteSeason> getUserFavoriteSeasonList(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        return new ArrayList<>();
-    }
-
-    public List<RatedSeason> getUserRatedSeasonList(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        return user.getRatingList().stream().map(m -> seasonConvertors.convertSeasonToRatedSeason(m.getSeason(),
-            m.getValue())).toList();
-    }
 }
