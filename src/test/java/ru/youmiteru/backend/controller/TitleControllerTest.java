@@ -28,6 +28,7 @@ class TitleControllerTest {
     private TitleService titleService;
 
     private TitlePageDTO fakePageDTO;
+
     @BeforeEach
     void setUp() {
         fakePageDTO = FakeTitleForTestCatalog.createTitlePageDTO();
@@ -67,10 +68,15 @@ class TitleControllerTest {
     }
 
     @Test
-    void testTitlePage(){
-        when(titleService.getTitlePage(1L)).thenReturn(fakePageDTO);
-        TitlePageDTO response = titleController.getTitlePage(1L);
-        assertEquals(response, fakePageDTO);
-    }
+    void testGetTitlePage() {
+        // Arrange
+        Long id = 1L;
+        when(titleService.getTitlePage(id)).thenReturn(fakePageDTO);
 
+        // Act
+        TitlePageDTO result = titleController.getTitlePage(id);
+
+        // Assert
+        assertEquals(fakePageDTO, result);
+    }
 }
