@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(SeasonNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleExecption(SeasonNotFoundException e) {
         ErrorResponse response = new ErrorResponse(
             "Season not found",
