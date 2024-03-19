@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
 import ru.youmiteru.backend.dto.Title.TitlePageCountDto;
+import ru.youmiteru.backend.dto.Title.TitlePageDTO;
+import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
 import ru.youmiteru.backend.service.TitleService;
 
 import java.util.Arrays;
@@ -25,8 +27,11 @@ class TitleControllerTest {
     @Mock
     private TitleService titleService;
 
+    private TitlePageDTO fakePageDTO;
+
     @BeforeEach
     void setUp() {
+        fakePageDTO = FakeTitleForTestCatalog.createTitlePageDTO();
         MockitoAnnotations.openMocks(this);
     }
 
@@ -62,4 +67,16 @@ class TitleControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
+    @Test
+    void testGetTitlePage() {
+        // Arrange
+        Long id = 1L;
+        when(titleService.getTitlePage(id)).thenReturn(fakePageDTO);
+
+        // Act
+        TitlePageDTO result = titleController.getTitlePage(id);
+
+        // Assert
+        assertEquals(fakePageDTO, result);
+    }
 }

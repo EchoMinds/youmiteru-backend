@@ -1,14 +1,20 @@
 package ru.youmiteru.backend.fakeDomain;
 
+import ru.youmiteru.backend.convertors.SeasonConvertors;
+import ru.youmiteru.backend.convertors.TitleConvertors;
 import ru.youmiteru.backend.domain.*;
+import ru.youmiteru.backend.dto.SeasonDto.HomePage;
+import ru.youmiteru.backend.dto.Title.TitlePageDTO;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FakeTitleForTestCatalog {
     private static Title fakeTitle;
     private static Season fakeSeason;
     private static Genre fakeGenre;
+    private static SeasonConvertors seasonConvertors;
 
     public static Title createTitle(){
         fakeTitle = new Title();
@@ -53,5 +59,16 @@ public class FakeTitleForTestCatalog {
         fakeGenre.setTitles(List.of(new Title("url", "Boku no Kokoro no Yabai Yatsu Season 2", "Повседневная жизнь маленького")));
 
         return fakeGenre;
+    }
+
+    public static TitlePageDTO createTitlePageDTO(){
+        return new TitlePageDTO(
+            1L,
+            "Boku no Kokoro no Yabai Yatsu Season 2",
+            "url",
+            "Повседневная жизнь маленького",
+            List.of("Shoujo"),
+            List.of(new HomePage(1L, "fakeNameDTO", "fakeDescription", "fakeURL"))
+        );
     }
 }
