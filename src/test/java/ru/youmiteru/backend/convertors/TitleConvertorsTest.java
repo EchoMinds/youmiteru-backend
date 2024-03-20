@@ -10,8 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.domain.*;
 import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
 import ru.youmiteru.backend.dto.Title.TitlePageDTO;
-import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
-
+import ru.youmiteru.backend.fakeDomain.FakeDomainCreator;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,9 +31,9 @@ public class TitleConvertorsTest {
 
     @BeforeEach
     void init() {
-        fakeTitle = FakeTitleForTestCatalog.createTitle();
-        fakeSeason = FakeTitleForTestCatalog.creareSeason();
-        fakeGenre = FakeTitleForTestCatalog.createGenre();
+        fakeTitle = FakeDomainCreator.createFakeTitle();
+        fakeSeason = FakeDomainCreator.createFakeSeason();
+        fakeGenre = FakeDomainCreator.createFakeGenre();
         testDto1 = new TitleCatalogDTO(fakeTitle.getId(), fakeTitle.getName(), fakeTitle.getTitleImageUrl());
     }
 
@@ -50,7 +49,7 @@ public class TitleConvertorsTest {
 
     @DisplayName("testConvertToPageDTO")
     @Test
-    void testConvertToPageDTO(){
+    void testConvertToPageDTO() {
         TitlePageDTO testDto = titleConvertorsMock.convertToPageDTO(fakeTitle);
         assertNotNull(testDto);
         assertEquals(testDto.titleId(), fakeTitle.getId());

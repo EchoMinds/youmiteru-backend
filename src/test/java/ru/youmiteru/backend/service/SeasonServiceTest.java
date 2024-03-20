@@ -41,6 +41,7 @@ class SeasonServiceTest {
 
     @BeforeEach
     void setUp() {
+        //Кароче это пиздец, почему вы не юзаете FakeDomainCreator... СРАЗУ готовые вещи
         title = new Title("https://example.com/title-image.jpg", "Test Title", "Test Description");
         title.setId(1L);
         title.setGenres(Collections.emptyList());
