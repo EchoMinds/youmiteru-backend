@@ -18,6 +18,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(TitleNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleExecption(TitleNotFoundException e) {
+        ErrorResponse response = new ErrorResponse(
+            "Title not found",
+            System.currentTimeMillis()
+        );
+
+        //return 404
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleExecption(UserNotFoundException e) {
         ErrorResponse response = new ErrorResponse(
