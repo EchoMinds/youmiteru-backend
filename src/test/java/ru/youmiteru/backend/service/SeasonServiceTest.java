@@ -1,23 +1,20 @@
 package ru.youmiteru.backend.service;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.convertors.SeasonConvertors;
-import ru.youmiteru.backend.domain.*;
-import ru.youmiteru.backend.dto.CommentDTO;
+import ru.youmiteru.backend.domain.Season;
+import ru.youmiteru.backend.domain.Title;
 import ru.youmiteru.backend.dto.SeasonDto.HomePage;
 import ru.youmiteru.backend.dto.SeasonDto.ListHomePage;
 import ru.youmiteru.backend.dto.SeasonDto.RelatedSeason;
-import ru.youmiteru.backend.dto.SeasonDto.SeasonPage;
-import ru.youmiteru.backend.dto.VideoDTO;
-import ru.youmiteru.backend.dto.VoiceActorDTO;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;

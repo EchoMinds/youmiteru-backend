@@ -1,8 +1,11 @@
 package ru.youmiteru.backend.fakeDomain;
 
 import ru.youmiteru.backend.domain.*;
+import ru.youmiteru.backend.dto.SeasonDto.FavoriteSeason;
 import ru.youmiteru.backend.dto.SeasonDto.HomePage;
+import ru.youmiteru.backend.dto.SeasonDto.RatedSeason;
 import ru.youmiteru.backend.dto.Title.TitlePageDTO;
+import ru.youmiteru.backend.dto.UserDTO;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -83,7 +86,9 @@ public class FakeDomainCreator {
 
     public static User createFakeUser() {
         //for fix circle
-        fakeComment =  new Comment();
+        fakeComment = new Comment();
+        fakeSeason = createFakeSeason();
+        fakeRating = new Rating();
 
         fakeComment.setId(1L);
         fakeComment.setCreationDate(LocalDateTime.now());
@@ -91,10 +96,9 @@ public class FakeDomainCreator {
         fakeComment.setRatingValue(5);
         fakeComment.setSeason(createFakeSeason());
 
-        fakeRating = new Rating();
-
         fakeRating.setId(1L);
         fakeRating.setValue(5);
+        fakeRating.setSeason(fakeSeason);
 
         // createUser
         fakeUser = new User();
@@ -108,7 +112,7 @@ public class FakeDomainCreator {
 
         fakeUser.setUsersComms(List.of(fakeComment));
         fakeUser.setRatingList(List.of(fakeRating));
-        fakeUser.setFavoriteSeasonList(List.of(createFakeSeason()));
+        fakeUser.setFavoriteSeasonList(List.of(fakeSeason));
 
         return fakeUser;
     }
@@ -124,7 +128,7 @@ public class FakeDomainCreator {
         return fakeRating;
     }
 
-    public static TitlePageDTO createTitlePageDTO(){
+    public static TitlePageDTO createTitlePageDTO() {
         return new TitlePageDTO(
             1L,
             "Boku no Kokoro no Yabai Yatsu Season 2",
@@ -133,5 +137,16 @@ public class FakeDomainCreator {
             List.of("Shoujo"),
             List.of(new HomePage(1L, "fakeNameDTO", "fakeDescription", "fakeURL"))
         );
+    }
+
+    public static UserDTO createFakeUserDTO() {
+        return new UserDTO(
+            1L, "https://example.com/profile.jpg", "Иван Иванов",
+            List.of(new FavoriteSeason(
+                1L, "Fake Season", "https://example.com/season_image.jpg")),
+            List.of(new RatedSeason(
+                1L, "Fake Season", "https://example.com/season_image.jpg", 5))
+        );
+
     }
 }

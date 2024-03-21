@@ -23,7 +23,6 @@ public class UserService {
 
     public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-
         return usersConvertors.convertUserToUserDto(
             user, getUserFavoriteSeasonList(id), getUserRatedSeasonList(id));
     }

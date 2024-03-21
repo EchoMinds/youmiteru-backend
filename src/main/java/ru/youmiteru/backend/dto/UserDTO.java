@@ -11,8 +11,6 @@ public record UserDTO(
     Long userId,
     String profileImageUrl,
     String username,
-    // season -> seasonDtoBasic(Only image,id,name)
     List<FavoriteSeason> favoriteSeasons,
-    // season -> seasonDtoWithRating(basicDto+rating)
     List<RatedSeason> ratedSeasons
 ){}
