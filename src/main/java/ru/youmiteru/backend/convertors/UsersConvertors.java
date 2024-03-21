@@ -19,3 +19,4 @@ public class UsersConvertors {
             user.getName(), favoriteSeasons, seasonHaveUserRating);
     }
 }
+
