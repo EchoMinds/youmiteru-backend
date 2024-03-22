@@ -43,6 +43,15 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Rating> ratingList;
 
+    @ManyToMany
+    @JoinTable(
+        name = "seasons_users",
+        schema = "youmiteru_backend",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "season_id")
+    )
+    private List<Season> favoriteSeasonList;
+
 
     public User(String profileImageUrl, String name, String email, Role role) {
         this.profileImageUrl = profileImageUrl;

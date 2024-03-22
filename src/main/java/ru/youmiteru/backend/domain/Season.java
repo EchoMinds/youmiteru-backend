@@ -1,13 +1,11 @@
 package ru.youmiteru.backend.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
-
 
 @Entity
 @Table(name = "season", schema = "youmiteru_backend")
@@ -44,7 +42,6 @@ public class Season {
     @JoinColumn(name = "title_id", referencedColumnName = "id")
     private Title title;
 
-    //считаю что надо переименовать в seasonState
     @Enumerated(value = EnumType.STRING)
     @Column(name = "title_state")
     private TitleState titleState;
@@ -69,6 +66,9 @@ public class Season {
     )
     private List<VoiceActor> voiceActors;
 
+    @ManyToMany(mappedBy = "favoriteSeasonList")
+    private List<User> thisUserLikeThisAnime;
+
     @OneToMany(mappedBy = "season")
     private List<Video> videoList;
 
@@ -81,7 +81,8 @@ public class Season {
     @OneToMany(mappedBy = "season")
     private List<Rating> seasonRatingList;
 
-    public Season(long id, Title title, String testSeason, String testDescription, boolean date, boolean titleState, boolean animeFormat, boolean videoList) {
+    public Season(long id, Title title, String testSeason, String testDescription, boolean date, boolean titleState,
+                  boolean animeFormat, boolean videoList) {
     }
 
 }

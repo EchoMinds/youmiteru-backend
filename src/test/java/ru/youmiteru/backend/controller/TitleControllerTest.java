@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
 import ru.youmiteru.backend.dto.Title.TitlePageCountDto;
 import ru.youmiteru.backend.dto.Title.TitlePageDTO;
-import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
+import ru.youmiteru.backend.fakeDomain.FakeDomainCreator;
 import ru.youmiteru.backend.service.TitleService;
 
 import java.util.Arrays;
@@ -31,7 +31,7 @@ class TitleControllerTest {
 
     @BeforeEach
     void setUp() {
-        fakePageDTO = FakeTitleForTestCatalog.createTitlePageDTO();
+        fakePageDTO = FakeDomainCreator.createTitlePageDTO();
         MockitoAnnotations.openMocks(this);
     }
 

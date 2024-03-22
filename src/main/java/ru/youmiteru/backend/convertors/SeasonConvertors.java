@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.youmiteru.backend.domain.Genre;
 import ru.youmiteru.backend.domain.Season;
-import ru.youmiteru.backend.dto.SeasonDto.HomePage;
-import ru.youmiteru.backend.dto.SeasonDto.RelatedSeason;
-import ru.youmiteru.backend.dto.SeasonDto.SeasonPage;
+import ru.youmiteru.backend.dto.SeasonDto.*;
 import ru.youmiteru.backend.dto.VideoDTO;
 import ru.youmiteru.backend.service.*;
 
@@ -20,6 +18,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class SeasonConvertors {
+    //need delete
     private final CommentService commentService;
     private final RatingService ratingService;
     private final VoiceActorService voiceActorService;
@@ -31,7 +30,8 @@ public class SeasonConvertors {
     }
 
     //season page
-    public SeasonPage seasonPageResponse (Season seasonPage, List<RelatedSeason> relatedSeasonList) {
+    //need refactoring
+    public SeasonPage seasonPageResponse(Season seasonPage, List<RelatedSeason> relatedSeasonList) {
         List<String> genres = seasonPage.getTitle().getGenres().stream().map(Genre::getName)
             .toList();
 
@@ -63,4 +63,13 @@ public class SeasonConvertors {
     public RelatedSeason convertToRelatedSeason(Season season) {
         return new RelatedSeason(season.getId(), season.getSeasonImageUrl());
     }
+
+    public FavoriteSeason convertSeasonToFavoriteSeasonDTO(Season season) {
+        return new FavoriteSeason(season.getId(), season.getName(), season.getSeasonImageUrl());
+    }
+
+    public RatedSeason convertSeasonToRatedSeason(Season season, int userRating) {
+        return new RatedSeason(season.getId(), season.getName(), season.getSeasonImageUrl(), userRating);
+    }
+
 }

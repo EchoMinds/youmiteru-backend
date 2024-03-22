@@ -3,17 +3,14 @@ package ru.youmiteru.backend.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.*;
-import ru.youmiteru.backend.dto.*;
-import ru.youmiteru.backend.dto.SeasonDto.HomePage;
-import ru.youmiteru.backend.dto.SeasonDto.ListHomePage;
-import ru.youmiteru.backend.dto.SeasonDto.RelatedSeason;
-import ru.youmiteru.backend.dto.SeasonDto.SeasonPage;
+import ru.youmiteru.backend.dto.SeasonDto.*;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
+import ru.youmiteru.backend.exceptions.UserNotFoundException;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.convertors.SeasonConvertors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import ru.youmiteru.backend.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +19,7 @@ import java.util.stream.Collectors;
 public class SeasonService {
     private final SeasonRepository seasonRepository;
     private final SeasonConvertors seasonConvertors;
-    private static final Logger logger = LogManager.getLogger();
+    private final UserRepository userRepository;
 
     public ListHomePage getAllSeasonForHomePage() {
         List<HomePage> anons = seasonRepository.findAnnouncement()
@@ -50,7 +47,8 @@ public class SeasonService {
 
     public SeasonPage getSeasonPage(Long id) {
         Season seasonPages = seasonRepository.findById(id).orElseThrow(SeasonNotFoundException::new);
-        List<RelatedSeason>  relatedSeasons =seasonPages.getTitle().getSeasonList().stream().map(seasonConvertors::convertToRelatedSeason).toList();
+        List<RelatedSeason> relatedSeasons = seasonPages.getTitle().getSeasonList().stream()
+            .map(seasonConvertors::convertToRelatedSeason).toList();
         return seasonConvertors.seasonPageResponse(seasonPages,
             relatedSeasons);
     }
