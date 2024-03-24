@@ -1,4 +1,4 @@
-package ru.youmiteru.backend.config;
+package ru.youmiteru.backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
