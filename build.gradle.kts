@@ -73,13 +73,14 @@ dependencies {
 	implementation("org.apache.logging.log4j:log4j-api:2.22.1")
 	implementation("org.springframework.security:spring-security-web:6.2.3")
 	implementation("org.springframework.security:spring-security-config:6.2.3")
-
+	implementation("org.springframework.security:spring-security-core:6.2.3")
 
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
 	annotationProcessor("org.projectlombok:lombok")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.security:spring-security-test:6.2.3")
 
 	intTestImplementation("org.springframework.boot:spring-boot-starter-test")
 	intTestImplementation("org.testcontainers:junit-jupiter:1.18.3")
