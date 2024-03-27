@@ -10,8 +10,8 @@ import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.User;
 import ru.youmiteru.backend.dto.CommentDTO;
 import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
+import ru.youmiteru.backend.fakeDomain.FakeDomainCreator;
 import ru.youmiteru.backend.fakeDomain.FakeCommentEntity;
-import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
 import ru.youmiteru.backend.repositories.CommentRepository;
 
 import java.time.LocalDateTime;
