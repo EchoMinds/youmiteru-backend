@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.domain.*;
 import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
-import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
 import ru.youmiteru.backend.service.CommentService;
 import ru.youmiteru.backend.dto.Title.TitlePageDTO;
 import ru.youmiteru.backend.fakeDomain.FakeDomainCreator;
