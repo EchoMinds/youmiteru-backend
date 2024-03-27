@@ -13,7 +13,9 @@ services:
       - /var/lib/postgresql/data
     restart: always
   backend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: testapp_container
     volumes:
       - /build/libs:/app
