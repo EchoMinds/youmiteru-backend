@@ -6,3 +6,4 @@ Backend for the youmiteru website
 1. скачиваете проект
 2. закидываете билд в проект (Ссылка в инф. канале)
 3. прописываете ```docker-compose up```
+4. У вас должен быть базовый пароль в postgresql(postgres)
