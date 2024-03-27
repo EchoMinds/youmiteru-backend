@@ -11,7 +11,7 @@ import ru.youmiteru.backend.convertors.TitleConvertors;
 import ru.youmiteru.backend.domain.Title;
 import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
 import ru.youmiteru.backend.dto.Title.TitlePageCountDto;
-import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
+import ru.youmiteru.backend.fakeDomain.FakeDomainCreator;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
@@ -52,11 +52,12 @@ public class TitleServiceTest {
     private List<String> state;
     private List<String> ageRestriction;
     private List<String> yearSeason;
+
     @BeforeEach
-    void init(){
-        fakeTitle1 = FakeTitleForTestCatalog.createTitle();
-        fakeSeason1 = FakeTitleForTestCatalog.creareSeason();
-        fakeGenre = FakeTitleForTestCatalog.createGenre();
+    void init() {
+        fakeTitle1 = FakeDomainCreator.createFakeTitle();
+        fakeSeason1 = FakeDomainCreator.createFakeSeason();
+        fakeGenre = FakeDomainCreator.createFakeGenre();
 
         //спецификации для фильтра
         offset = 0;
@@ -69,15 +70,16 @@ public class TitleServiceTest {
 
         testDto1 = new TitleCatalogDTO(1L, fakeTitle1.getName(), fakeTitle1.getTitleImageUrl());
     }
+
     @Test
     @DisplayName("filterForCatalog")
-    void getCatalog(){
+    void getCatalog() {
         when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1));
 
-        TitlePageCountDto testDtoTitle = titleServiceMock.getCatalog(offset ,genre, date, format, state, ageRestriction, yearSeason);
+        TitlePageCountDto testDtoTitle = titleServiceMock.getCatalog(offset, genre, date, format, state, ageRestriction, yearSeason);
 
         assertNotNull(testDtoTitle);
-        for (TitleCatalogDTO test : testDtoTitle.titlesForCatalog()){
+        for (TitleCatalogDTO test : testDtoTitle.titlesForCatalog()) {
             assertEquals(testDto1, test);
             assertEquals(testDto1.titleImageUrl(), test.titleImageUrl());
             assertEquals(testDto1.titleName(), test.titleName());
@@ -85,7 +87,7 @@ public class TitleServiceTest {
 
         List<Title> filteredTitleTest = titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason);
         assertNotNull(filteredTitleTest);
-        for (Title test : filteredTitleTest){
+        for (Title test : filteredTitleTest) {
             assertEquals(test.getName(), "Boku no Kokoro no Yabai Yatsu Season 2");
             assertEquals(test.getGenres().get(0).getName(), genre.get(0));
             assertEquals(test.getSeasonList().get(0).getAnimeFormat().name(), format.get(0));
@@ -97,12 +99,12 @@ public class TitleServiceTest {
 
     @Test
     @DisplayName("testPageCount")
-    void testCount(){
+    void testCount() {
         when(titleServiceMock.filterForCatalog(genre, date, format, state, ageRestriction, yearSeason)).thenReturn(List.of(fakeTitle1));
-        TitlePageCountDto testDtoTitle = titleServiceMock.getCatalog(offset ,genre, date, format, state, ageRestriction, yearSeason);
+        TitlePageCountDto testDtoTitle = titleServiceMock.getCatalog(offset, genre, date, format, state, ageRestriction, yearSeason);
 
         assertNotNull(testDtoTitle);
-        assertEquals(testDtoTitle.totalPage(), (int) Math.ceil((double) testDtoTitle.titlesForCatalog().size()/20));
+        assertEquals(testDtoTitle.totalPage(), (int) Math.ceil((double) testDtoTitle.titlesForCatalog().size() / 20));
         assertEquals(testDtoTitle.currentPage(), offset);
     }
 

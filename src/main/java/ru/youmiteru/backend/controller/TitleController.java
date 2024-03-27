@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.youmiteru.backend.dto.Title.TitlePageCountDto;
+import ru.youmiteru.backend.dto.Title.TitlePageDTO;
 import ru.youmiteru.backend.service.TitleService;
 
 import java.util.List;
@@ -25,11 +26,16 @@ public class TitleController {
                                                         @RequestParam(value = "yearSeason", required = false) List<String> yearSeason){
 
         TitlePageCountDto catalog = titleService.getCatalog(offset ,genres, date, format, state, ageRestriction, yearSeason);
-        if(!catalog.titlesForCatalog().isEmpty()){
+        if(!catalog.titlesForCatalog().isEmpty()) {
             return new ResponseEntity<>(catalog, HttpStatus.OK);
-        } else {
+        }
+        else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    @GetMapping("/{id}")
+    public TitlePageDTO getTitlePage(@PathVariable Long id){
+        return titleService.getTitlePage(id);
+    }
 }

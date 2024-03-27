@@ -16,6 +16,7 @@ import ru.youmiteru.backend.dto.Title.TitleAdminPanelDto;
 import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
 import ru.youmiteru.backend.dto.Title.TitlePageCountDto;
 import ru.youmiteru.backend.dto.Title.TitlePageDTO;
+import ru.youmiteru.backend.exceptions.TitleNotFoundException;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
@@ -141,6 +142,8 @@ public class TitleService {
             }
         }
     }
+
+  
     public TitlePageDTO getTitlePage(Long id){
         logger.info("метод getTitlePage запускается");
         return titleConvertors.convertToPageDTO(titleRepository.findById(id)
@@ -169,6 +172,5 @@ public class TitleService {
             return ResponseEntity.notFound().build();
         }
     }
-
 
 }

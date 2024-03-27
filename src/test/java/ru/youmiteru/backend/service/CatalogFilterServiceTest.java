@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.domain.*;
-import ru.youmiteru.backend.fakeDomain.FakeTitleForTestCatalog;
+import ru.youmiteru.backend.fakeDomain.FakeDomainCreator;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
@@ -50,8 +50,8 @@ public class CatalogFilterServiceTest {
         ageRestrictions.add("18");
         yearSeasons.add("WINTER");
 
-        fakeTitle1 = FakeTitleForTestCatalog.createTitle();
-        fakeSeason1 = FakeTitleForTestCatalog.creareSeason();
+        fakeTitle1 = FakeDomainCreator.createFakeTitle();
+        fakeSeason1 = FakeDomainCreator.createFakeSeason();
     }
 
     @Test
