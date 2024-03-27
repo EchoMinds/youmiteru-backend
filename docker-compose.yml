@@ -7,12 +7,13 @@ services:
     image: postgres
     environment:
       - POSTGRES_DB=postgres #//Your DB
-      - POSTGRES_PASSWORD=relocate #//Your password
+      - POSTGRES_PASSWORD=postgres #//Your password
       - POSTGRES_USER=postgres #//Your name
     volumes:
       - /var/lib/postgresql/data
     restart: always
   backend:
+    command: ["gradle", "build"]
     build:
       context: .
       dockerfile: Dockerfile
@@ -24,7 +25,8 @@ services:
     environment:
       db-url: jdbc:postgresql://db:5432/postgres #//Your DB
       db-username: postgres #//Your name
-      db-password: relocate #//Your password
+      db-password: postgres #//Your password
     depends_on:
       - db
     restart: always
+
