@@ -1,32 +1,19 @@
 version: "3.9"
 services:
-  db:
-    ports:
-      - 5432:5432
-    container_name: postgresql_container
-    image: postgres
+  postgres:
+    image: postgres:15
+    container_name: java-postgres
     environment:
-      - POSTGRES_DB=postgres #//Your DB
-      - POSTGRES_PASSWORD=postgres #//Your password
-      - POSTGRES_USER=postgres #//Your name
-    volumes:
-      - /var/lib/postgresql/data
-    restart: always
-  backend:
-    command: ["gradle", "build"]
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: testapp_container
-    volumes:
-      - /build/libs:/app
+      - 'POSTGRES_DB=postgres'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_PASSWORD=relocate'
     ports:
-      - 8080:8080
-    environment:
-      db-url: jdbc:postgresql://db:5432/postgres #//Your DB
-      db-username: postgres #//Your name
-      db-password: postgres #//Your password
-    depends_on:
-      - db
-    restart: always
+      - "5432:5432"
 
+  backend:
+    build: ./
+    container_name: java-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
