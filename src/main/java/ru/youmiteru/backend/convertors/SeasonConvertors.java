@@ -54,7 +54,8 @@ public class SeasonConvertors {
             genres,
             commentService.getCommentsList(seasonPage),
             voiceActorService.getVoiceActorList(seasonPage),
-            videoDtoList
+            videoDtoList,
+            seasonPage.getAnimeBannerUrl()
         );
     }
 
