@@ -45,4 +45,67 @@ public class Comment {
     @JoinColumn(name = "season_id", referencedColumnName = "id")
     private Season season;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public int getRatingValue() {
+        return ratingValue;
+    }
+
+    public void setRatingValue(int ratingValue) {
+        this.ratingValue = ratingValue;
+    }
+
+    public Comment getReplyTo() {
+        return replyTo;
+    }
+
+    public void setReplyTo(Comment replyTo) {
+        this.replyTo = replyTo;
+    }
+
+    public List<Comment> getAnswerForThisCommList() {
+        return answerForThisCommList;
+    }
+
+    public void setAnswerForThisCommList(List<Comment> answerForThisCommList) {
+        this.answerForThisCommList = answerForThisCommList;
+    }
+
+    public User getWriter() {
+        return writer;
+    }
+
+    public void setWriter(User writer) {
+        this.writer = writer;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
+    }
 }

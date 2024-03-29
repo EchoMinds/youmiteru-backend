@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "ru.youmiteru"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.2-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -74,6 +74,8 @@ dependencies {
 	implementation("org.springframework.security:spring-security-web:6.2.3")
 	implementation("org.springframework.security:spring-security-config:6.2.3")
 	implementation("org.springframework.security:spring-security-core:6.2.3")
+	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+
 
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
@@ -86,6 +88,8 @@ dependencies {
 	intTestImplementation("org.testcontainers:junit-jupiter:1.18.3")
 	intTestImplementation("org.testcontainers:testcontainers:1.18.3")
 	intTestImplementation("org.testcontainers:postgresql:1.18.3")
+
+
 }
 
 tasks.withType<Test> {

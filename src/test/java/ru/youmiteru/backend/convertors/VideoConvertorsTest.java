@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.domain.Video;
-import ru.youmiteru.backend.dto.VideoDTO;
+import ru.youmiteru.backend.dto.VideoDTO.VideoDTO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
