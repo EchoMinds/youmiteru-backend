@@ -6,9 +6,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import ru.youmiteru.backend.convertors.TitleConvertors;
 import ru.youmiteru.backend.domain.Title;
+import ru.youmiteru.backend.dto.Title.TitleAdminPanelDto;
 import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
 import ru.youmiteru.backend.dto.Title.TitlePageCountDto;
 import ru.youmiteru.backend.dto.Title.TitlePageDTO;
@@ -16,9 +20,11 @@ import ru.youmiteru.backend.exceptions.TitleNotFoundException;
 import ru.youmiteru.backend.repositories.GenreRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.TitleRepository;
+import ru.youmiteru.backend.exceptions.TitleNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -137,9 +143,34 @@ public class TitleService {
         }
     }
 
+  
     public TitlePageDTO getTitlePage(Long id){
         logger.info("метод getTitlePage запускается");
         return titleConvertors.convertToPageDTO(titleRepository.findById(id)
             .orElseThrow(TitleNotFoundException::new));
     }
+
+    public List<TitleAdminPanelDto> getAllSeasonsService() {
+        List<Title> titles = titleRepository.findAll();
+        List<TitleAdminPanelDto> titleDtos = new ArrayList<>();
+
+        for (Title title : titles) {
+            TitleAdminPanelDto dto = new TitleAdminPanelDto(title.getId(), title.getName());
+            titleDtos.add(dto);
+        }
+
+        return titleDtos;
+    }
+
+    public ResponseEntity<Title> updateTitle(Long id, Title title) {
+        Optional<Title> seasonOptional = titleRepository.findById(id);
+        if (seasonOptional.isPresent()) {
+            Title existingSeason = seasonOptional.get();
+            existingSeason.setName(title.getName());
+            return ResponseEntity.ok(titleRepository.save(existingSeason));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

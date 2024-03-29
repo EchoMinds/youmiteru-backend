@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.convertors.SeasonConvertors;
+import ru.youmiteru.backend.domain.*;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.Title;
 import ru.youmiteru.backend.dto.SeasonDto.HomePage;
@@ -14,6 +15,7 @@ import ru.youmiteru.backend.dto.SeasonDto.ListHomePage;
 import ru.youmiteru.backend.dto.SeasonDto.RelatedSeason;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 
+import java.util.*;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

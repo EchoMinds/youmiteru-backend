@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class TitleConvertors {
-
     private final SeasonConvertors seasonConvertors;
     public TitleCatalogDTO convertToCatalogDTO(Title title){
         return new TitleCatalogDTO(

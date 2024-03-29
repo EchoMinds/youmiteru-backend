@@ -9,13 +9,17 @@ import ru.youmiteru.backend.domain.Comment;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.User;
 import ru.youmiteru.backend.dto.CommentDTO;
+import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
+import ru.youmiteru.backend.fakeDomain.FakeDomainCreator;
+import ru.youmiteru.backend.fakeDomain.FakeCommentEntity;
 import ru.youmiteru.backend.repositories.CommentRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @DisplayName("test comment service")
@@ -30,14 +34,18 @@ class CommentServiceTest {
     @Mock
     CommentRepository commentRepository;
 
+
     private static final LocalDateTime localDateTime = LocalDateTime.now();
     private static Comment fakeComm;
     private static User fakeUser;
+
+    private static Comment fakeComment;
 
     @BeforeAll
     static void init() {
         fakeComm = mockedComment();
         fakeUser = mockedUser();
+        fakeComment = FakeCommentEntity.creareComment();
     }
 
     @Test
@@ -88,5 +96,19 @@ class CommentServiceTest {
         fc.setWriter(mockedUser());
 
         return fc;
+    }
+
+    @DisplayName("testConvertToCatalogDTO")
+    @Test
+    void testConvertToCatalogDTO() {
+        CommentDTO testDto = commentService.convertToCommentDto(fakeComm);
+        assertNotNull(testDto);
+    }
+
+    // Метод-заглушка для getSubCommentsList
+    private List<CommentDTO> getSubCommentsList(Comment comment) {
+        // Здесь можно реализовать логику получения списка подкомментариев
+        // или использовать mock-объект для тестирования
+        return new ArrayList<>();
     }
 }
