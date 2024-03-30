@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.youmiteru.backend.domain.Genre;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.dto.SeasonDto.*;
-import ru.youmiteru.backend.dto.VideoDTO;
+import ru.youmiteru.backend.dto.VideoDTO.*;
 import ru.youmiteru.backend.service.*;
 
 import java.util.List;

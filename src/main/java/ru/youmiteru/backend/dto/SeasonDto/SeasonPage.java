@@ -1,10 +1,9 @@
 package ru.youmiteru.backend.dto.SeasonDto;
 
-import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.TitleState;
 import ru.youmiteru.backend.dto.CommentDTO;
-import ru.youmiteru.backend.dto.VideoDTO;
-import ru.youmiteru.backend.dto.VoiceActorDTO;
+import ru.youmiteru.backend.dto.VideoDTO.VideoDTO;
+import ru.youmiteru.backend.dto.VoiceActorDTO.VoiceActorDTO;
 
 import java.time.LocalDate;
 import java.util.List;

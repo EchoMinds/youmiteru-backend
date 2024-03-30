@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.youmiteru.backend.domain.User;
 import ru.youmiteru.backend.domain.VoiceActor;
-import ru.youmiteru.backend.dto.VoiceActorDTO;
+import ru.youmiteru.backend.dto.VoiceActorDTO.VoiceActorDTO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
