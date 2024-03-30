@@ -1,5 +1,6 @@
 package ru.youmiteru.backend.controller.admin_panel;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.youmiteru.backend.dto.VoiceActorDTO.CreateVoiceActorDto;
@@ -10,11 +11,12 @@ import ru.youmiteru.backend.service.VoiceActorService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/voice-actors")
-public class VoiceActorController {
+@RequestMapping("/api/admin/voice-actors")
+public class VoiceActorAdminController {
     private final VoiceActorService voiceActorService;
 
-    public VoiceActorController(VoiceActorService voiceActorService) {
+    @Autowired
+    public VoiceActorAdminController(VoiceActorService voiceActorService) {
         this.voiceActorService = voiceActorService;
     }
 
@@ -34,7 +36,8 @@ public class VoiceActorController {
     }
 
     @PutMapping("/{id}")
-    public VoiceActorDtoCrud updateVoiceActor(@PathVariable Long id, @RequestBody VoiceActorDtoCrud voiceActorDto) {
+    public VoiceActorDtoCrud updateVoiceActor(@PathVariable Long id,
+                                              @RequestBody VoiceActorDtoCrud voiceActorDto) {
         return voiceActorService.updateVoiceActor(id, voiceActorDto);
     }
 
@@ -43,7 +46,7 @@ public class VoiceActorController {
         voiceActorService.deleteVoiceActor(id);
     }
 
-    @PutMapping("/{voiceActorId}/seasons/{seasonId}")
+    @PutMapping("/{voiceActorId}/season/{seasonId}")
     public ResponseEntity<VoiceActorDtoCrud> addSeasonToVoiceActor(
         @PathVariable Long voiceActorId,
         @PathVariable Long seasonId,

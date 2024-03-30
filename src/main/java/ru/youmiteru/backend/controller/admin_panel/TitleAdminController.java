@@ -1,4 +1,5 @@
 package ru.youmiteru.backend.controller.admin_panel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.youmiteru.backend.convertors.TitleConvertors;
@@ -8,23 +9,21 @@ import ru.youmiteru.backend.dto.Title.TitlePageDTO;
 import ru.youmiteru.backend.repositories.TitleRepository;
 import ru.youmiteru.backend.service.TitleService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/titles")
-public class TitleCrudController {
+@RequestMapping("/api/admin/title")
+public class TitleAdminController {
     private final TitleRepository titleRepository;
-    private final TitleConvertors titleConvertors;
     private final TitleService titleService;
-    public TitleCrudController(TitleRepository titleRepository, TitleConvertors titleConvertors, TitleService titleService) {
+
+    @Autowired
+    public TitleAdminController(TitleRepository titleRepository, TitleService titleService) {
         this.titleRepository = titleRepository;
-        this.titleConvertors = titleConvertors;
         this.titleService = titleService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<TitleAdminPanelDto> getAllSeasons() {
         return titleService.getAllSeasonsService();
     }
@@ -35,7 +34,7 @@ public class TitleCrudController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping
     public Title createTitle(@RequestBody Title title) {
         return titleRepository.save(title);
     }

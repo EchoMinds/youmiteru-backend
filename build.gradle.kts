@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "ru.youmiteru"
-version = "0.0.2-SNAPSHOT"
+version = "0.0.4-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -71,9 +71,9 @@ dependencies {
 	implementation("org.postgresql:postgresql")
 	implementation("org.apache.logging.log4j:log4j-core:2.22.1")
 	implementation("org.apache.logging.log4j:log4j-api:2.22.1")
-	implementation("org.springframework.security:spring-security-web:6.2.3")
-	implementation("org.springframework.security:spring-security-config:6.2.3")
-	implementation("org.springframework.security:spring-security-core:6.2.3")
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+	implementation("org.springframework.boot:spring-boot-starter-security:3.2.4")
+
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
 

@@ -1,5 +1,6 @@
 package ru.youmiteru.backend.controller.admin_panel;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.youmiteru.backend.dto.GenreDTO.GenreDto;
@@ -8,17 +9,15 @@ import ru.youmiteru.backend.service.GenreService;
 import ru.youmiteru.backend.service.TitleService;
 
 @RestController
-@RequestMapping("/genres")
-public class GenreController {
+@RequestMapping("/api/admin/genres")
+public class GenreAdminController {
     private final GenreService genreService;
-    private final TitleService titleService;
-
-    public GenreController(GenreService genreService, TitleService titleService) {
+    @Autowired
+    public GenreAdminController(GenreService genreService, TitleService titleService) {
         this.genreService = genreService;
-        this.titleService = titleService;
     }
 
-    @PostMapping("/{genreId}/titles/{titleId}")
+    @PostMapping("/{genreId}/title/{titleId}")
     public ResponseEntity<GenreDto> associateGenreWithTitle(
         @PathVariable Long genreId,
         @PathVariable Long titleId,
@@ -36,7 +35,7 @@ public class GenreController {
         }
     }
 
-    @DeleteMapping("/{genreId}/titles/{titleId}")
+    @DeleteMapping("/{genreId}/title/{titleId}")
     public ResponseEntity<GenreDto> dissociateGenreFromTitle(
         @PathVariable Long genreId,
         @PathVariable Long titleId,
