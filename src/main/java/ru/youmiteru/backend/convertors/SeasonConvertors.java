@@ -50,7 +50,7 @@ public class SeasonConvertors {
             genres,
             commentService.getCommentsList(seasonPage),
             voiceActorService.getVoiceActorList(seasonPage),
-            seasonPage.getFrameWithCodeVideoPlayList(),
+            seasonPage.getCodeForVideoPlayer(),
             seasonPage.getAnimeBannerUrl()
         );
     }

@@ -39,7 +39,7 @@ create table if not exists youmiteru_backend.season
     age_restriction     varchar(24),
     year_season         varchar(24),
     anime_banner_url    varchar,
-    frame_with_videoplayer varchar
+    code_videoplayer varchar
 );
 
 create table if not exists youmiteru_backend.comment

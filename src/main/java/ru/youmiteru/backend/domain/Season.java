@@ -57,8 +57,8 @@ public class Season {
     @Enumerated(value = EnumType.STRING)
     private AnimeFormat animeFormat;
 
-    @Column(name = "frame_with_videoplayer")
-    private String frameWithCodeVideoPlayList;
+    @Column(name = "code_videoplayer")
+    private String codeForVideoPlayer;
 
     @ManyToMany
     @JoinTable(

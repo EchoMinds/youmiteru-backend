@@ -23,7 +23,7 @@ public record SeasonPage(
     List<String> genres,
     List<CommentDTO> commentsList,
     List<VoiceActorDTO> voiceActorDTO,
-    String frameVideoPlayer,
+    String codeVideoPlayer,
     String animeBannerUrl
 
 ) {
