@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ru.youmiteru.backend.domain.Genre;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.dto.SeasonDto.*;
-import ru.youmiteru.backend.dto.VideoDTO.*;
 import ru.youmiteru.backend.service.*;
 
 import java.util.List;
@@ -22,7 +21,6 @@ public class SeasonConvertors {
     private final CommentService commentService;
     private final RatingService ratingService;
     private final VoiceActorService voiceActorService;
-    private final VideoConvertors videoConvertors;
 
     //home page
     public HomePage homePageResponse(Season season) {
@@ -35,8 +33,6 @@ public class SeasonConvertors {
         List<String> genres = seasonPage.getTitle().getGenres().stream().map(Genre::getName)
             .toList();
 
-        List<VideoDTO> videoDtoList = seasonPage.getVideoList()
-            .stream().map(videoConvertors::convertToVideoDtoForSeason).toList();
 
         return new SeasonPage(
             seasonPage.getId(),
@@ -54,7 +50,7 @@ public class SeasonConvertors {
             genres,
             commentService.getCommentsList(seasonPage),
             voiceActorService.getVoiceActorList(seasonPage),
-            videoDtoList,
+            seasonPage.getFrameWithCodeVideoPlayList(),
             seasonPage.getAnimeBannerUrl()
         );
     }

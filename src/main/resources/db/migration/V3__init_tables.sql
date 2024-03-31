@@ -38,7 +38,8 @@ create table if not exists youmiteru_backend.season
     title_state         varchar(64)                                                      not null,
     age_restriction     varchar(24),
     year_season         varchar(24),
-    anime_banner_url    varchar
+    anime_banner_url    varchar,
+    frame_with_videoplayer varchar
 );
 
 create table if not exists youmiteru_backend.comment
@@ -51,14 +52,7 @@ create table if not exists youmiteru_backend.comment
     writer_id     BIGINT references youmiteru_backend.user (id) on delete cascade   not null,
     season_id     BIGINT references youmiteru_backend.season (id) on delete cascade not null
 );
-create table if not exists youmiteru_backend.video
-(
-    id        BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    episode   Int                                                               not null,
-    player    varchar(64)                                                       not null,
-    link      varchar                                                           not null,
-    season_id BIGINT references youmiteru_backend.season (id) on delete cascade not null
-);
+
 create table if not exists youmiteru_backend.rating
 (
     id        BIGINT primary key GENERATED ALWAYS AS IDENTITY,
