@@ -55,7 +55,7 @@ public class SeasonCrudControllerTest {
         testSeason.setReleaseDate(LocalDate.of(2023, 4, 1));
 
         listHomePage = new ListHomePage(Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
-        seasonPage = new SeasonPage(1L, "imageUrl", "Test Season", "TV", "Description", LocalDate.of(2023, 4, 1), TitleState.FINISHED, "18+", "Spring", "Reduced Description", 4.5, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
+        seasonPage = new SeasonPage(1L, "imageUrl", "Test Season", "TV", "Description", LocalDate.of(2023, 4, 1), TitleState.FINISHED, "18+", "Spring", "Reduced Description", 4.5, Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), "url");
     }
 
     @Test
