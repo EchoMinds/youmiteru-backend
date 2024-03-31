@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://java-postgres:5432/postgres #//Your DB
-    username: postgres #//Your name
-    password: relocate #//Your password
+    url: jdbc:postgresql://java-postgres:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
+    username: postgres
+    password: relocate
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
