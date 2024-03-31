@@ -24,7 +24,8 @@ public record SeasonPage(
     List<String> genres,
     List<CommentDTO> commentsList,
     List<VoiceActorDTO> voiceActorDTO,
-    List<VideoDTO> videoDtoList
+    List<VideoDTO> videoDtoList,
+    String animeBannerUrl
 
 ) {
 }
