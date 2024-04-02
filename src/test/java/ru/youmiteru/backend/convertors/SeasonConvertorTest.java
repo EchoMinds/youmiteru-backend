@@ -33,8 +33,6 @@ public class SeasonConvertorTest {
     @Mock
     private VoiceActorService voiceActorService;
 
-    @Mock
-    private VideoConvertors videoConvertors;
 
     @InjectMocks
     private SeasonConvertors seasonConvertors;
