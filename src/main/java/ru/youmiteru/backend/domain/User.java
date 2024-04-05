@@ -52,6 +52,12 @@ public class User {
     )
     private List<Season> favoriteSeasonList;
 
+    @Column(name = "discordID")
+    private Long discordId;
+    @Column(name = "googleID")
+    private Long googleId;
+    @Column(name = "vkID")
+    private Long vkId;
 
     public User(String profileImageUrl, String name, String email, Role role) {
         this.profileImageUrl = profileImageUrl;

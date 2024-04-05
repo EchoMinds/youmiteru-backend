@@ -5,7 +5,10 @@ create table if not exists youmiteru_backend.user
     name                varchar(32) not null,
     email               varchar(64),
     role                varchar(32) not null,
-    creation_time       timestamp
+    creation_time       timestamp,
+    discordID           BIGINT,
+    googleID            BIGINT,
+    vkID                BIGINT
 );
 create table if not exists youmiteru_backend.title
 (
@@ -39,7 +42,7 @@ create table if not exists youmiteru_backend.season
     age_restriction     varchar(24),
     year_season         varchar(24),
     anime_banner_url    varchar,
-    code_videoplayer varchar
+    code_videoplayer    varchar
 );
 
 create table if not exists youmiteru_backend.comment

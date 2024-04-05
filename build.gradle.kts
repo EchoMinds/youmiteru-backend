@@ -71,8 +71,9 @@ dependencies {
 	implementation("org.postgresql:postgresql")
 	implementation("org.apache.logging.log4j:log4j-core:2.22.1")
 	implementation("org.apache.logging.log4j:log4j-api:2.22.1")
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-	implementation("org.springframework.boot:spring-boot-starter-security:3.2.4")
+// https://mvnrepository.com/artifact7/org.springframework.boot/spring-boot-starter-security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 

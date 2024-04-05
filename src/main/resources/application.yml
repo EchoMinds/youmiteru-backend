@@ -14,3 +14,21 @@ spring:
     baseline-description: "init"
     locations: classpath:db/migration
     default-schema: flyway_schema
+  security:
+    oauth2:
+      client:
+        registration:
+          discord:
+            client-id: 'TOTAL SECRET'
+            client-secret: 'TOTAL SECRET'
+            client-authentication-method: client_secret_post
+            authorization-grant-type: authorization_code
+            scope: identify
+            client-name: Discord
+            redirect-uri: "{baseUrl}/api/login/oauth2/code/discord"
+            provider: discord
+        provider:
+          discord:
+            authorization-uri: 'https://discord.com/api/oauth2/authorize'
+            token-uri: 'https://discord.com/api/oauth2/token'
+            user-info-uri: 'https://discord.com/api/users/@me'
