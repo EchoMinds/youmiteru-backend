@@ -21,7 +21,7 @@ public class RatingPanelService {
     private UserRepository userRepository;
     private RatingRepository ratingRepository;
 
-    public ResponseEntity<HttpStatus> addRatingValueSeason(Long season_id, Long user_id, int value){
+    public Rating addRatingValueSeason(Long season_id, Long user_id, int value){
         Optional<Season> optionalSeason = seasonRepository.findById(season_id);
         Optional<User> optionalUser = userRepository.findById(user_id);
 
@@ -37,13 +37,13 @@ public class RatingPanelService {
             seasonRepository.save(season);
             userRepository.save(user);
 
-            return ResponseEntity.ok().build();
+            return rating;
         }
 
-        return ResponseEntity.badRequest().build();
+        return null;
     }
 
-    public ResponseEntity<HttpStatus> updateRatingValueSeason(Long season_id, Long user_id, int value){
+    public Rating updateRatingValueSeason(Long season_id, Long user_id, int value){
         Optional<Season> optionalSeason = seasonRepository.findById(season_id);
         Optional<User> optionalUser = userRepository.findById(user_id);
 
@@ -57,13 +57,13 @@ public class RatingPanelService {
             user.setRatingList(List.of(rating));
 
             ratingRepository.save(rating);
-            return ResponseEntity.ok().build();
+            return rating;
         }
 
-        return ResponseEntity.badRequest().build();
+        return null;
     }
 
-    public ResponseEntity<HttpStatus> deleteRatingValueSeason(Long season_id, Long user_id, int value){
+    public Rating deleteRatingValueSeason(Long season_id, Long user_id, int value){
         Optional<Season> optionalSeason = seasonRepository.findById(season_id);
         Optional<User> optionalUser = userRepository.findById(user_id);
 
@@ -78,9 +78,9 @@ public class RatingPanelService {
             seasonRepository.save(season);
             userRepository.save(user);
 
-            return ResponseEntity.ok().build();
+            return rating;
         }
 
-        return ResponseEntity.badRequest().build();
+        return null;
     }
 }

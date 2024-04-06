@@ -1,6 +1,7 @@
 package ru.youmiteru.backend.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.youmiteru.backend.domain.User;
 import ru.youmiteru.backend.user.service.UserPanelService;
@@ -16,8 +17,13 @@ public class UserPanelController {
     }
 
     @PutMapping("/{id}/settings")
-    public User putUserName(@PathVariable Long id, @RequestBody String name){
-        return userPanelService.updateUserName(id, name);
+    public HttpStatus putUserName(@PathVariable Long id, @RequestBody String name){
+        User user = userPanelService.updateUserName(id, name);
+        if(user != null){
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.BAD_REQUEST;
+        }
     }
 
 

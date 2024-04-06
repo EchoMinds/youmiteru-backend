@@ -23,7 +23,7 @@ public class SeasonPanelService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<HttpStatus> addFavorite(Long user_id, Long season_id){
+    public HttpStatus addFavorite(Long user_id, Long season_id){
         Optional<User> user = userRepository.findById(user_id);
         Optional<Season> season = seasonRepository.findById(season_id);
         System.out.println(user);
@@ -38,13 +38,13 @@ public class SeasonPanelService {
             userRepository.save(newUser);
             seasonRepository.save(newSeason);
 
-            return ResponseEntity.ok().build();
+            return HttpStatus.OK;
         }
 
-        return ResponseEntity.notFound().build();
+        return HttpStatus.BAD_REQUEST;
     }
 
-    public ResponseEntity<HttpStatus> deleteFavorite(Long user_id, Long season_id){
+    public HttpStatus deleteFavorite(Long user_id, Long season_id){
         Optional<User> user = userRepository.findById(user_id);
         Optional<Season> season = seasonRepository.findById(season_id);
 
@@ -59,8 +59,8 @@ public class SeasonPanelService {
             userRepository.save(trueUser);
             seasonRepository.save(trueSeason);
 
-            return ResponseEntity.ok().build();
+            return HttpStatus.OK;
         }
-        return ResponseEntity.badRequest().build();
+        return HttpStatus.BAD_REQUEST;
     }
 }

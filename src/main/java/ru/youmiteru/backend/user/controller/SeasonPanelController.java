@@ -18,14 +18,23 @@ public class SeasonPanelController {
 
 
     @PostMapping("/{seasonId}/addFavorite/{userId}")
-    public ResponseEntity<HttpStatus> addFavoriteSeasonList(@PathVariable Long userId,
+    public HttpStatus addFavoriteSeasonList(@PathVariable Long userId,
                                                             @PathVariable Long seasonId){
-        return seasonPanelService.addFavorite(userId, seasonId);
+
+        if (HttpStatus.OK == seasonPanelService.addFavorite(userId, seasonId)){
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.BAD_REQUEST;
+        }
     }
 
     @DeleteMapping("/{seasonId}/addFavorite/{userId}")
-    public ResponseEntity<HttpStatus> deleteFavoriteSeasonList(@PathVariable Long userId,
+    public HttpStatus deleteFavoriteSeasonList(@PathVariable Long userId,
                                                                @PathVariable Long seasonId){
-        return seasonPanelService.deleteFavorite(userId, seasonId);
+        if (HttpStatus.OK == seasonPanelService.deleteFavorite(userId, seasonId)){
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.BAD_REQUEST;
+        }
     }
 }
