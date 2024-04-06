@@ -37,10 +37,10 @@ public class RatingPanelService {
             seasonRepository.save(season);
             userRepository.save(user);
 
-            return (ResponseEntity<HttpStatus>) ResponseEntity.ok();
+            return ResponseEntity.ok().build();
         }
 
-        return (ResponseEntity<HttpStatus>) ResponseEntity.badRequest();
+        return ResponseEntity.badRequest().build();
     }
 
     public ResponseEntity<HttpStatus> updateRatingValueSeason(Long season_id, Long user_id, int value){
@@ -57,10 +57,10 @@ public class RatingPanelService {
             user.setRatingList(List.of(rating));
 
             ratingRepository.save(rating);
-            return (ResponseEntity<HttpStatus>) ResponseEntity.ok();
+            return ResponseEntity.ok().build();
         }
 
-        return (ResponseEntity<HttpStatus>) ResponseEntity.badRequest();
+        return ResponseEntity.badRequest().build();
     }
 
     public ResponseEntity<HttpStatus> deleteRatingValueSeason(Long season_id, Long user_id, int value){
@@ -78,9 +78,9 @@ public class RatingPanelService {
             seasonRepository.save(season);
             userRepository.save(user);
 
-            return (ResponseEntity<HttpStatus>) ResponseEntity.ok();
+            return ResponseEntity.ok().build();
         }
 
-        return (ResponseEntity<HttpStatus>) ResponseEntity.badRequest();
+        return ResponseEntity.badRequest().build();
     }
 }

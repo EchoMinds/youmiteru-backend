@@ -1,6 +1,6 @@
 package ru.youmiteru.backend.user.service;
 
-import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.User;
 import ru.youmiteru.backend.repositories.UserRepository;
@@ -8,9 +8,13 @@ import ru.youmiteru.backend.repositories.UserRepository;
 import java.util.Optional;
 
 @Service
-@Data
 public class UserPanelService {
     private UserRepository userRepository;
+
+    @Autowired
+    public UserPanelService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User updateUserName(Long id, String name){
         Optional<User> user = userRepository.findById(id);

@@ -1,15 +1,19 @@
 package ru.youmiteru.backend.user.controller;
 
-import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.youmiteru.backend.domain.User;
 import ru.youmiteru.backend.user.service.UserPanelService;
 
 @RestController
-@Data
 @RequestMapping("/api/user")
 public class UserPanelController {
     private UserPanelService userPanelService;
+
+    @Autowired
+    public UserPanelController(UserPanelService userPanelService) {
+        this.userPanelService = userPanelService;
+    }
 
     @PutMapping("/{id}/settings")
     public User putUserName(@PathVariable Long id, @RequestBody String name){

@@ -1,14 +1,16 @@
 package ru.youmiteru.backend.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "user", schema = "youmiteru_backend")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,12 +36,15 @@ public class User {
     @Column(name = "creation_time")
     private LocalDateTime creationTime;
 
+
     @OneToOne(mappedBy = "user")
     private VoiceActor voiceActorAcc;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "writer")
     private List<Comment> usersComms;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private List<Rating> ratingList;
 

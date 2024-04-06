@@ -1,17 +1,17 @@
 package ru.youmiteru.backend.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "comment", schema = "youmiteru_backend")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
@@ -37,6 +37,7 @@ public class Comment {
     @OneToMany(mappedBy = "replyTo", fetch = FetchType.LAZY)
     private List<Comment> answerForThisCommList;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", referencedColumnName = "id")
     private User writer;

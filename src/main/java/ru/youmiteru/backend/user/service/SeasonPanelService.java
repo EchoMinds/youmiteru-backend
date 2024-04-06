@@ -1,6 +1,6 @@
 package ru.youmiteru.backend.user.service;
 
-import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,14 +13,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Data
 public class SeasonPanelService {
     private SeasonRepository seasonRepository;
     private UserRepository userRepository;
 
+    @Autowired
+    public SeasonPanelService(SeasonRepository seasonRepository, UserRepository userRepository) {
+        this.seasonRepository = seasonRepository;
+        this.userRepository = userRepository;
+    }
+
     public ResponseEntity<HttpStatus> addFavorite(Long user_id, Long season_id){
         Optional<User> user = userRepository.findById(user_id);
         Optional<Season> season = seasonRepository.findById(season_id);
+        System.out.println(user);
+
 
         if (user.isPresent() && season.isPresent()){
             Season newSeason = season.get();
@@ -31,16 +38,17 @@ public class SeasonPanelService {
             userRepository.save(newUser);
             seasonRepository.save(newSeason);
 
-            return (ResponseEntity<HttpStatus>) ResponseEntity.ok();
+            return ResponseEntity.ok().build();
         }
 
-        return (ResponseEntity<HttpStatus>) ResponseEntity.notFound();
+        return ResponseEntity.notFound().build();
     }
 
     public ResponseEntity<HttpStatus> deleteFavorite(Long user_id, Long season_id){
         Optional<User> user = userRepository.findById(user_id);
         Optional<Season> season = seasonRepository.findById(season_id);
 
+        System.out.println(user);
         if (user.isPresent() && season.isPresent()){
             User trueUser = user.get();
             Season trueSeason = season.get();
@@ -51,8 +59,8 @@ public class SeasonPanelService {
             userRepository.save(trueUser);
             seasonRepository.save(trueSeason);
 
-            return (ResponseEntity<HttpStatus>) ResponseEntity.ok();
+            return ResponseEntity.ok().build();
         }
-        return (ResponseEntity<HttpStatus>) ResponseEntity.badRequest();
+        return ResponseEntity.badRequest().build();
     }
 }

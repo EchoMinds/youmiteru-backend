@@ -2,11 +2,14 @@ package ru.youmiteru.backend.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "rating", schema = "youmiteru_backend")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Rating {
     @Id
