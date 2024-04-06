@@ -24,4 +24,7 @@ public class Rating {
     @ManyToOne
     @JoinColumn(name = "season_id", referencedColumnName = "id")
     private Season season;
+
+    public Rating(int value, Season season, User user) {
+    }
 }

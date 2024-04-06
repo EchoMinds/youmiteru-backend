@@ -1,9 +1,10 @@
-package ru.youmiteru.backend.user;
+package ru.youmiteru.backend.user.controller;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.youmiteru.backend.user.service.SeasonPanelService;
 
 @RestController
 @Data

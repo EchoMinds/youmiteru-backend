@@ -1,4 +1,4 @@
-package ru.youmiteru.backend.user;
+package ru.youmiteru.backend.user.service;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;
