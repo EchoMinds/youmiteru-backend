@@ -74,6 +74,10 @@ dependencies {
 // https://mvnrepository.com/artifact7/org.springframework.boot/spring-boot-starter-security
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+	implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
+// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+	implementation("com.fasterxml.jackson.core:jackson-core:2.17.0")
 
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
