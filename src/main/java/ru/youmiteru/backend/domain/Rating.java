@@ -8,8 +8,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "rating", schema = "youmiteru_backend")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Rating {
     @Id

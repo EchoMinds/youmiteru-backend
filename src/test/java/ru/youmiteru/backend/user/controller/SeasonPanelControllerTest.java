@@ -6,7 +6,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import ru.youmiteru.backend.user.service.SeasonPanelService;
+import ru.youmiteru.backend.controller.user_panel.SeasonPanelController;
+import ru.youmiteru.backend.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -16,7 +17,7 @@ public class SeasonPanelControllerTest {
     private SeasonPanelController seasonPanelController;
 
     @Mock
-    private SeasonPanelService seasonPanelService;
+    private UserService seasonPanelService;
 
     private Long user_id = 1L;
     private Long season_id = 1L;

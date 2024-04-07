@@ -10,8 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "comment", schema = "youmiteru_backend")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
@@ -37,7 +36,7 @@ public class Comment {
     @OneToMany(mappedBy = "replyTo", fetch = FetchType.LAZY)
     private List<Comment> answerForThisCommList;
 
-    @JsonBackReference
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", referencedColumnName = "id")
     private User writer;

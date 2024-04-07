@@ -1,15 +1,14 @@
 package ru.youmiteru.backend.user.controller;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import ru.youmiteru.backend.controller.user_panel.RatingPanelController;
 import ru.youmiteru.backend.domain.Rating;
-import ru.youmiteru.backend.user.service.RatingPanelService;
+import ru.youmiteru.backend.service.RatingService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -19,7 +18,7 @@ public class RatingPanelControllerTest {
     @InjectMocks
     private RatingPanelController ratingPanelController;
     @Mock
-    private RatingPanelService ratingPanelService;
+    private RatingService ratingPanelService;
 
     private int value = 1;
     private Long season_id = 1L;

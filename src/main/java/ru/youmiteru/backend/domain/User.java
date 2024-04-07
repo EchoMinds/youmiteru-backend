@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "user", schema = "youmiteru_backend")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -40,11 +39,9 @@ public class User {
     @OneToOne(mappedBy = "user")
     private VoiceActor voiceActorAcc;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "writer")
     private List<Comment> usersComms;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "user")
     private List<Rating> ratingList;
 

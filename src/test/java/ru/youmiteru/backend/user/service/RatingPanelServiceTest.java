@@ -13,6 +13,7 @@ import ru.youmiteru.backend.fakeDomain.FakeDomainCreator;
 import ru.youmiteru.backend.repositories.RatingRepository;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.UserRepository;
+import ru.youmiteru.backend.service.RatingService;
 
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class RatingPanelServiceTest {
     @InjectMocks
-    private RatingPanelService ratingPanelService;
+    private RatingService ratingPanelService;
     @Mock
     private SeasonRepository seasonRepository;
     @Mock
