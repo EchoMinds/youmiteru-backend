@@ -2,7 +2,6 @@ package ru.youmiteru.backend.dto.SeasonDto;
 
 import ru.youmiteru.backend.domain.TitleState;
 import ru.youmiteru.backend.dto.CommentDTO;
-import ru.youmiteru.backend.dto.VideoDTO.VideoDTO;
 import ru.youmiteru.backend.dto.VoiceActorDTO.VoiceActorDTO;
 
 import java.time.LocalDate;
@@ -24,7 +23,7 @@ public record SeasonPage(
     List<String> genres,
     List<CommentDTO> commentsList,
     List<VoiceActorDTO> voiceActorDTO,
-    List<VideoDTO> videoDtoList,
+    String codeVideoPlayer,
     String animeBannerUrl
 
 ) {
