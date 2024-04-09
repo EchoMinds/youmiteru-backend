@@ -2,7 +2,9 @@ package ru.youmiteru.backend.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "rating", schema = "youmiteru_backend")
@@ -24,4 +26,7 @@ public class Rating {
     @ManyToOne
     @JoinColumn(name = "season_id", referencedColumnName = "id")
     private Season season;
+
+    public Rating(int value, Season season, User user) {
+    }
 }

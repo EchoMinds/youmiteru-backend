@@ -1,10 +1,9 @@
 package ru.youmiteru.backend.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +35,7 @@ public class Comment {
 
     @OneToMany(mappedBy = "replyTo", fetch = FetchType.LAZY)
     private List<Comment> answerForThisCommList;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id", referencedColumnName = "id")
