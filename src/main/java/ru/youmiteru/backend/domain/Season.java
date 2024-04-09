@@ -57,6 +57,9 @@ public class Season {
     @Enumerated(value = EnumType.STRING)
     private AnimeFormat animeFormat;
 
+    @Column(name = "code_videoplayer")
+    private String codeForVideoPlayer;
+
     @ManyToMany
     @JoinTable(
         name = "seasons_voice_actors",
@@ -69,9 +72,6 @@ public class Season {
     @ManyToMany(mappedBy = "favoriteSeasonList")
     private List<User> thisUserLikeThisAnime;
 
-    @OneToMany(mappedBy = "season")
-    private List<Video> videoList;
-
     @Column(name = "anime_banner_url")
     private String animeBannerUrl;
 
@@ -81,8 +81,6 @@ public class Season {
     @OneToMany(mappedBy = "season")
     private List<Rating> seasonRatingList;
 
-    public Season(long id, Title title, String testSeason, String testDescription, boolean date, boolean titleState,
-                  boolean animeFormat, boolean videoList) {
-    }
+
 
 }

@@ -6,12 +6,10 @@ import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.*;
 import ru.youmiteru.backend.dto.SeasonDto.*;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
-import ru.youmiteru.backend.exceptions.UserNotFoundException;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.convertors.SeasonConvertors;
 import ru.youmiteru.backend.repositories.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

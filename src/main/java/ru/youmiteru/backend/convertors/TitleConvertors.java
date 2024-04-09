@@ -2,6 +2,7 @@ package ru.youmiteru.backend.convertors;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import ru.youmiteru.backend.domain.Genre;
 import ru.youmiteru.backend.domain.Title;
 import ru.youmiteru.backend.dto.Title.TitleCatalogDTO;
 import ru.youmiteru.backend.dto.Title.TitlePageDTO;
@@ -26,7 +27,7 @@ public class TitleConvertors {
             title.getName(),
             title.getTitleImageUrl(),
             title.getDescription(),
-            title.getGenres().stream().map(f -> f.getName()).collect(Collectors.toList()),
+            title.getGenres().stream().map(Genre::getName).collect(Collectors.toList()),
             title.getSeasonList().stream().map(seasonConvertors::homePageResponse).collect(Collectors.toList())
         );
     }
