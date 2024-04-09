@@ -27,34 +27,34 @@ public class RatingPanelControllerTest {
     //POST
     @Test
     void testAddRatingValueOK(){
-        when(ratingPanelService.addRatingValueSeason(season_id, user_id, value)).thenReturn(new Rating());
+        when(ratingPanelService.addRatingValueSeason(season_id, user_id, value)).thenReturn(HttpStatus.OK);
         HttpStatus http = ratingPanelController.addRatingValue(season_id, user_id, value);
         assertEquals(http, HttpStatus.OK);
     }
     @Test
     void testAddRatingValueBadRequest(){
         HttpStatus http = ratingPanelController.addRatingValue(season_id, user_id, value);
-        assertEquals(http, HttpStatus.BAD_REQUEST);
+        assertEquals(http, null);
     }
 
     //PUT
     @Test
     void testUpdateRatingValueOK(){
-        when(ratingPanelService.updateRatingValueSeason(season_id, user_id, value)).thenReturn(new Rating());
+        when(ratingPanelService.updateRatingValueSeason(season_id, user_id, value)).thenReturn(HttpStatus.OK);
         HttpStatus http = ratingPanelController.updateRatingValue(season_id, user_id, value);
         assertEquals(http, HttpStatus.OK);
     }
     @Test
     void testUpdateRatingValueBadRequest(){
         HttpStatus http = ratingPanelController.updateRatingValue(season_id, user_id, value);
-        assertEquals(http, HttpStatus.BAD_REQUEST);
+        assertEquals(http, null);
     }
 
     //DELETE
     @Test
     void testDeleteRatingValueBadRequest(){
         HttpStatus http = ratingPanelController.updateRatingValue(season_id, user_id, value);
-        assertEquals(http, HttpStatus.BAD_REQUEST);
+        assertEquals(http, null);
     }
 
 

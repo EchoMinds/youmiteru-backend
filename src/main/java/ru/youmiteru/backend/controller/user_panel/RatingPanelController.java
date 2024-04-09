@@ -21,13 +21,7 @@ public class RatingPanelController {
     public HttpStatus addRatingValue(@PathVariable Long seasonId,
                                                      @PathVariable Long userId,
                                                      @RequestBody int ratingValue){
-        Rating rating = ratingPanelService.addRatingValueSeason(seasonId, userId, ratingValue);
-
-        if (rating != null){
-            return HttpStatus.OK;
-        } else {
-            return HttpStatus.BAD_REQUEST;
-        }
+        return ratingPanelService.addRatingValueSeason(seasonId, userId, ratingValue);
     }
 
     //обновление оценки рейтинга сезона
@@ -35,12 +29,7 @@ public class RatingPanelController {
     public HttpStatus updateRatingValue(@PathVariable Long seasonId,
                                                         @PathVariable Long userId,
                                                         @RequestBody int ratingValue){
-        Rating rating = ratingPanelService.updateRatingValueSeason(seasonId, userId, ratingValue);
-        if (rating != null){
-            return HttpStatus.OK;
-        } else {
-            return HttpStatus.BAD_REQUEST;
-        }
+        return ratingPanelService.updateRatingValueSeason(seasonId, userId, ratingValue);
     }
 
     //удаление оценки сезона
@@ -49,12 +38,7 @@ public class RatingPanelController {
                                                         @PathVariable Long userId,
                                                         @RequestBody int ratingValue){
 
-        Rating rating = ratingPanelService.deleteRatingValueSeason(seasonId, userId, ratingValue);
-        if (rating != null){
-            return HttpStatus.OK;
-        } else {
-            return HttpStatus.BAD_REQUEST;
-        }
+        return ratingPanelService.deleteRatingValueSeason(seasonId, userId, ratingValue);
     }
 
 }

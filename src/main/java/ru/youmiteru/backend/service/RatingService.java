@@ -2,6 +2,7 @@ package ru.youmiteru.backend.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.domain.Rating;
 import ru.youmiteru.backend.domain.Season;
@@ -15,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class RatingService {
     private final RatingRepository ratingRepository;
     private final SeasonRepository seasonRepository;
@@ -31,7 +31,7 @@ public class RatingService {
         return ratingRepository.getRatingBySeasonId(id);
     }
 
-    public Rating addRatingValueSeason(Long season_id, Long user_id, int value){
+    public HttpStatus addRatingValueSeason(Long season_id, Long user_id, int value){
         Optional<Season> optionalSeason = seasonRepository.findById(season_id);
         Optional<User> optionalUser = userRepository.findById(user_id);
 
@@ -47,33 +47,39 @@ public class RatingService {
             seasonRepository.save(season);
             userRepository.save(user);
 
-            return rating;
+            return HttpStatus.OK;
+        } else {
+            throw new RatingNotFoundException();
         }
-
-        throw new RatingNotFoundException();
     }
 
-    public Rating updateRatingValueSeason(Long season_id, Long user_id, int value){
-        Optional<Season> optionalSeason = seasonRepository.findById(season_id);
-        Optional<User> optionalUser = userRepository.findById(user_id);
+    public HttpStatus updateRatingValueSeason(Long season_id, Long user_id, int value){
 
-        if (optionalSeason.isPresent() && optionalUser.isPresent()){
-            Season season = optionalSeason.get();
-            User user = optionalUser.get();
-            Rating rating = ratingRepository.findByUserAndSeason(user, season);
 
-            rating.setValue(value);
-            season.setSeasonRatingList(List.of(rating));
-            user.setRatingList(List.of(rating));
+            Optional<Season> optionalSeason = seasonRepository.findById(season_id);
+            Optional<User> optionalUser = userRepository.findById(user_id);
 
-            ratingRepository.save(rating);
-            return rating;
-        }
+            if (optionalSeason.isPresent() && optionalUser.isPresent()) {
+                Season season = optionalSeason.get();
+                User user = optionalUser.get();
+                Rating rating = ratingRepository.findByUserAndSeason(user, season);
 
-        throw new RatingNotFoundException();
+                if (rating == null){
+                    throw new RatingNotFoundException();
+                }
+
+                rating.setValue(value);
+                season.setSeasonRatingList(List.of(rating));
+                user.setRatingList(List.of(rating));
+
+                ratingRepository.save(rating);
+                return HttpStatus.OK;
+            } else {
+                throw new RatingNotFoundException();
+            }
     }
 
-    public Rating deleteRatingValueSeason(Long season_id, Long user_id, int value){
+    public HttpStatus deleteRatingValueSeason(Long season_id, Long user_id, int value){
         Optional<Season> optionalSeason = seasonRepository.findById(season_id);
         Optional<User> optionalUser = userRepository.findById(user_id);
 
@@ -82,15 +88,18 @@ public class RatingService {
             User user = optionalUser.get();
             Rating rating = ratingRepository.findByUserAndSeason(user, season);
 
+            if (rating == null){
+                throw new RatingNotFoundException();
+            }
             season.getSeasonRatingList().remove(rating);
             user.getRatingList().remove(rating);
             ratingRepository.delete(rating);
             seasonRepository.save(season);
             userRepository.save(user);
 
-            return rating;
+            return HttpStatus.OK;
+        } else {
+            throw new RatingNotFoundException();
         }
-
-        throw new RatingNotFoundException();
     }
 }

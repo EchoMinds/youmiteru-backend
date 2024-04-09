@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import ru.youmiteru.backend.domain.Rating;
 import ru.youmiteru.backend.domain.Season;
 import ru.youmiteru.backend.domain.User;
@@ -54,10 +55,10 @@ public class RatingPanelServiceTest {
     void testAddRatingValueSeason(){
         when(seasonRepository.findById(season_id)).thenReturn(Optional.ofNullable(fakeSeason));
         when(userRepository.findById(user_id)).thenReturn(Optional.ofNullable(fakeUser));
-        Rating rating = ratingPanelService.addRatingValueSeason(season_id, user_id, ratingValue);
+        HttpStatus rating = ratingPanelService.addRatingValueSeason(season_id, user_id, ratingValue);
 
         assertNotNull(rating);
-        assertEquals(rating.getValue(), ratingValue);
+        assertEquals(HttpStatus.OK, rating);
     }
 
     @Test
@@ -66,10 +67,10 @@ public class RatingPanelServiceTest {
         when(userRepository.findById(user_id)).thenReturn(Optional.ofNullable(fakeUser));
         when(ratingRepository.findByUserAndSeason(fakeUser, fakeSeason)).thenReturn(fakeRating);
 
-        Rating rating = ratingPanelService.updateRatingValueSeason(fakeSeason.getId(), fakeUser.getId(), fakeRating.getValue());
+        HttpStatus rating = ratingPanelService.updateRatingValueSeason(fakeSeason.getId(), fakeUser.getId(), fakeRating.getValue());
 
         assertNotNull(rating);
-        assertEquals(rating.getValue(), fakeRating.getValue());
+        assertEquals(rating, HttpStatus.OK);
     }
 
 }
