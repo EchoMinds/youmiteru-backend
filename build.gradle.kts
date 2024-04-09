@@ -32,24 +32,24 @@ tasks.withType<JacocoReport> {
 }
 
 val intTestImplementation: Configuration by configurations.creating {
-	extendsFrom(configurations.getByName("implementation"))
+    extendsFrom(configurations.getByName("implementation"))
 }
 val intTestRuntimeOnly: Configuration by configurations.creating {
-	extendsFrom(configurations.getByName("runtimeOnly"))
+    extendsFrom(configurations.getByName("runtimeOnly"))
 }
 
 val integrationTest: SourceSet by sourceSets.creating {
-	compileClasspath += sourceSets["main"].output + configurations["intTestImplementation"]
-	runtimeClasspath += output + compileClasspath + configurations["intTestRuntimeOnly"]
+    compileClasspath += sourceSets["main"].output + configurations["intTestImplementation"]
+    runtimeClasspath += output + compileClasspath + configurations["intTestRuntimeOnly"]
 }
 
 tasks.register<Test>("integrationTest") {
-	description = "Runs the integration tests."
-	group = "verification"
-	testClassesDirs = integrationTest.output.classesDirs
-	classpath = integrationTest.runtimeClasspath
+    description = "Runs the integration tests."
+    group = "verification"
+    testClassesDirs = integrationTest.output.classesDirs
+    classpath = integrationTest.runtimeClasspath
 
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 configurations {
@@ -64,36 +64,36 @@ repositories {
 
 dependencies {
 
-	implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.flywaydb:flyway-core:10.4.1")
-	implementation("org.postgresql:postgresql")
-	implementation("org.apache.logging.log4j:log4j-core:2.22.1")
-	implementation("org.apache.logging.log4j:log4j-api:2.22.1")
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.flywaydb:flyway-core:10.4.1")
+    implementation("org.postgresql:postgresql")
+    implementation("org.apache.logging.log4j:log4j-core:2.22.1")
+    implementation("org.apache.logging.log4j:log4j-api:2.22.1")
 // https://mvnrepository.com/artifact7/org.springframework.boot/spring-boot-starter-security
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-	implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
 // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-	implementation("com.fasterxml.jackson.core:jackson-core:2.17.0")
+    implementation("com.fasterxml.jackson.core:jackson-core:2.17.0")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
-	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 
+    compileOnly("org.projectlombok:lombok")
+    runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
+    annotationProcessor("org.projectlombok:lombok")
 
-	compileOnly("org.projectlombok:lombok")
-	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
-	annotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test:6.2.3")
 
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.security:spring-security-test:6.2.3")
-
-	intTestImplementation("org.springframework.boot:spring-boot-starter-test")
-	intTestImplementation("org.testcontainers:junit-jupiter:1.18.3")
-	intTestImplementation("org.testcontainers:testcontainers:1.18.3")
-	intTestImplementation("org.testcontainers:postgresql:1.18.3")
+    intTestImplementation("org.springframework.boot:spring-boot-starter-test")
+    intTestImplementation("org.testcontainers:junit-jupiter:1.18.3")
+    intTestImplementation("org.testcontainers:testcontainers:1.18.3")
+    intTestImplementation("org.testcontainers:postgresql:1.18.3")
 
 
 }
