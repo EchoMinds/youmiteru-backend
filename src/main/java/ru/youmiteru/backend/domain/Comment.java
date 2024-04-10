@@ -10,7 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "comment", schema = "youmiteru_backend")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment {
