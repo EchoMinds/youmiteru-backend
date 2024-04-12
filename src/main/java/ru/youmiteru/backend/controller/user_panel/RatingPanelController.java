@@ -7,7 +7,7 @@ import ru.youmiteru.backend.domain.Rating;
 import ru.youmiteru.backend.service.RatingService;
 
 @RestController
-@RequestMapping("/api/season/{seasonId}/addRatingValue/{userId}")
+@RequestMapping("/api/season")
 public class RatingPanelController {
     private final RatingService ratingPanelService;
 
@@ -17,7 +17,7 @@ public class RatingPanelController {
     }
 
     //Добавление оценки рейтинга к сезону
-    @PostMapping
+    @PostMapping("/{seasonId}/addRatingValue/{userId}")
     public HttpStatus addRatingValue(@PathVariable Long seasonId,
                                                      @PathVariable Long userId,
                                                      @RequestBody int ratingValue){
@@ -25,20 +25,21 @@ public class RatingPanelController {
     }
 
     //обновление оценки рейтинга сезона
-    @PutMapping
+    @PutMapping("/{seasonId}/addRatingValue/{userId}/{ratingId}")
     public HttpStatus updateRatingValue(@PathVariable Long seasonId,
                                                         @PathVariable Long userId,
+                                                        @PathVariable Long ratingId,
                                                         @RequestBody int ratingValue){
-        return ratingPanelService.updateRatingValueSeason(seasonId, userId, ratingValue);
+        return ratingPanelService.updateRatingValueSeason(seasonId, userId, ratingId, ratingValue);
     }
 
     //удаление оценки сезона
-    @DeleteMapping
+    @DeleteMapping("/{seasonId}/addRatingValue/{userId}/{ratingId}")
     public HttpStatus deleteRatingValue(@PathVariable Long seasonId,
                                                         @PathVariable Long userId,
-                                                        @RequestBody int ratingValue){
+                                                        @PathVariable Long ratingId){
 
-        return ratingPanelService.deleteRatingValueSeason(seasonId, userId, ratingValue);
+        return ratingPanelService.deleteRatingValueSeason(seasonId, userId, ratingId);
     }
 
 }

@@ -15,6 +15,7 @@ import ru.youmiteru.backend.exceptions.UserNotFoundException;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,8 +54,13 @@ public class UserService {
             Season newSeason = season.get();
             User newUser = user.get();
 
-            newUser.setFavoriteSeasonList(List.of(newSeason));
-            newSeason.setThisUserLikeThisAnime(List.of(newUser));
+            List<Season> listSeason = new ArrayList<>(newUser.getFavoriteSeasonList());
+            List<User> listUser = new ArrayList<>(newSeason.getThisUserLikeThisAnime());
+            listSeason.add(newSeason);
+            listUser.add(newUser);
+            newUser.setFavoriteSeasonList(listSeason);
+            newSeason.setThisUserLikeThisAnime(listUser);
+
             userRepository.save(newUser);
             seasonRepository.save(newSeason);
 
