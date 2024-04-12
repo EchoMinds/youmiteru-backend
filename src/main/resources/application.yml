@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://java-postgres:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
+    url: jdbc:postgresql://localhost:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
     username: postgres
     password: relocate
     driver-class-name: org.postgresql.Driver
@@ -19,8 +19,8 @@ spring:
       client:
         registration:
           discord:
-            client-id: 'TOTAL SECRET'
-            client-secret: 'TOTAL SECRET'
+            client-id: 1224820146934120649
+            client-secret: srafRMewS2BixeZX4d_stMXP5xJ-DOtw
             client-authentication-method: client_secret_post
             authorization-grant-type: authorization_code
             scope: identify

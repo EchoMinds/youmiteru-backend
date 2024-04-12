@@ -60,6 +60,9 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        setUrl("https://jitpack.io")
+    }
 }
 
 dependencies {
@@ -72,16 +75,16 @@ dependencies {
     implementation("org.postgresql:postgresql")
     implementation("org.apache.logging.log4j:log4j-core:2.22.1")
     implementation("org.apache.logging.log4j:log4j-api:2.22.1")
-// https://mvnrepository.com/artifact7/org.springframework.boot/spring-boot-starter-security
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
-// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
     implementation("com.fasterxml.jackson.core:jackson-core:2.17.0")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
-
+    implementation("org.json:json:20231013")
+    implementation("org.jsoup:jsoup:1.17.2")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.3.1")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
