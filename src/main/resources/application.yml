@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://java-postgres:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
+    url: jdbc:postgresql://localhost:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
     username: postgres
     password: relocate
     driver-class-name: org.postgresql.Driver
@@ -14,3 +14,23 @@ spring:
     baseline-description: "init"
     locations: classpath:db/migration
     default-schema: flyway_schema
+  security:
+    oauth2:
+      client:
+        registration:
+          yandex:
+            client-name: yandex
+            provider: yandex
+            client-id: 2bfa55f30cc941629f6ae8a6974277bd
+            client-secret: 5c5c820599094d3db0f94468ab1f4190
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            scope:
+              - login:email
+              - login:avatar
+        provider:
+          yandex:
+            authorization-uri: https://oauth.yandex.ru/authorize
+            token-uri: https://oauth.yandex.ru/token
+            user-info-uri: https://login.yandex.ru/info
+            user-name-attribute: id
