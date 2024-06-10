@@ -27,13 +27,13 @@ public class AuthorizationSuccessHandlerImpl implements AuthenticationSuccessHan
         OAuth2AuthenticationToken auth = (OAuth2AuthenticationToken) authentication;
         var userInfoFromToken = extractInfoFromToken(auth, auth.getAuthorizedClientRegistrationId());
         var generatedToken = jwtService.generateToken(userInfoFromToken);
-        System.out.printf(
-            """
-                Итак, мы сгенерировали токен \n%s\nПопробуй достучаться до /protected через POSTMAN или курлом
-                curl --location 'http://localhost:8080/protected' \
-                --header 'Authorization: Bearer %s' \
-                """,
-            generatedToken, generatedToken);
+//        System.out.printf(
+//            """
+//                Итак, мы сгенерировали токен \n%s\nПопробуй достучаться до /protected через POSTMAN или курлом
+//                curl --location 'http://localhost:8080/protected' \
+//                --header 'Authorization: Bearer %s' \
+//                """,
+//            generatedToken, generatedToken);
         response.addHeader("Authorization", "Bearer " + generatedToken);
     }
 

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
+    url: jdbc:postgresql://java-postgres:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
     username: postgres
     password: relocate
     driver-class-name: org.postgresql.Driver
@@ -21,8 +21,8 @@ spring:
           yandex:
             client-name: yandex
             provider: yandex
-            client-id: 2bfa55f30cc941629f6ae8a6974277bd
-            client-secret: 5c5c820599094d3db0f94468ab1f4190
+            client-id: TOP SECRET
+            client-secret: TOP SECRET
             redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
             scope:
