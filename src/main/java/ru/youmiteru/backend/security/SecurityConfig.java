@@ -1,4 +1,4 @@
-package ru.youmiteru.backend.security.config;
+package ru.youmiteru.backend.security;
 
 
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import ru.youmiteru.backend.security.AuthorizationSuccessHandlerImpl;
 import ru.youmiteru.backend.security.jwt.JWTValidationFilter;
 
 @Configuration
@@ -25,11 +24,12 @@ public class SecurityConfig {
             .csrf((AbstractHttpConfigurer::disable))
             .oauth2Login(oath2LoginConfig -> oath2LoginConfig
                 .successHandler(authorizationSuccessHandler)
-                .defaultSuccessUrl("/api/user/home")
+                .defaultSuccessUrl("/api/user")
                 .failureUrl("/login?error=true")
             )
             .authorizeHttpRequests(httpAuth -> httpAuth
                 .requestMatchers("/api/admin/**").authenticated()
+                .requestMatchers("/api/user").authenticated()
                 .anyRequest().permitAll()
             )
             .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class)
