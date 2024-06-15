@@ -31,7 +31,7 @@ spring:
           google:
             client-name: google
             provider: google
-            client-id: 884991855301-.apps.googleusercontent.com
+            client-id:
             client-secret:
             redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
