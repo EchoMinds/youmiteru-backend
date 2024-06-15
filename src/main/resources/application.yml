@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://java-postgres:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
+    url: jdbc:postgresql://localhost:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
     username: postgres
     password: relocate
     driver-class-name: org.postgresql.Driver
@@ -21,16 +21,33 @@ spring:
           yandex:
             client-name: yandex
             provider: yandex
-            client-id: TOP SECRET
-            client-secret: TOP SECRET
+            client-id:
+            client-secret:
             redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
             scope:
               - login:email
               - login:avatar
+          google:
+            client-name: google
+            provider: google
+            client-id: 884991855301-.apps.googleusercontent.com
+            client-secret:
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            authorization-grant-type: authorization_code
+            scope:
+              - profile
+              - email
+              - openid
         provider:
           yandex:
             authorization-uri: https://oauth.yandex.ru/authorize
             token-uri: https://oauth.yandex.ru/token
             user-info-uri: https://login.yandex.ru/info
             user-name-attribute: id
+          google:
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-name-attribute: sub

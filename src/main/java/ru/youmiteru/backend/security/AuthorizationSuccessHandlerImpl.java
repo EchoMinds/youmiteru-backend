@@ -8,13 +8,17 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 import ru.youmiteru.backend.security.jwt.JwtService;
+import ru.youmiteru.backend.security.tokenStrategies.GoogleTokenStrategy;
 import ru.youmiteru.backend.security.tokenStrategies.YandexTokenStrategy;
 
 import java.io.IOException;
 
 @Service
 public class AuthorizationSuccessHandlerImpl implements AuthenticationSuccessHandler {
-    private OAuthTokenToProfileConvertStrategy yandexTokenStrategy = new YandexTokenStrategy();
+    private final OAuthTokenToProfileConvertStrategy
+        yandexTokenStrategy = new YandexTokenStrategy(),
+        googleTokenStrategy = new GoogleTokenStrategy();
+
     private final JwtService jwtService;
 
     public AuthorizationSuccessHandlerImpl(JwtService jwtService) {
@@ -34,7 +38,7 @@ public class AuthorizationSuccessHandlerImpl implements AuthenticationSuccessHan
         return switch (clientId) {
 //            case "github" -> githubTokenStrategy.extractInfoFromToken(token);
             case "yandex" -> yandexTokenStrategy.extractInfoFromToken(token);
-//            case "google" -> googleTokenStrategy.extractInfoFromToken(token);
+            case "google" -> googleTokenStrategy.extractInfoFromToken(token);
             default -> throw new Error("");
         };
     }
