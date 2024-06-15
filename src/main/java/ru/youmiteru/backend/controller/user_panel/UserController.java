@@ -46,7 +46,9 @@ public class UserController {
             // Создаем и сохраняем нового пользователя
             User newUser = new User();
 
-            newUser.setId(Long.valueOf(userId));
+            if (userId != null) {
+                newUser.setId(Long.valueOf(userId));
+            }
             newUser.setName(userLogin);
             newUser.setEmail(userEmail);
             newUser.setProfileImageUrl(userProfilePicture);

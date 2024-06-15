@@ -28,13 +28,13 @@ public class AuthorizationSuccessHandlerImpl implements AuthenticationSuccessHan
         var userInfoFromToken = extractInfoFromToken(auth, auth.getAuthorizedClientRegistrationId());
         var generatedToken = jwtService.generateToken(userInfoFromToken);
         response.addHeader("Authorization", "Bearer " + generatedToken);
-        response.sendRedirect("/api/user");
     }
 
     private UserInfoFromToken extractInfoFromToken(OAuth2AuthenticationToken token, String clientId) {
         return switch (clientId) {
 //            case "github" -> githubTokenStrategy.extractInfoFromToken(token);
             case "yandex" -> yandexTokenStrategy.extractInfoFromToken(token);
+//            case "google" -> googleTokenStrategy.extractInfoFromToken(token);
             default -> throw new Error("");
         };
     }
