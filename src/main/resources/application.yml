@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres #//Your DB: localhost || Docker DB: java-postgres
+    url: jdbc:postgresql://localhost:5432/postgres # // Your DB: localhost || Docker DB: java-postgres
     username: postgres
     password: relocate
     driver-class-name: org.postgresql.Driver
