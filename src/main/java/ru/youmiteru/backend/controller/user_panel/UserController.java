@@ -109,11 +109,10 @@ public class UserController {
 
     //Testing if the user authenticated with ADMIN ROLE
     @GetMapping("/test")
-    @RolesAllowed("ADMIN")
     public String getUserByContext() {
         Authentication authentication = SecurityContextHolder
             .getContext().getAuthentication();
-
+        authentication.getAuthorities();
         System.out.println(authentication.getPrincipal());
         return authentication.getName();
     }

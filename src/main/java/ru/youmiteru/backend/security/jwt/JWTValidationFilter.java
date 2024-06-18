@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import ru.youmiteru.backend.domain.Role;
 import ru.youmiteru.backend.security.AuthToken;
 import ru.youmiteru.backend.security.Principal;
 
@@ -45,7 +46,8 @@ public class JWTValidationFilter extends HttpFilter {
                 var userEmail = claims.getSubject();
                 String userId = (String) claims.get("id");
                 var principal = new Principal(userEmail, userId);
-                Authentication auth = new AuthToken(principal);
+
+                Authentication auth = new AuthToken(principal, (String) claims.get("roles"));
                 SecurityContextHolder.getContext().setAuthentication(auth);
                 chain.doFilter(request, response);
             } catch (Exception e) {
