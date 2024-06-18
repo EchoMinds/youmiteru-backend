@@ -31,6 +31,7 @@ public class AuthorizationSuccessHandlerImpl implements AuthenticationSuccessHan
         OAuth2AuthenticationToken auth = (OAuth2AuthenticationToken) authentication;
         var userInfoFromToken = extractInfoFromToken(auth, auth.getAuthorizedClientRegistrationId());
         var generatedToken = jwtService.generateToken(userInfoFromToken);
+        System.out.println(generatedToken);
         response.addHeader("Authorization", "Bearer " + generatedToken);
     }
 
@@ -47,7 +48,8 @@ public class AuthorizationSuccessHandlerImpl implements AuthenticationSuccessHan
         String userId,
         String userName,
         String userEmail,
-        String userProfilePicture
+        String userProfilePicture,
+        String userRole
     ) {
     }
 }

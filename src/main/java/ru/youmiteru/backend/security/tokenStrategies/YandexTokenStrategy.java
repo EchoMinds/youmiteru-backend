@@ -20,7 +20,8 @@ public class YandexTokenStrategy implements OAuthTokenToProfileConvertStrategy {
             userId,
             userLogin,
             userEmail,
-            userProfilePicture
+            userProfilePicture,
+            "USER"
         );
     }
 

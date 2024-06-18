@@ -1,6 +1,7 @@
 package ru.youmiteru.backend.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 import ru.youmiteru.backend.domain.User;
 
@@ -11,4 +12,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findById(Long id);
 
     Boolean existsByEmail(String email);
+
+    User findByName(String username);
+
+    User findByEmail(String email);
 }

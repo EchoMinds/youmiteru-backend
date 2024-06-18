@@ -1,9 +1,15 @@
 package ru.youmiteru.backend.controller.user_panel;
 
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.youmiteru.backend.domain.Role;
 import ru.youmiteru.backend.domain.User;
 import ru.youmiteru.backend.repositories.UserRepository;
+import ru.youmiteru.backend.security.AuthorizationSuccessHandlerImpl;
+import ru.youmiteru.backend.security.jwt.JwtService;
 import ru.youmiteru.backend.service.UserService;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @RestController
@@ -22,6 +31,9 @@ import java.time.LocalDateTime;
 public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
+    @Autowired
+    JwtService jwtService;
+
 
     @Autowired
     public UserController(UserRepository userRepository, UserService userService) {
@@ -32,6 +44,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<String> getUserInfo(@AuthenticationPrincipal OAuth2User principal,
                                               OAuth2AuthenticationToken authentication) {
+
         String provider = authentication.getAuthorizedClientRegistrationId();
         String userLogin = null;
         String userEmail = null;
@@ -66,13 +79,44 @@ public class UserController {
             newUser.setRole(Role.USER);
             newUser.setCreationTime(LocalDateTime.now());
             userRepository.save(newUser);
+            return ResponseEntity.ok(String.format(jwtService.generateToken(
+                new AuthorizationSuccessHandlerImpl.UserInfoFromToken(
+                    principal.getAttribute("sub"),
+                    userLogin,
+                    userEmail,
+                    "userAvatar",
+                    newUser.getRole().name()
+                )
+            )));
         }
 
-        // Возвращаем ответ
-        return ResponseEntity.ok(String.format("User ID: %s, Login: %s, Email: %s, Profile Picture: %s",
-            principal.getAttribute("sub"), userLogin, userEmail, userProfilePicture));
+        else {
+            var getEmail = userRepository.findByEmail(principal.getAttribute("email")) != null ?
+                userRepository.findByEmail(principal.getAttribute("email")) : userRepository.findByEmail(principal.getAttribute("default_email"));
+
+            // Возвращаем ответ
+            return ResponseEntity.ok(String.format(jwtService.generateToken(
+                new AuthorizationSuccessHandlerImpl.UserInfoFromToken(
+                    principal.getAttribute("sub"),
+                    userLogin,
+                    userEmail,
+                    "userAvatar",
+                    getEmail.getRole().name()
+                )
+            )));
+        }
     }
 
+    //Testing if the user authenticated with ADMIN ROLE
+    @GetMapping("/test")
+    @RolesAllowed("ADMIN")
+    public String getUserByContext() {
+        Authentication authentication = SecurityContextHolder
+            .getContext().getAuthentication();
+
+        System.out.println(authentication.getPrincipal());
+        return authentication.getName();
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> getUserPageById(@PathVariable Long id) {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);

@@ -20,6 +20,7 @@ public class JwtService {
         return Jwts.builder().subject(token.userEmail()).signWith(key)
             .claim("profile_picture", token.userProfilePicture())
             .claim("id", token.userId())
+            .claim("roles", token.userRole())
             // и ты ды
             .compact();
     }

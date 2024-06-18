@@ -1,8 +1,10 @@
 package ru.youmiteru.backend.security.tokenStrategies;
 
+import lombok.Getter;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import ru.youmiteru.backend.security.AuthorizationSuccessHandlerImpl;
 import ru.youmiteru.backend.security.OAuthTokenToProfileConvertStrategy;
+
 
 public class GoogleTokenStrategy implements OAuthTokenToProfileConvertStrategy {
     @Override
@@ -16,7 +18,8 @@ public class GoogleTokenStrategy implements OAuthTokenToProfileConvertStrategy {
             userId,
             userLogin,
             userEmail,
-            userAvatar
+            userAvatar,
+            "USER"
         );
     }
 }
