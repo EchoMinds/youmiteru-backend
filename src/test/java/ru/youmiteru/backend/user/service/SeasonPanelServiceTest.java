@@ -14,10 +14,11 @@ import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.UserRepository;
 import ru.youmiteru.backend.service.UserService;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class SeasonPanelServiceTest {
@@ -41,14 +42,40 @@ public class SeasonPanelServiceTest {
     }
 
     @Test
-    void testAddFavoriteOK(){
-        when(seasonRepository.findById(season_id)).thenReturn(Optional.of(fakeSeason));
-        when(userRepository.findById(user_id)).thenReturn(Optional.of(fakeUser));
+    public void testAddFavorite_UserNotFound() {
+        Long userId = 1L;
+        Long seasonId = 1L;
 
-        HttpStatus httpStatus = seasonPanelService.addFavorite(season_id, user_id);
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        assertEquals(httpStatus, HttpStatus.OK);
+        HttpStatus result = seasonPanelService.addFavorite(userId, seasonId);
 
+        assertEquals(HttpStatus.BAD_REQUEST, result);
+
+        verify(userRepository, times(1)).findById(userId);
+        verify(userRepository, never()).save(any());
+        verify(seasonRepository, never()).save(any());
+    }
+
+    @Test
+    public void testAddFavorite_SeasonNotFound() {
+        Long userId = 1L;
+        Long seasonId = 1L;
+
+        User user = new User();
+        user.setId(userId);
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(seasonRepository.findById(seasonId)).thenReturn(Optional.empty());
+
+        HttpStatus result = seasonPanelService.addFavorite(userId, seasonId);
+
+        assertEquals(HttpStatus.BAD_REQUEST, result);
+
+        verify(userRepository, times(1)).findById(userId);
+        verify(seasonRepository, times(1)).findById(seasonId);
+        verify(userRepository, never()).save(any());
+        verify(seasonRepository, never()).save(any());
     }
 
     @Test
