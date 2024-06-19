@@ -8,7 +8,8 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "rating", schema = "youmiteru_backend")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Rating {
     @Id
@@ -27,6 +28,9 @@ public class Rating {
     @JoinColumn(name = "season_id", referencedColumnName = "id")
     private Season season;
 
-    public Rating(int value, Season season, User user) {
+    public Rating(int value, User user, Season season) {
+        this.value = value;
+        this.user = user;
+        this.season = season;
     }
 }
