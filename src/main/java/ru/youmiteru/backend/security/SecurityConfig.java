@@ -13,7 +13,6 @@ import ru.youmiteru.backend.security.jwt.JWTValidationFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
     @Bean
     public SecurityFilterChain securityFilterChain(
         HttpSecurity http,
@@ -28,8 +27,8 @@ public class SecurityConfig {
                 .failureUrl("/login?error=true")
             )
             .authorizeHttpRequests(httpAuth -> httpAuth
-                .requestMatchers("/api/admin/**").authenticated()
-                .requestMatchers("/api/user/test").hasRole("ADMIN")
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/api/user").authenticated()
                 .anyRequest().permitAll()
             )
             .addFilterBefore(jwtValidationFilter, UsernamePasswordAuthenticationFilter.class)
