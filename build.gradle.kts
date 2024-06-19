@@ -7,7 +7,7 @@ plugins {
 
 group = "ru.youmiteru"
 
-version = "0.0.6-SNAPSHOT"
+version = "0.0.8-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -72,18 +72,21 @@ dependencies {
 	implementation("org.postgresql:postgresql")
 	implementation("org.apache.logging.log4j:log4j-core:2.22.1")
 	implementation("org.apache.logging.log4j:log4j-api:2.22.1")
-// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-	implementation("org.springframework.boot:spring-boot-starter-security:3.2.4")
-
+	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+	implementation("io.jsonwebtoken:jjwt-api:0.12.5")
 
 
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.5")
+
 	annotationProcessor("org.projectlombok:lombok")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.security:spring-security-test:6.2.3")
+	testImplementation("org.springframework.security:spring-security-test")
 
 	intTestImplementation("org.springframework.boot:spring-boot-starter-test")
 	intTestImplementation("org.testcontainers:junit-jupiter:1.18.3")

@@ -8,7 +8,6 @@ import ru.youmiteru.backend.dto.SeasonDto.*;
 import ru.youmiteru.backend.exceptions.SeasonNotFoundException;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.convertors.SeasonConvertors;
-import ru.youmiteru.backend.repositories.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 public class SeasonService {
     private final SeasonRepository seasonRepository;
     private final SeasonConvertors seasonConvertors;
-    private final UserRepository userRepository;
 
     public ListHomePage getAllSeasonForHomePage() {
         List<HomePage> anons = seasonRepository.findAnnouncement()
