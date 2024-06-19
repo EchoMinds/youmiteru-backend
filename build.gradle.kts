@@ -9,6 +9,7 @@ group = "ru.youmiteru"
 
 version = "0.0.9-SNAPSHOT"
 
+
 java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
