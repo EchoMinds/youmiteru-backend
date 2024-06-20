@@ -7,7 +7,8 @@ import ru.youmiteru.backend.service.UserService;
 
 @RestController
 @RequestMapping("/api/season/{seasonId}/favorite/{userId}")
-public class SeasonPanelController {
+public class
+SeasonPanelController {
     private final UserService seasonPanelService;
 
     @Autowired

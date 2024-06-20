@@ -25,9 +25,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    //return token for frontend and they
+    //return token for frontend and info about user
     @GetMapping
-    public ResponseEntity<String> getUserInfo(@AuthenticationPrincipal OAuth2User principal,
+    public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal OAuth2User principal,
                                               OAuth2AuthenticationToken authentication) {
         return userService.getTokenForSecurity(principal, authentication, jwtService);
     }
