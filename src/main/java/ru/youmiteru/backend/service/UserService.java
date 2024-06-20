@@ -1,7 +1,6 @@
 package ru.youmiteru.backend.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -15,6 +14,7 @@ import ru.youmiteru.backend.domain.User;
 import ru.youmiteru.backend.dto.SeasonDto.FavoriteSeason;
 import ru.youmiteru.backend.dto.SeasonDto.RatedSeason;
 import ru.youmiteru.backend.dto.UserDTO;
+import ru.youmiteru.backend.dto.responses.ResponseForUserProfile;
 import ru.youmiteru.backend.exceptions.UserNotFoundException;
 import ru.youmiteru.backend.repositories.SeasonRepository;
 import ru.youmiteru.backend.repositories.UserRepository;
@@ -54,13 +54,13 @@ public class UserService {
     }
 
     //USER PANEL
-    public HttpStatus addFavorite(Long user_id, Long season_id){
+    public HttpStatus addFavorite(Long user_id, Long season_id) {
         Optional<User> user = userRepository.findById(user_id);
         Optional<Season> season = seasonRepository.findById(season_id);
         System.out.println(user);
 
 
-        if (user.isPresent() && season.isPresent()){
+        if (user.isPresent() && season.isPresent()) {
             Season newSeason = season.get();
             User newUser = user.get();
 
@@ -80,12 +80,12 @@ public class UserService {
         return HttpStatus.BAD_REQUEST;
     }
 
-    public HttpStatus deleteFavorite(Long user_id, Long season_id){
+    public HttpStatus deleteFavorite(Long user_id, Long season_id) {
         Optional<User> user = userRepository.findById(user_id);
         Optional<Season> season = seasonRepository.findById(season_id);
 
         System.out.println(user);
-        if (user.isPresent() && season.isPresent()){
+        if (user.isPresent() && season.isPresent()) {
             User trueUser = user.get();
             Season trueSeason = season.get();
 
@@ -101,16 +101,20 @@ public class UserService {
     }
 
     //USER OAUTH REG + AUTH
-    public ResponseEntity<String> getTokenForSecurity(OAuth2User principal,
-                                                      OAuth2AuthenticationToken authentication,
-                                                      JwtService jwtService){
+    public ResponseEntity<?> getTokenForSecurity(OAuth2User principal,
+                                                 OAuth2AuthenticationToken authentication,
+                                                 JwtService jwtService) {
+        String token = null;
+        String userLogin = null;
+        String userEmail = null;
+        String userProfilePicture = null;
+        User getUser = null;
         if (authentication == null || principal == null) {
             return ResponseEntity.ok("YOU ARE BANNED!");
         } else {
             String provider = authentication.getAuthorizedClientRegistrationId();
-            String userLogin = null;
-            String userEmail = null;
-            String userProfilePicture = null;
+
+            //get provider and get in principal name, email and etc
             if ("google".equals(provider)) {
                 userLogin = principal.getAttribute("name");
                 userEmail = principal.getAttribute("email");
@@ -125,47 +129,43 @@ public class UserService {
 
             }
 
-            // Временная диагностика
-            System.out.println("User Login: " + userLogin);
-            System.out.println("User Email: " + userEmail);
-            System.out.println("User Profile Picture: " + userProfilePicture);
-
             // Проверяем, существует ли пользователь в базе данных
             if (!userRepository.existsByEmail(userEmail)) {
                 // Создаем и сохраняем нового пользователя
-                User newUser = new User();
+                getUser = new User();
 
-                newUser.setName(userLogin);
-                newUser.setEmail(userEmail);
-                newUser.setProfileImageUrl(userProfilePicture);
-                newUser.setRole(Role.USER);
-                newUser.setCreationTime(LocalDateTime.now());
-                userRepository.save(newUser);
-                return ResponseEntity.ok(String.format(jwtService.generateToken(
+                getUser.setName(userLogin);
+                getUser.setEmail(userEmail);
+                getUser.setProfileImageUrl(userProfilePicture);
+                getUser.setRole(Role.USER);
+                getUser.setCreationTime(LocalDateTime.now());
+                userRepository.save(getUser);
+                token = String.format(jwtService.generateToken(
                     new AuthorizationSuccessHandlerImpl.UserInfoFromToken(
                         principal.getAttribute("sub"),
                         userLogin,
                         userEmail,
                         "userAvatar",
-                        newUser.getRole().name()
+                        getUser.getRole().name()
                     )
-                )));
+                ));
             } else {
-                var getEmail = userRepository.findByEmail(principal.getAttribute("email")) != null ?
-                    userRepository.findByEmail(principal.getAttribute("email")) : userRepository.
-                    findByEmail(principal.getAttribute("default_email"));
-
-                // Возвращаем ответ
-                return ResponseEntity.ok(String.format(jwtService.generateToken(
+                getUser = userRepository.findByEmail(principal.getAttribute("email")) != null ?
+                    userRepository.findByEmail(principal.getAttribute("email")) :
+                    userRepository.findByEmail(principal.getAttribute("default_email"));
+                token = String.format(jwtService.generateToken(
                     new AuthorizationSuccessHandlerImpl.UserInfoFromToken(
                         principal.getAttribute("sub"),
                         userLogin,
                         userEmail,
                         "userAvatar",
-                        getEmail.getRole().name()
+                        getUser.getRole().name()
                     )
-                )));
+                ));
+                // Возвращаем ответ
             }
         }
+
+        return new ResponseEntity<>(new ResponseForUserProfile(token,getUser), HttpStatus.OK);
     }
 }
