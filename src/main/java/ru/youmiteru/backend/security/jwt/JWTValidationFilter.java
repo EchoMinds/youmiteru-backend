@@ -13,7 +13,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import ru.youmiteru.backend.domain.Role;
 import ru.youmiteru.backend.security.AuthToken;
 import ru.youmiteru.backend.security.Principal;
 

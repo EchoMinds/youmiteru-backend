@@ -7,7 +7,7 @@ plugins {
 
 group = "ru.youmiteru"
 
-version = "0.0.9-SNAPSHOT"
+version = "0.1.0-SNAPSHOT"
 
 
 java {
@@ -77,7 +77,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
 	implementation("io.jsonwebtoken:jjwt-api:0.12.5")
-
 
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.flywaydb:flyway-database-postgresql:10.4.1")
