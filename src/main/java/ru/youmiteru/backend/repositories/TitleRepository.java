@@ -9,7 +9,7 @@ import ru.youmiteru.backend.domain.Title;
 import java.util.List;
 
 @Repository
-public interface TitleRepository extends JpaRepository<Title,Long> {
+public interface TitleRepository extends JpaRepository<Title, Long> {
 
     @Query(value = "select (genre_id) from youmiteru_backend.anime_genres where title_id = :#{#id} LIMIT 20", nativeQuery = true)
     List<Long> findGenreIdsByTitleIds(@Param("id") Long id);
@@ -19,4 +19,7 @@ public interface TitleRepository extends JpaRepository<Title,Long> {
 
     @Query(value = "select * from youmiteru_backend.title limit 30", nativeQuery = true)
     List<Title> findAllForFilter();
+
+    @Query
+    List<Title> findByNameContains(String name);
 }
